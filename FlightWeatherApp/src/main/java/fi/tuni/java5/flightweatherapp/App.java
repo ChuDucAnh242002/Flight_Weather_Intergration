@@ -5,8 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.transform.Scale;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import javafx.scene.image.Image;
 
 /**
  * JavaFX App
@@ -14,16 +17,45 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    
+    // Adjust scale factor as needed
+    public static double scaleFactor = 0.8;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        Parent root = loadFXML("StartScreen");
+        
+        // Create the scene
+        scene = new Scene(root, 1540, 970);
+        
+        // Set color of scene
+        scene.setFill(Color.web("#F4F4F4"));
+        
+        // Create a scale transformation
+        Scale scale = new Scale(scaleFactor, scaleFactor);
+        
+        // Apply the scale transformation to the root node
+        root.getTransforms().add(scale);
+        
+        // Set name and icon of stage
+        stage.setTitle("Flight Weather Search App");
+        Image appLogo = new Image(getClass().getResourceAsStream("sprites/app_icon.png"));
+        stage.getIcons().add(appLogo);
+        
         stage.setScene(scene);
         stage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        // Load the new root node from FXML
+        Parent root = loadFXML(fxml);
+        
+        // Apply the scale transformation to the new root node
+        Scale scale = new Scale(scaleFactor, scaleFactor);
+        root.getTransforms().add(scale);
+        
+        // Set the new root node in the scene
+        scene.setRoot(root);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
