@@ -53,7 +53,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     static void setRoot(String fxml) throws IOException {
         // Load the new root node from FXML
         Parent root = loadFXML(fxml);
