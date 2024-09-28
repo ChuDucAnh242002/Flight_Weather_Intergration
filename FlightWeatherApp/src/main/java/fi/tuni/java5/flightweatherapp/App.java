@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * JavaFX App
@@ -25,8 +26,15 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = loadFXML("StartScreen");
         
+        // Get AnchorPane as the root in FXML
+        AnchorPane anchorPane = (AnchorPane) root;
+
+        // Get the preferred size of the AnchorPane
+        double prefWidth = anchorPane.getPrefWidth() * scaleFactor;
+        double prefHeight = anchorPane.getPrefHeight() * scaleFactor;
+        
         // Create the scene
-        scene = new Scene(root, 1540, 970);
+        scene = new Scene(root, prefWidth, prefHeight);
         
         // Set color of scene
         scene.setFill(Color.web("#F4F4F4"));
