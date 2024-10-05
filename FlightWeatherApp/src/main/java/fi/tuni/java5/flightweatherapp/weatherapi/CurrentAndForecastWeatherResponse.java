@@ -1,4 +1,4 @@
-package fi.tuni.java5.flightweatherapp;
+package fi.tuni.java5.flightweatherapp.weatherAPI;
 
 /**
  * The `CurrentAndForecastWeatherResponse` class represents the One Call API 3.0 response.
