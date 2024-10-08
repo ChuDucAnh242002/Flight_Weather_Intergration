@@ -1,4 +1,4 @@
-package fi.tuni.java5.flightweatherapp;
+package fi.tuni.java5.flightweatherapp.weatherAPI;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -66,6 +66,7 @@ public class WeatherAPICall {
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+            
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
