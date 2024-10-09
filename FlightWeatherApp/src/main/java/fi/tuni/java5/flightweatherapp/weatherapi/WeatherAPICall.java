@@ -1,10 +1,13 @@
 package fi.tuni.java5.flightweatherapp.weatherAPI;
 
+import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataAPICall;
+import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import com.google.gson.Gson;
+import java.util.List;
 
 /**
  * The WeatherAPICall class contains methods to interact with the OpenWeatherMap API
@@ -48,15 +51,39 @@ public class WeatherAPICall {
      */
     public static CurrentAndForecastWeatherResponse RequestCurrentAndForecastWeatherData() 
     {
+        if (forecastWeatherRequest == null)
+        {
+            InitializeForecastWeatherRequest();
+        }
+        return getCurrentAndForecastWeatherData(forecastWeatherRequest.getLatitude(), forecastWeatherRequest.getLongitude());
+    }
+    
+    public static CurrentAndForecastWeatherResponse RequestCurrentAndForecastWeatherData(String airportName)
+    {
         try {
-            
             if (forecastWeatherRequest == null)
             {
                 InitializeForecastWeatherRequest();
             }
             
-            String latitudeString = String.valueOf(forecastWeatherRequest.getLatitude());
-            String longitudeString = String.valueOf(forecastWeatherRequest.getLongitude());
+            
+            List<AirportDataResponse> airportRes = AirportDataAPICall.RequestAirportData(airportName);
+            double lat = airportRes.get(0).getLatitude();
+            double lon = airportRes.get(0).getLongitude();
+            
+            return getCurrentAndForecastWeatherData(lat, lon);
+        } 
+        catch (Exception e) {
+            System.out.println("Airport Data API call error");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private static CurrentAndForecastWeatherResponse getCurrentAndForecastWeatherData(double lat, double lon) {
+        try {
+            String latitudeString = String.valueOf(lat);
+            String longitudeString = String.valueOf(lon);
             
             String apiUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=" + latitudeString + 
                     "&lon=" + longitudeString + "&appid=" + forecastWeatherRequest.getAppId() + 
@@ -89,6 +116,7 @@ public class WeatherAPICall {
             return weatherResponse;
             
         } catch (Exception e) {
+            System.out.println("Weather API call error");
             e.printStackTrace();
             
             return null;
