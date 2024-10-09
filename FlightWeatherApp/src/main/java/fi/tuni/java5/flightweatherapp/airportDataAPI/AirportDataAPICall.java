@@ -6,10 +6,13 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import java.util.List;
+import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 
 /**
@@ -17,36 +20,36 @@ import com.google.gson.JsonObject;
  * @author Chu Duc Anh
  */
 public class AirportDataAPICall {
-    private static final String RAPID_API_KEY = "bce51e3fb7mshe11b0268d9ee852p13c20fjsnc74bdd3f0278";
-    private static final String RAPID_API_HOST = "aiport-data.p.rapidapi.com";
+    private static final String NINJA_API_KEY = "oCFqyGRKgTOJXwbzxwZMIg==zdgkY01L1T5vEVJ9";
     
-    public static AirportDataResponse RequestAirportData(){
-        AirportDataResponse airportDataResponse = new AirportDataResponse();
-        return airportDataResponse;
+    public static List<AirportDataResponse> RequestAirportData(){
+        
+        return getAirportData("Helsinki");
     }
     
-    public static AirportDataResponse RequestAirportData(String iata_code) {
+    public static List<AirportDataResponse> RequestAirportData(String name) {
+        return getAirportData(name);
+    } 
+    
+    public static List<AirportDataResponse> getAirportData(String name) {
         HttpRequest request = HttpRequest.newBuilder()
-		.uri(URI.create("https://aiport-data.p.rapidapi.com/getAirportByIATA?iataCode=" + iata_code))
-		.header("x-rapidapi-key", RAPID_API_KEY)
-		.header("x-rapidapi-host", RAPID_API_HOST)
-		.method("GET", HttpRequest.BodyPublishers.noBody())
+                .uri(URI.create("https://api.api-ninjas.com/v1/airports?name=" + name))
+                .header("X-Api-Key", NINJA_API_KEY)
+                .method("GET", HttpRequest.BodyPublishers.noBody())
 		.build();
         
         try {
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-           
+            
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(response.body(), JsonArray.class);
-            JsonObject airport = jsonArray.get(0).getAsJsonObject();
             
-            double lat = airport.get("latitude_deg").getAsDouble();
-            double lon = airport.get("longitude_deg").getAsDouble();
+            Type airportListType = new TypeToken<List<AirportDataResponse>>(){}.getType();
             
-            AirportDataResponse airportDataResponse = new AirportDataResponse(iata_code, lat, lon);
-            return airportDataResponse;
+            List<AirportDataResponse> airports = gson.fromJson(response.body(), airportListType);
+            return airports;
             
         } catch (IOException | InterruptedException e) {
+            System.out.println("Airport Data API call error");
             e.printStackTrace();
             return null;
         }
