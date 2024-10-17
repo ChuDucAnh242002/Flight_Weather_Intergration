@@ -9,4 +9,5 @@ module fi.tuni.java5.flightweatherapp {
     
     opens fi.tuni.java5.flightweatherapp.weatherAPI to com.google.gson;
     opens fi.tuni.java5.flightweatherapp.airportDataAPI to com.google.gson;
+    opens fi.tuni.java5.flightweatherapp.flightDataAPI to com.google.gson;
 }

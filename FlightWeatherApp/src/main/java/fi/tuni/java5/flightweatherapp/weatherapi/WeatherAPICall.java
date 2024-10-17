@@ -58,7 +58,16 @@ public class WeatherAPICall {
         return getCurrentAndForecastWeatherData(forecastWeatherRequest.getLatitude(), forecastWeatherRequest.getLongitude());
     }
     
-    public static CurrentAndForecastWeatherResponse RequestCurrentAndForecastWeatherData(String airportName)
+    /**
+     * Makes a request to retrieve both current and forecast weather data of the given airport's name.
+     * Uses latitude, longitude, API key, chosen units, and exclusion parameters to fetch weather information.
+     * Uses airport's name to get the current and forecast weather of the airport.
+     * 
+     * @param String airport name, for example "Helsinki"
+     * @return CurrentAndForecastWeatherResponse containing the requested current and forecast weather data.
+     *         Returns null if an error occurs during the retrieval process.
+     */
+    public static CurrentAndForecastWeatherResponse RequestCurrentAndForecastWeatherDataByAirportName(String airportName)
     {
         try {
             if (forecastWeatherRequest == null)
@@ -67,7 +76,38 @@ public class WeatherAPICall {
             }
             
             
-            List<AirportDataResponse> airportRes = AirportDataAPICall.RequestAirportData(airportName);
+            List<AirportDataResponse> airportRes = AirportDataAPICall.RequestAirportDataByAirportName(airportName);
+            double lat = airportRes.get(0).getLatitude();
+            double lon = airportRes.get(0).getLongitude();
+            
+            return getCurrentAndForecastWeatherData(lat, lon);
+        } 
+        catch (Exception e) {
+            System.out.println("Airport Data API call error");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Makes a request to retrieve both current and forecast weather data of the given airport's code.
+     * Uses latitude, longitude, API key, chosen units, and exclusion parameters to fetch weather information.
+     * Uses airport's code to get the current and forecast weather of the airport.
+     * 
+     * @param String airport code, for example "HEL"
+     * @return CurrentAndForecastWeatherResponse containing the requested current and forecast weather data.
+     *         Returns null if an error occurs during the retrieval process.
+     */
+    public static CurrentAndForecastWeatherResponse RequestCurrentAndForecastWeatherDataByAirportCode(String airportCode)
+    {
+        try {
+            if (forecastWeatherRequest == null)
+            {
+                InitializeForecastWeatherRequest();
+            }
+            
+            
+            List<AirportDataResponse> airportRes = AirportDataAPICall.RequestAirportDataByAirportCode(airportCode);
             double lat = airportRes.get(0).getLatitude();
             double lon = airportRes.get(0).getLongitude();
             
