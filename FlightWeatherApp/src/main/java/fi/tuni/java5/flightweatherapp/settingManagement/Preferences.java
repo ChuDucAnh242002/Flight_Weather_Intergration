@@ -9,16 +9,14 @@ package fi.tuni.java5.flightweatherapp.settingManagement;
  */
 public class Preferences {
     
-    public String currency_;
-    public Double max_price_;
-    public String api_key_;
-    public int layovers_;
+    private String currency_;
+    private Double max_price_;
+    private int layovers_;
     
     
-    public Preferences(String currency, Double max_price,String api_key, int layovers){
+    public Preferences(String currency, Double max_price, int layovers){
         currency_ = currency;
         max_price_ = max_price;
-        api_key_ = api_key;
         layovers_ = layovers;
     }
     public String get_currency(){
@@ -27,9 +25,7 @@ public class Preferences {
     public Double get_max_price(){
         return max_price_;
     }
-    public String get_api_key(){
-        return api_key_;
-    }
+
     public int get_leyovers(){
         return layovers_;
     }
@@ -40,9 +36,7 @@ public class Preferences {
     public void set_max_price(Double max_price){
         max_price_ = max_price;
     }
-    public void set_api_key(String api_key){
-        api_key_ = api_key;
-    }
+
     public void set_layovers(int layovers){
         layovers_ = layovers;
     }

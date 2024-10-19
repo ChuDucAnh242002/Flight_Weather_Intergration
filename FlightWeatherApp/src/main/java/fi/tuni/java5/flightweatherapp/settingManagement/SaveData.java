@@ -78,6 +78,12 @@ public class SaveData {
                 );
             favorites.set_new_favorite(new_flight);
         }
+        JsonObject pref = data.get("preferences").getAsJsonObject();
+        String currency = pref.get("currency").getAsString();
+        Double max_price = pref.get("max_price").getAsDouble();
+        int number_of_layovers = pref.get("layovers").getAsInt();
+        preferences = new Preferences(currency, max_price, number_of_layovers);
+        
     }
     
     private ArrayList<String> get_layovers(JsonArray layovers_json){
@@ -108,5 +114,8 @@ public class SaveData {
     }
     public Favorites get_favorites(){
         return favorites;
+    }
+    public Preferences get_preferences(){
+        return preferences;
     }
 }
