@@ -2,6 +2,7 @@
 package fi.tuni.java5.flightweatherapp.settingManagement;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,6 +10,7 @@ import com.google.gson.JsonParseException;
 import fi.tuni.java5.flightweatherapp.Flight;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,7 +95,13 @@ public class SaveData {
         }
         return result;
     }
-    
+    private JsonArray get_layovers_as_json(ArrayList<String> layovers){
+        JsonArray result = new JsonArray();
+        for (String layover : layovers){
+            result.add(layover);
+        }
+        return result; 
+    }
     
     // written with AI
     public static String date_to_string(Date date){
@@ -117,5 +125,47 @@ public class SaveData {
     }
     public Preferences get_preferences(){
         return preferences;
+    }
+    
+    public void write_data(Favorites fav, Preferences pref){
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        
+        JsonArray fav_result = new JsonArray();
+        for (Flight flight : fav.get_favorite_flights_by_recent()){
+            JsonObject flight_json = new JsonObject();
+            
+            flight_json.addProperty("flightID",         flight.get_flight_id());
+            flight_json.addProperty("dep_airport",      flight.get_departure_airport());
+            flight_json.addProperty("des_airport",      flight.get_destination_airport());
+            flight_json.addProperty("price",            flight.get_price());
+            
+            flight_json.add("layovers",                 gson.toJsonTree(get_layovers_as_json(flight.get_layovers())));
+            
+            flight_json.addProperty("dep_time",         date_to_string(flight.get_departure_time()));
+            flight_json.addProperty("arr_time",         date_to_string(flight.get_arrival_time()));
+            flight_json.addProperty("overnight",        flight.is_overnight());
+            flight_json.addProperty("often_delayed",    flight.is_often_delayed());
+            
+            fav_result.add(flight_json);
+        }
+        
+        JsonObject pref_result = new JsonObject();
+        pref_result.addProperty("currency", pref.get_currency());
+        pref_result.addProperty("max_price", pref.get_max_price());
+        pref_result.addProperty("layovers", pref.get_leyovers());
+        
+        JsonObject result = new JsonObject();
+        result.add("favorites", fav_result);
+        result.add("preferences", pref_result);
+        
+        String jsonString = gson.toJson(result);
+        
+        try (FileWriter writer = new FileWriter(file_name)) {
+            writer.write(jsonString);
+        }
+        catch (IOException error){
+            System.err.println("target file not found");
+        }
     }
 }
