@@ -4,7 +4,12 @@ package fi.tuni.java5.flightweatherapp;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ * @author Kalle Hirvijärvi
+ * 
+ * stores all information about a flight
+ * All values must be set in the constructor
+ */
 public class Flight {
     
     private int flightID;
@@ -54,6 +59,9 @@ public class Flight {
     }
     public ArrayList<String> get_layovers(){
         return layovers;
+    }
+    public int get_number_of_layovers(){
+        return layovers.size();
     }
     public Date get_departure_time(){
         return departure_time;
