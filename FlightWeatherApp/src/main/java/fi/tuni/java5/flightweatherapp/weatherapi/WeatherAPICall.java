@@ -2,6 +2,8 @@ package fi.tuni.java5.flightweatherapp.weatherAPI;
 
 import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataAPICall;
 import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataResponse;
+import fi.tuni.java5.flightweatherapp.interfaces.APICallInterface;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -20,7 +22,7 @@ import java.util.List;
  * @version 1.0
  * @since 2023-12-06
  */
-public class WeatherAPICall {
+public class WeatherAPICall implements APICallInterface {
     
     /**
      *
@@ -41,6 +43,14 @@ public class WeatherAPICall {
      *
      */
     public static String imperialUnit = "imperial";
+    
+    @Override 
+    public void initializeRequest() {
+        if (forecastWeatherRequest == null)
+        {
+            forecastWeatherRequest = new CurrentAndForecastWeatherRequest();
+        }
+    }
     
     /**
      * Makes a request to retrieve both current and forecast weather data from the OpenWeatherMap API.

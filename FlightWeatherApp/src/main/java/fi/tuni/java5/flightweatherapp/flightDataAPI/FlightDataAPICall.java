@@ -1,5 +1,7 @@
 package fi.tuni.java5.flightweatherapp.flightDataAPI;
 
+import fi.tuni.java5.flightweatherapp.interfaces.APICallInterface;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
@@ -14,7 +16,16 @@ import java.net.http.HttpResponse;
  *
  * @author ASUS
  */
-public class FlightDataAPICall {
+public class FlightDataAPICall implements APICallInterface {
+    
+    private FlightDataRequest flightDataRequest;
+    
+    @Override
+    public void initializeRequest(){
+        if (flightDataRequest == null) {
+            flightDataRequest = new FlightDataRequest();
+        }
+    }
     
     /**
      * The function makes a request by FlightDataRequest class

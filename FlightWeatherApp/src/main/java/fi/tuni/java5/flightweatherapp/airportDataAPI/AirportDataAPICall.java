@@ -1,5 +1,7 @@
 package fi.tuni.java5.flightweatherapp.airportDataAPI;
 
+import fi.tuni.java5.flightweatherapp.interfaces.APICallInterface;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,8 +22,16 @@ import com.google.gson.reflect.TypeToken;
  * 
  * @author Chu Duc Anh
  */
-public class AirportDataAPICall {
+public class AirportDataAPICall implements APICallInterface {
     private static final String NINJA_API_KEY = "oCFqyGRKgTOJXwbzxwZMIg==zdgkY01L1T5vEVJ9";
+    private static AirportDataRequest airportDataRequest;
+//    
+    @Override
+    public void initializeRequest(){
+        if(airportDataRequest == null) {
+            airportDataRequest = new AirportDataRequest();
+        }
+    }
     
     /**
      * The function makes a request by airport's name to get the airport's data

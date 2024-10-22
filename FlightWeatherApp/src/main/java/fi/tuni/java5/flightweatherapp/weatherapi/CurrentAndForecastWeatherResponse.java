@@ -1,5 +1,7 @@
 package fi.tuni.java5.flightweatherapp.weatherAPI;
 
+import fi.tuni.java5.flightweatherapp.interfaces.ResponseInterface;
+
 /**
  * The `CurrentAndForecastWeatherResponse` class represents the One Call API 3.0 response.
  * It contains the latitude, longitude, timezone, timezone offset, current weather data,
@@ -10,7 +12,7 @@ package fi.tuni.java5.flightweatherapp.weatherAPI;
  * @version 2.0
  * @since 2023-12-06
  */
-public class CurrentAndForecastWeatherResponse {
+public class CurrentAndForecastWeatherResponse implements ResponseInterface {
 
     /**
      * The latitude of the location

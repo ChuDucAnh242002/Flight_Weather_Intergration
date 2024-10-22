@@ -1,6 +1,7 @@
 package fi.tuni.java5.flightweatherapp.weatherAPI;
 
 import static fi.tuni.java5.flightweatherapp.StartScreenController.getApiKey;
+import fi.tuni.java5.flightweatherapp.interfaces.RequestInterface;
 
 /**
  * The `CurrentAndForecastWeatherRequest` class represents a request for current and forecast weather data.
@@ -10,7 +11,7 @@ import static fi.tuni.java5.flightweatherapp.StartScreenController.getApiKey;
  * @version 1.0
  * @since 2023-12-06
  */
-public class CurrentAndForecastWeatherRequest {
+public class CurrentAndForecastWeatherRequest implements RequestInterface {
     // The lat of the location
     private double lat;
     // The lon of the location

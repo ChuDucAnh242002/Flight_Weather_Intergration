@@ -1,10 +1,11 @@
 package fi.tuni.java5.flightweatherapp.airportDataAPI;
+import fi.tuni.java5.flightweatherapp.interfaces.ResponseInterface;
 
 /**
  *
  * @author ASUS
  */
-public class AirportDataResponse {
+public class AirportDataResponse implements ResponseInterface {
     private String icao;
     private String iata;
     private String name;

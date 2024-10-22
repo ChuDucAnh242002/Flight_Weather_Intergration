@@ -1,12 +1,14 @@
 package fi.tuni.java5.flightweatherapp.flightDataAPI;
 
+import fi.tuni.java5.flightweatherapp.interfaces.ResponseInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
  *
  * @author Chu Duc Anh
  */
-public class FlightDataResponse {
+public class FlightDataResponse implements ResponseInterface {
     public List<FlightData> best_flights;
     public List<FlightData> other_flights;
 

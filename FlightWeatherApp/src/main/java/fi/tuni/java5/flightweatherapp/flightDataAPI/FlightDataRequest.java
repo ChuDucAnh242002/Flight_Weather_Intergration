@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fi.tuni.java5.flightweatherapp.flightDataAPI;
+import fi.tuni.java5.flightweatherapp.interfaces.RequestInterface;
 
 /**
  * The `FlightDataRequest` class represents a request for flight data
@@ -10,7 +7,7 @@ package fi.tuni.java5.flightweatherapp.flightDataAPI;
  * 
  * @author Chu Duc Anh
  */
-public class FlightDataRequest {
+public class FlightDataRequest implements RequestInterface {
     private String departureId;
     private String arrivalId;
     private String currency = "USD";
