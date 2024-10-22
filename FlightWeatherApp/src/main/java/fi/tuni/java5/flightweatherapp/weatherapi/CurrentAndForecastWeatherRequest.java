@@ -1,6 +1,6 @@
 package fi.tuni.java5.flightweatherapp.weatherAPI;
 
-import static fi.tuni.java5.flightweatherapp.StartScreenController.getApiKey;
+import static fi.tuni.java5.flightweatherapp.PrimaryController.getApiKey;
 import fi.tuni.java5.flightweatherapp.interfaces.RequestInterface;
 
 /**
