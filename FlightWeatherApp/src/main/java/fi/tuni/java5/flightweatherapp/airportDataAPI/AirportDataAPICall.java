@@ -13,6 +13,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -25,12 +27,19 @@ import com.google.gson.reflect.TypeToken;
 public class AirportDataAPICall implements APICallInterface {
     private static final String NINJA_API_KEY = "oCFqyGRKgTOJXwbzxwZMIg==zdgkY01L1T5vEVJ9";
     private static AirportDataRequest airportDataRequest;
-//    
+    
+    public static AirportDataResponse departureAirport;
+    public static AirportDataResponse arrivalAirport;
+
     @Override
     public void initializeRequest(){
         if(airportDataRequest == null) {
             airportDataRequest = new AirportDataRequest();
         }
+    }
+    
+    public static boolean isAnyAirportNull() {
+        return departureAirport == null || arrivalAirport == null;
     }
     
     /**
@@ -65,8 +74,10 @@ public class AirportDataAPICall implements APICallInterface {
     }
     
     private static List<AirportDataResponse> getAirportDataByAirportName(String name) {
+        String encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8);
+        
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.api-ninjas.com/v1/airports?name=" + name))
+                .uri(URI.create("https://api.api-ninjas.com/v1/airports?name=" + encodedName))
                 .header("X-Api-Key", NINJA_API_KEY)
                 .method("GET", HttpRequest.BodyPublishers.noBody())
 		.build();
@@ -75,8 +86,10 @@ public class AirportDataAPICall implements APICallInterface {
     }
     
     private static List<AirportDataResponse> getAirportDataByAirportCode(String iata) {
+        String encodedIata = URLEncoder.encode(iata, StandardCharsets.UTF_8);
+        
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.api-ninjas.com/v1/airports?iata=" + iata))
+                .uri(URI.create("https://api.api-ninjas.com/v1/airports?iata=" + encodedIata))
                 .header("X-Api-Key", NINJA_API_KEY)
                 .method("GET", HttpRequest.BodyPublishers.noBody())
 		.build();

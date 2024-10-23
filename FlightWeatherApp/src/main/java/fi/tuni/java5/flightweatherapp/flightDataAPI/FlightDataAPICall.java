@@ -18,7 +18,7 @@ import java.net.http.HttpResponse;
  */
 public class FlightDataAPICall implements APICallInterface {
     
-    private FlightDataRequest flightDataRequest;
+    public static FlightDataRequest flightDataRequest = new FlightDataRequest();
     
     @Override
     public void initializeRequest(){
@@ -33,7 +33,7 @@ public class FlightDataAPICall implements APICallInterface {
      * @param FlightDataRequest 
      * @return FlightDataResponse the response contain of best flights
      */
-    public static FlightDataResponse RequestFlightDataAPI(FlightDataRequest flightDataRequest) {
+    public static FlightDataResponse RequestFlightDataAPI() {
         try {
             
             String apiUri = generateAPIURI(flightDataRequest);
