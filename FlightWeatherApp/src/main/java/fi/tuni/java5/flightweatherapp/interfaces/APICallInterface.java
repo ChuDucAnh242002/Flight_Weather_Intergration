@@ -9,6 +9,4 @@ package fi.tuni.java5.flightweatherapp.interfaces;
  * @author Chu Duc Anh
  */
 public interface APICallInterface {
-    void initializeRequest();
-    
 }

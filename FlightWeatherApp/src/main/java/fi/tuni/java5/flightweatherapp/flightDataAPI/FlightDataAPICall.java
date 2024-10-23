@@ -20,20 +20,13 @@ public class FlightDataAPICall implements APICallInterface {
     
     public static FlightDataRequest flightDataRequest = new FlightDataRequest();
     
-    @Override
-    public void initializeRequest(){
-        if (flightDataRequest == null) {
-            flightDataRequest = new FlightDataRequest();
-        }
-    }
-    
     /**
      * The function makes a request by FlightDataRequest class
      * 
      * @param FlightDataRequest 
      * @return FlightDataResponse the response contain of best flights
      */
-    public static FlightDataResponse RequestFlightDataAPI() {
+    public static SearchResult RequestFlightDataAPI() {
         try {
             
             String apiUri = generateAPIURI(flightDataRequest);
@@ -59,12 +52,12 @@ public class FlightDataAPICall implements APICallInterface {
                 return null;
             }
             
-            FlightDataResponse flightDataResponse = new FlightDataResponse();
+            SearchResult flightDataResponse = new SearchResult();
             
             JsonArray bestFlightArray = jsonResponse.get("best_flights").getAsJsonArray();
             if(bestFlightArray.size() != 0) {
                 for(JsonElement bestFlightElement : bestFlightArray) {
-                    FlightData bestFlight = gson.fromJson(bestFlightElement, FlightData.class);
+                    SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
                     flightDataResponse.addBestFlight(bestFlight);
                 }
             }
@@ -72,7 +65,7 @@ public class FlightDataAPICall implements APICallInterface {
             JsonArray otherFlightArray = jsonResponse.get("other_flights").getAsJsonArray();
             if(otherFlightArray.size() != 0) {
                 for(JsonElement otherFlightElement : otherFlightArray) {
-                    FlightData otherFlight = gson.fromJson(otherFlightElement, FlightData.class);
+                    SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
                     flightDataResponse.addOtherFlight(otherFlight);
                 }
             }

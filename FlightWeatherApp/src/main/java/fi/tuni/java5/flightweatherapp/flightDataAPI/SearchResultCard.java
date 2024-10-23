@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Chu Duc Anh
  */
-public class FlightData {
+public class SearchResultCard {
     public List<Flight> flights;
     public List<Layover> layovers;
     public int total_duration;

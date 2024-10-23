@@ -30,13 +30,6 @@ public class AirportDataAPICall implements APICallInterface {
     
     public static AirportDataResponse departureAirport;
     public static AirportDataResponse arrivalAirport;
-
-    @Override
-    public void initializeRequest(){
-        if(airportDataRequest == null) {
-            airportDataRequest = new AirportDataRequest();
-        }
-    }
     
     public static boolean isAnyAirportNull() {
         return departureAirport == null || arrivalAirport == null;
