@@ -259,6 +259,47 @@ public class FlightDataRequest implements RequestInterface {
             this.returnDate = returnDate;
         }
         
+        /**
+        * Initialize the FlightDataRequest
+        * Uses when the flight is round trip (type is 1)
+        * 
+        * @param departureId Airport departure's IATA code (For example: "PEK", "HEL")
+        * @param arrivalId Airport arrival's IATA code (For example: "AUS", "CDG")
+        * @param outboundDate date type yyyy-mm-dd
+        * @param returnDate date type yyyy-mm-dd
+        * @param adults integer, 1 default
+        * @param children integer, 0 default
+        * 
+        */
+        public Builder (String departureId, String arrivalId, String outboundDate, int adultAmount, int childAmount) {
+            this.departureId = departureId;
+            this.arrivalId = arrivalId;
+            this.type = 2;
+            this.outboundDate = outboundDate;
+            this.adults = adultAmount;
+            this.children = childAmount;
+        }
+        
+        /**
+        * Initialize the FlightDataRequest
+        * Uses when the flight is round trip (type is 1)
+        * 
+        * @param departureId Airport departure's IATA code (For example: "PEK", "HEL")
+        * @param arrivalId Airport arrival's IATA code (For example: "AUS", "CDG")
+        * @param outboundDate date type yyyy-mm-dd
+        * @param returnDate date type yyyy-mm-dd
+        * @param adults integer, 1 default
+        * @param children integer, 0 default
+        */
+        public Builder(String departureId, String arrivalId, String outboundDate, String returnDate, int adultAmount, int childAmount) {
+            this.departureId = departureId;
+            this.arrivalId = arrivalId;
+            this.outboundDate = outboundDate;
+            this.returnDate = returnDate;
+            this.adults = adultAmount;
+            this.children = childAmount;
+        }
+        
         public Builder setDepartureId(String departureId) {
             this.departureId = departureId;
             return this;

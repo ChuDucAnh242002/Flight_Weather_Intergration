@@ -44,14 +44,6 @@ public class WeatherAPICall implements APICallInterface {
      */
     public static String imperialUnit = "imperial";
     
-    @Override 
-    public void initializeRequest() {
-        if (forecastWeatherRequest == null)
-        {
-            forecastWeatherRequest = new CurrentAndForecastWeatherRequest();
-        }
-    }
-    
     /**
      * Makes a request to retrieve both current and forecast weather data from the OpenWeatherMap API.
      * Uses latitude, longitude, API key, chosen units, and exclusion parameters to fetch weather information.

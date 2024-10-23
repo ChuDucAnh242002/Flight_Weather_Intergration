@@ -3,7 +3,7 @@ package fi.tuni.java5.flightweatherapp;
 import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataAPICall;
 import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataResponse;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataAPICall;
-import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataResponse;
+import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResult;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataRequest;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -326,7 +326,7 @@ public class PrimaryController {
                                 childPassengerAmount);
         }
                 
-        FlightDataResponse searchResult = FlightDataAPICall.RequestFlightDataAPI();
+        SearchResult searchResult = FlightDataAPICall.RequestFlightDataAPI();
         
         System.out.println(searchResult.toString());
         

@@ -8,28 +8,28 @@ import java.util.List;
  *
  * @author Chu Duc Anh
  */
-public class FlightDataResponse implements ResponseInterface {
-    public List<FlightData> best_flights;
-    public List<FlightData> other_flights;
+public class SearchResult implements ResponseInterface {
+    public List<SearchResultCard> best_flights;
+    public List<SearchResultCard> other_flights;
 
-    public FlightDataResponse() {
+    public SearchResult() {
         this.best_flights = new ArrayList<>();
         this.other_flights = new ArrayList<>();
     }
     // Getter
-    public List<FlightData> getBestFlights() {
+    public List<SearchResultCard> getBestFlights() {
         return best_flights;
     }
     
-    public List<FlightData> getOtherFlights() {
+    public List<SearchResultCard> getOtherFlights() {
         return other_flights;
     }
     
-    public void addBestFlight(FlightData bestFlight) {
+    public void addBestFlight(SearchResultCard bestFlight) {
         best_flights.add(bestFlight);
     }
     
-    public void addOtherFlight(FlightData otherFlight) {
+    public void addOtherFlight(SearchResultCard otherFlight) {
         other_flights.add(otherFlight);
     }
     
@@ -42,7 +42,7 @@ public class FlightDataResponse implements ResponseInterface {
         // Append best_flights list
         sb.append("Best Flights: \n");
         if (best_flights != null && !best_flights.isEmpty()) {
-            for (FlightData flightData : best_flights) {
+            for (SearchResultCard flightData : best_flights) {
                 sb.append(flightData.toString()).append("\n");
             }
         } else {
@@ -52,7 +52,7 @@ public class FlightDataResponse implements ResponseInterface {
         // Append other_flights list
         sb.append("Other Flights: \n");
         if (other_flights != null && !other_flights.isEmpty()) {
-            for (FlightData flightData : other_flights) {
+            for (SearchResultCard flightData : other_flights) {
                 sb.append(flightData.toString()).append("\n");
             }
         } else {
