@@ -10,5 +10,4 @@ package fi.tuni.java5.flightweatherapp.interfaces;
  */
 public interface APICallInterface {
     void initializeRequest();
-    
 }

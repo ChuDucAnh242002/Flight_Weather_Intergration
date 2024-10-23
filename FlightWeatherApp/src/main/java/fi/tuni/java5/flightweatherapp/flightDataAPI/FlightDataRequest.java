@@ -72,7 +72,6 @@ public class FlightDataRequest implements RequestInterface {
      * @param stops integer, 0: Any number of stops (default), 1: Nonstop only, 2: 1 stop or fewer, 3: 2 stops or fewer
      * @param maxPrice double, unlimited (default)
      */
-    
     public FlightDataRequest(String departureId, String arrivalId, String currency, int type, 
                              String outboundDate, String returnDate, int adults, int children, 
                              int stops, double maxPrice) {
@@ -86,6 +85,33 @@ public class FlightDataRequest implements RequestInterface {
         this.children = children;
         this.stops = stops;
         this.maxPrice = maxPrice;
+    }
+    
+    /**
+     * Initialize the FlightDataRequest using Builder
+     * 
+     * @param builder a builder to build all FlightDataRequest properties
+     * Use examples: 
+     * FlightDataRequest request = new FlightDataRequest.Builder()
+            .setDepartureId("HEL")
+            .setArrivalId("JFK")
+            .setOutboundDate("2024-12-10")
+            .setReturnDate("2024-12-20")
+            .setAdults(2)
+            .setMaxPrice(1000)
+            .build();
+     */
+    private FlightDataRequest(Builder builder) {
+        this.departureId = builder.departureId;
+        this.arrivalId = builder.arrivalId;
+        this.currency = builder.currency;
+        this.type = builder.type;
+        this.outboundDate = builder.outboundDate;
+        this.returnDate = builder.returnDate;
+        this.adults = builder.adults;
+        this.children = builder.children;
+        this.stops = builder.stops;
+        this.maxPrice = builder.maxPrice;
     }
     
     public String getDepartureId() {
@@ -139,7 +165,7 @@ public class FlightDataRequest implements RequestInterface {
     public void setDepartureId(String departureId) {
         this.departureId = departureId;
     }
-
+    
     public void setArrivalId(String arrivalId) {
         this.arrivalId = arrivalId;
     }
@@ -184,4 +210,102 @@ public class FlightDataRequest implements RequestInterface {
         this.apiKey = apiKey;
     }
     
+    public static class Builder {
+        private String departureId= "PEK";
+        private String arrivalId= "AUS";
+        private String currency = "USD";
+        private int type = 1;
+        private String outboundDate;
+        private String returnDate;
+        private int adults = 1;
+        private int children = 0;
+        private int stops = 0;
+        private double maxPrice = 0;
+        
+        /**
+        * Initialize the FlightDataRequest
+        * Uses when the flight is round trip (type is 1)
+        * 
+        * @param departureId Airport departure's IATA code (For example: "PEK", "HEL")
+        * @param arrivalId Airport arrival's IATA code (For example: "AUS", "CDG")
+        * @param outboundDate date type yyyy-mm-dd
+        * @param returnDate date type yyyy-mm-dd
+        */
+        public Builder (String departureId, String arrivalId, String outboundDate) {
+            this.departureId = departureId;
+            this.arrivalId = arrivalId;
+            this.type = 2;
+            this.outboundDate = outboundDate;
+        }
+        
+        /**
+        * Initialize the FlightDataRequest
+        * Uses when the flight is round trip (type is 1)
+        * 
+        * @param departureId Airport departure's IATA code (For example: "PEK", "HEL")
+        * @param arrivalId Airport arrival's IATA code (For example: "AUS", "CDG")
+        * @param outboundDate date type yyyy-mm-dd
+        * @param returnDate date type yyyy-mm-dd
+        */
+        public Builder(String departureId, String arrivalId, String outboundDate, String returnDate) {
+            this.departureId = departureId;
+            this.arrivalId = arrivalId;
+            this.outboundDate = outboundDate;
+            this.returnDate = returnDate;
+        }
+        
+        public Builder setDepartureId(String departureId) {
+            this.departureId = departureId;
+            return this;
+        }
+
+        public Builder setArrivalId(String arrivalId) {
+            this.arrivalId = arrivalId;
+            return this;
+        }
+
+        public Builder setCurrency(String currency) {
+            this.currency = currency;
+            return this;
+        }
+
+        public Builder setType(int type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder setOutboundDate(String outboundDate) {
+            this.outboundDate = outboundDate;
+            return this;
+        }
+
+        public Builder setReturnDate(String returnDate) {
+            this.returnDate = returnDate;
+            return this;
+        }
+
+        public Builder setAdults(int adults) {
+            this.adults = adults;
+            return this;
+        }
+
+        public Builder setChildren(int children) {
+            this.children = children;
+            return this;
+        }
+
+        public Builder setStops(int stops) {
+            this.stops = stops;
+            return this;
+        }
+
+        public Builder setMaxPrice(double maxPrice) {
+            this.maxPrice = maxPrice;
+            return this;
+        }
+        
+        public FlightDataRequest build() {
+            return new FlightDataRequest(this);
+        }
+    }
 }
