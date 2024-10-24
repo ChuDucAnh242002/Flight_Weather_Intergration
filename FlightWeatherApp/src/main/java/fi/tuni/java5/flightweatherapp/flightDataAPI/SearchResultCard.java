@@ -10,11 +10,10 @@ public class SearchResultCard {
     public List<Flight> flights;
     public List<Layover> layovers;
     public int total_duration;
-    public CarbonEmissions carbon_emissions;
+    public int carbon_emission;
     public double price;
     public String type;
     public String airline_logo;
-    public List<String> extensions;
     public String departure_token;
     
     // Getters
@@ -30,10 +29,6 @@ public class SearchResultCard {
         return total_duration;
     }
 
-    public CarbonEmissions getCarbonEmissions() {
-        return carbon_emissions;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -45,13 +40,13 @@ public class SearchResultCard {
     public String getAirlineLogo() {
         return airline_logo;
     }
-
-    public List<String> getExtensions() {
-        return extensions;
-    }
-
+    
     public String getDepartureToken() {
         return departure_token;
+    }
+    
+    public void setCarbonEmission(int carbon_emission){
+        this.carbon_emission = carbon_emission;
     }
     
     @Override
@@ -82,21 +77,10 @@ public class SearchResultCard {
 
         // Append other attributes
         sb.append("Total Duration: ").append(total_duration).append(" minutes\n");
-        sb.append("Carbon Emissions: ").append(carbon_emissions != null ? carbon_emissions.toString() : "N/A").append("\n");
+        sb.append("Carbon emission: ").append(carbon_emission).append(" grams\n");
         sb.append("Price: ").append(price).append("\n");
         sb.append("Type: ").append(type != null ? type : "N/A").append("\n");
         sb.append("Airline Logo: ").append(airline_logo != null ? airline_logo : "N/A").append("\n");
-    
-        // Append extensions list
-        sb.append("Extensions: \n");
-        if (extensions != null && !extensions.isEmpty()) {
-            for (String extension : extensions) {
-                sb.append(extension).append("\n");
-            }
-        } else {
-            sb.append("No extensions available.\n");
-        }
-
         sb.append("Departure Token: ").append(departure_token != null ? departure_token : "N/A").append("\n");
     
         return sb.toString();
