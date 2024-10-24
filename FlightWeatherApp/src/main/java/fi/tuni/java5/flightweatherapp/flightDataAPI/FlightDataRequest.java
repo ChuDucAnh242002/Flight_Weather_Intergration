@@ -24,8 +24,8 @@ public class FlightDataRequest implements RequestInterface {
     public FlightDataRequest() {
         this.departureId = "PEK";
         this.arrivalId = "AUS";
-        this.outboundDate = "2024-10-18";
-        this.returnDate = "2024-10-20";
+        this.outboundDate = "2024-10-25";
+        this.returnDate = "2024-10-30";
     }
     /**
      * Initialize the FlightDataRequest

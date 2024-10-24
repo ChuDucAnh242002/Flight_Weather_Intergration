@@ -54,19 +54,27 @@ public class FlightDataAPICall implements APICallInterface {
             
             SearchResult flightDataResponse = new SearchResult();
             
-            JsonArray bestFlightArray = jsonResponse.get("best_flights").getAsJsonArray();
-            if(bestFlightArray.size() != 0) {
-                for(JsonElement bestFlightElement : bestFlightArray) {
-                    SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
-                    flightDataResponse.addBestFlight(bestFlight);
+            if(jsonResponse.has("best_flights")) {
+                JsonArray bestFlightArray = jsonResponse.get("best_flights").getAsJsonArray();
+                if(bestFlightArray.size() != 0) {
+                    for(JsonElement bestFlightElement : bestFlightArray) {
+                        int carbon_emission = bestFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
+                        SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
+                        bestFlight.setCarbonEmission(carbon_emission);
+                        flightDataResponse.addBestFlight(bestFlight);
+                    }
                 }
             }
             
-            JsonArray otherFlightArray = jsonResponse.get("other_flights").getAsJsonArray();
-            if(otherFlightArray.size() != 0) {
-                for(JsonElement otherFlightElement : otherFlightArray) {
-                    SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
-                    flightDataResponse.addOtherFlight(otherFlight);
+            if(jsonResponse.has("other_flights")) {
+                JsonArray otherFlightArray = jsonResponse.get("other_flights").getAsJsonArray();
+                if(otherFlightArray.size() != 0) {
+                    for(JsonElement otherFlightElement : otherFlightArray) {
+                        int carbon_emission = otherFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
+                        SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
+                        otherFlight.setCarbonEmission(carbon_emission);
+                        flightDataResponse.addOtherFlight(otherFlight);
+                    }
                 }
             }
             
