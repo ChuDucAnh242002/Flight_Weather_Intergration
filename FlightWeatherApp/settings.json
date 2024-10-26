@@ -1,8 +1,64 @@
 {
-  "favorites": [],
+  "favorites": [
+    {
+      "flights": [
+        {
+          "dep_airport_name": "Tukholma",
+          "dep_airport_id": "1",
+          "dep_airport_time": "2024-10-20 23:30",
+          "arr_airport_name": "Turku",
+          "arr_airport_id": "2",
+          "arr_airport_time": "2024-10-21 01:30",
+          "duration": 60,
+          "airplane": "boeing 737",
+          "airline_logo": "img",
+          "class": "eco",
+          "flight_num": "123456",
+          "tickets_sold_by": [
+            "a"
+          ],
+          "extentions": [
+            "a"
+          ]
+        },
+        {
+          "dep_airport_name": "Turku",
+          "dep_airport_id": "3",
+          "dep_airport_time": "2024-10-21 01:45",
+          "arr_airport_name": "Helsinki",
+          "arr_airport_id": "4",
+          "arr_airport_time": "2024-10-21 02:30",
+          "duration": 45,
+          "airplane": "boeing 737",
+          "airline_logo": "img",
+          "class": "eco",
+          "flight_num": "112233",
+          "tickets_sold_by": [
+            "a"
+          ],
+          "extentions": [
+            "a"
+          ]
+        }
+      ],
+      "layovers": [
+        {
+          "duration": 15,
+          "name": "Turku",
+          "layover_id": "556677"
+        }
+      ],
+      "total_duration": 120,
+      "emissions": 120,
+      "price": 94.99,
+      "type": "type",
+      "airline_logo": "img",
+      "dep_token": "yee wins"
+    }
+  ],
   "preferences": {
     "currency": "EUR",
     "max_price": -1.0,
-    "layovers": -1
+    "num_oflayovers": -1
   }
 }

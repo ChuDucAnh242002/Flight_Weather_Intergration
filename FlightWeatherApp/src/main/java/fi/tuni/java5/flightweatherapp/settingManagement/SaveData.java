@@ -104,7 +104,7 @@ public class SaveData {
                 String travel_class = current_flight.get("class").getAsString();
                 String flight_number = current_flight.get("flight_num").getAsString();
                 List<String> tickets_sold_by = JSONArray_to_List(current_flight.get("tickets_sold_by").getAsJsonArray());
-                List<String> extentions = JSONArray_to_List(current_flight.get("extensions").getAsJsonArray());
+                List<String> extentions = JSONArray_to_List(current_flight.get("extentions").getAsJsonArray());
                 
                 Flight new_flight = new Flight();
                 Airport dep_airport = new Airport();
