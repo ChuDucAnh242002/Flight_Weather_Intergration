@@ -59,6 +59,6 @@
   "preferences": {
     "currency": "EUR",
     "max_price": -1.0,
-    "num_oflayovers": -1
+    "num_of_layovers": -1
   }
 }
