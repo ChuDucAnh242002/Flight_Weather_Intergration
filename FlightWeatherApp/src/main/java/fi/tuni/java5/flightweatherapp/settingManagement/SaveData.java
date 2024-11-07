@@ -282,10 +282,10 @@ public class SaveData {
         JsonObject pref_result = new JsonObject();
         pref_result.addProperty("currency", pref.get_currency());
         pref_result.addProperty("max_price", pref.get_max_price());
-        pref_result.addProperty("num_oflayovers", pref.get_leyovers());
+        pref_result.addProperty("num_of_layovers", pref.get_leyovers());
         
         JsonObject result = new JsonObject();
-        result.add("favorites", write_flights_to_JSONArray(favorites.get_favorite_flights_by_dep_time().stream().collect(Collectors.toList())));
+        result.add("favorites", write_flights_to_JSONArray(favorites.get_favorite_flights_by_dep_time()));
         result.add("preferences", pref_result);
         
         // writes result to JSON file        
