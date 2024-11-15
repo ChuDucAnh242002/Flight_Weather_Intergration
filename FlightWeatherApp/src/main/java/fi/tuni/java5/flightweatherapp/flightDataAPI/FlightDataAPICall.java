@@ -27,8 +27,48 @@ public class FlightDataAPICall implements APICallInterface {
      * @return FlightDataResponse the response contain of best flights
      */
     public static SearchResult RequestFlightDataAPI() {
-        try {
+        
+        Gson gson = new Gson();
+        
+        JsonObject jsonResponse = RequestFlightDataAPIJson();
             
+        if (jsonResponse == null) {
+            return null;
+        }
+        
+        SearchResult flightDataResponse = new SearchResult();
+            
+        if(jsonResponse.has("best_flights")) {
+            JsonArray bestFlightArray = jsonResponse.get("best_flights").getAsJsonArray();
+            if(bestFlightArray.size() != 0) {
+                for(JsonElement bestFlightElement : bestFlightArray) {
+                    int carbon_emission = bestFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
+                    SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
+                    bestFlight.setCarbonEmission(carbon_emission);
+                    flightDataResponse.addBestFlight(bestFlight);
+                
+                }
+            }
+        }
+            
+        if(jsonResponse.has("other_flights")) {
+            JsonArray otherFlightArray = jsonResponse.get("other_flights").getAsJsonArray();
+            if(otherFlightArray.size() != 0) {
+                for(JsonElement otherFlightElement : otherFlightArray) {
+                    int carbon_emission = otherFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
+                    SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
+                    otherFlight.setCarbonEmission(carbon_emission);
+                    flightDataResponse.addOtherFlight(otherFlight);
+                }
+            }
+        }
+        return flightDataResponse;
+        
+    }
+    
+    public static JsonObject RequestFlightDataAPIJson() {
+        
+        try {
             String apiUri = generateAPIURI(flightDataRequest);
             if (apiUri == null){
                 System.out.println("Invalid request");
@@ -52,40 +92,14 @@ public class FlightDataAPICall implements APICallInterface {
                 return null;
             }
             
-            SearchResult flightDataResponse = new SearchResult();
-            
-            if(jsonResponse.has("best_flights")) {
-                JsonArray bestFlightArray = jsonResponse.get("best_flights").getAsJsonArray();
-                if(bestFlightArray.size() != 0) {
-                    for(JsonElement bestFlightElement : bestFlightArray) {
-                        int carbon_emission = bestFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
-                        SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
-                        bestFlight.setCarbonEmission(carbon_emission);
-                        flightDataResponse.addBestFlight(bestFlight);
-                    }
-                }
-            }
-            
-            if(jsonResponse.has("other_flights")) {
-                JsonArray otherFlightArray = jsonResponse.get("other_flights").getAsJsonArray();
-                if(otherFlightArray.size() != 0) {
-                    for(JsonElement otherFlightElement : otherFlightArray) {
-                        int carbon_emission = otherFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
-                        SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
-                        otherFlight.setCarbonEmission(carbon_emission);
-                        flightDataResponse.addOtherFlight(otherFlight);
-                    }
-                }
-            }
-            
-            return flightDataResponse;
+            return jsonResponse;
             
         } catch (IOException | InterruptedException e) {
             System.out.println("Flight API call error");
             e.printStackTrace();
             
             return null;
-        }
+        }   
     }
     
     private static String generateAPIURI(FlightDataRequest flightDataRequest) {
