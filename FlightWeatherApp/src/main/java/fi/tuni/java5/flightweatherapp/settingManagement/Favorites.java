@@ -36,10 +36,10 @@ public class Favorites {
         flights_by_price = new TreeSet<>((left, right) -> {
             if (Double.compare(left.getPrice(), right.getPrice()) != 0){
                 if (left.getPrice() < right.getPrice()){
-                    return 1;
+                    return -1;
                 }
                 else {
-                    return -1;
+                    return 1;
                 }
             }
             else {
