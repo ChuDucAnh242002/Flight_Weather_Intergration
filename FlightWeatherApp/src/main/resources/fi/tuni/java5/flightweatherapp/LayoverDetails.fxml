@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>   
+
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.tuni.java5.flightweatherapp.LayoverDetailsController">
+    <children>
+        <Pane maxWidth="360.0">
+            <children>
+                <ImageView fitHeight="70.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icons/Layover%20background.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="165.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icons/Airport%20icon.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER_RIGHT" layoutX="90.0" layoutY="3.0" text="Layover" textAlignment="RIGHT" textFill="#52459d">
+                    <font>
+                        <Font name="Arial Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="layoverDuration" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="30.0" layoutY="23.0" prefHeight="21.0" prefWidth="121.0" text="2 hr 45 min" textAlignment="RIGHT" textFill="#52459d">
+                    <font>
+                        <Font name="Arial" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="layoverAirportCode" layoutX="208.0" layoutY="3.0" prefHeight="20.0" prefWidth="80.0" text="DOH" textFill="#52459d">
+                    <font>
+                        <Font name="Arial Bold" size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="layoverAirportLabel" contentDisplay="RIGHT" layoutX="208.0" layoutY="23.0" prefHeight="21.0" prefWidth="121.0" text="Hamad Internation Airport" textAlignment="RIGHT" textFill="#52459d">
+                    <font>
+                        <Font name="Arial" size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>     
+    </children>
+</VBox>
+           
+        
