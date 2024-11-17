@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>                                
+
+
+<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.tuni.java5.flightweatherapp.FlightDetailsController">
+    <children>
+                             
+        <Pane prefHeight="260.0" prefWidth="426.0">
+            <children>
+                <Label fx:id="airline" layoutX="60.0" layoutY="18.0" text="Finnair" textFill="#52459d">
+                    <font>
+                        <Font name="Arial Bold" size="20.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icons/Circle%20image.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="departureDate" layoutX="300.0" layoutY="19.0" text="Fri, Sep 13" textFill="#52459d">
+                    <font>
+                        <Font name="Arial Bold" size="20.0" />
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" layoutX="9.0" layoutY="72.0" spacing="2.0">
+                    <children>
+                        <Label fx:id="departureTime" alignment="CENTER" layoutX="10.0" layoutY="40.0" prefHeight="26.0" prefWidth="80.0" text="12:25 AM" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/Flight%20Takeoff%20Icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="departureAirportCode" alignment="CENTER" prefHeight="26.0" prefWidth="70.0" text="HEL" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial Bold" size="20.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="departureAirportLabel" alignment="CENTER" prefHeight="40.0" prefWidth="70.0" text="Helsinki Airport" textAlignment="CENTER" textFill="#52459d" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                            <font>
+                                <Font name="Arial" size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <!--
+        <Label alignment="CENTER" layoutX="-651.0" layoutY="-247.0" prefHeight="26.0" prefWidth="80.0" text="12:25 AM" textAlignment="CENTER" textFill="#52459d">
+            <font>
+                <Font name="Arial Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="-661.0" layoutY="-287.0" prefHeight="26.0" prefWidth="70.0" text="HEL" textAlignment="CENTER" textFill="#52459d">
+            <font>
+                <Font name="Arial Bold" size="20.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="-661.0" layoutY="-287.0" prefHeight="40.0" prefWidth="70.0" text="Helsinki Airport" textAlignment="CENTER" textFill="#52459d" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
+                -->
+                <VBox alignment="CENTER" layoutX="341.0" layoutY="72.0" spacing="2.0">
+                    <children>
+                        <Label fx:id="arrivalTime" alignment="CENTER" layoutX="10.0" layoutY="40.0" prefHeight="26.0" prefWidth="80.0" text="6:35 PM" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/Flight%20Land%20Icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="arrivalAirportCode" alignment="CENTER" prefHeight="26.0" prefWidth="70.0" text="SIN" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial Bold" size="20.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="arrivalAirportLabel" alignment="CENTER" prefHeight="40.0" prefWidth="70.0" text="Singapore Changi Airport" textAlignment="CENTER" textFill="#52459d" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                            <font>
+                                <Font name="Arial" size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <ImageView fitHeight="74.0" fitWidth="263.0" layoutX="84.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@icons/Route%20Icon.png" />
+                    </image>
+                </ImageView>
+                <VBox alignment="CENTER" layoutX="36.0" layoutY="104.0" spacing="8.0">
+                    <children>
+                        <Label fx:id="airplane" alignment="CENTER" contentDisplay="CENTER" prefWidth="100.0" text="Airbus A350" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial" size="14.0" />
+                            </font>
+                        </Label>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@icons/Plane%20Icon.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="flightDuration" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="16.0" prefWidth="100.0" text="13 hr 10 min" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial" size="14.0" />
+                            </font>
+                        </Label>
+                        <HBox alignment="CENTER" spacing="20.0">
+                            <children>
+                                <HBox alignment="CENTER" spacing="4.0">
+                                    <children>
+                                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@icons/Alert%20icon.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="overnight" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" text="Overnight" textAlignment="CENTER" textFill="#52459d">
+                                            <font>
+                                                <Font name="Arial Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" spacing="4.0">
+                                    <children>
+                                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@icons/Hourglass%20Start%20Icon.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="oftenDelayed" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" text="Often delayed" textAlignment="CENTER" textFill="#52459d">
+                                            <font>
+                                                <Font name="Arial Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <Label fx:id="extraDetails" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="360.0" text="Economy • Legroom 31 in • Carbon footprint 374 kg" textAlignment="CENTER" textFill="#52459d">
+                            <font>
+                                <Font name="Arial" size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+        
+        <!-- Layover details -->
+                <!-- Dynamically load and add layovers -->
+                    
+    </children>
+</VBox>
+                        
+                        
