@@ -5,15 +5,19 @@ import fi.tuni.java5.flightweatherapp.airportDataAPI.AirportDataResponse;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataAPICall;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResult;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataRequest;
+import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.Node;
 
 public class PrimaryController {
     private static String apiKey = "c37bc522ccf0e106cd0d1be7e1ed9655";
@@ -80,6 +84,9 @@ public class PrimaryController {
     
     @FXML
     private Label childAmountLabel;
+    
+    @FXML
+    private VBox fetchedFlightsContainer;
     
     // Search Parameter
     private Boolean IsDecreasePassengerLegal() {
@@ -328,12 +335,61 @@ public class PrimaryController {
                 
         SearchResult searchResult = FlightDataAPICall.RequestFlightDataAPI();
         
-        System.out.println(searchResult.toString());
+        System.out.println("_____________________________________");
+        System.out.println("searchResult: " + searchResult);
+        System.out.println("_____________________________________");
+                
+        loadFlights(searchResult);
         
         if (searchResult == null) {
             return;
         }
     }
     
+    
+    @FXML
+    private void loadFlights(SearchResult searchResult) {
+        fetchedFlightsContainer.getChildren().clear(); 
+        
+        List<SearchResultCard> bestFlights = searchResult.getBestFlights();
+        List<SearchResultCard> otherFlights = searchResult.getOtherFlights();
+        
+        if (!bestFlights.isEmpty()) {
+            for (SearchResultCard flightDetails : bestFlights) {
+                
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("FlightSearchCard.fxml"));
+                    Node flightCardNode = loader.load();
+
+                    FlightSearchCardController controller = loader.getController();
+                          
+                    controller.setSearchCardFlightDetails(flightDetails);
+
+                    fetchedFlightsContainer.getChildren().add(flightCardNode);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+        if (!otherFlights.isEmpty()) {
+            for (SearchResultCard flightDetails : otherFlights) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("FlightSearchCard.fxml"));
+                    Node flightCardNode = loader.load();
+
+                    FlightSearchCardController controller = loader.getController();
+                    controller.setSearchCardFlightDetails(flightDetails);
+
+                    fetchedFlightsContainer.getChildren().add(flightCardNode);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+    }
     
 }
