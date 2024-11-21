@@ -26,9 +26,17 @@ public class FlightSearchCardController {
     @FXML
     private VBox flightDetailsContainer;
 
-    public void setSearchCardFlightDetails(SearchResultCard flightDetails) {
-
-        this.price.setText("$" + String.valueOf(flightDetails.price));
+    public void setSearchCardFlightDetails(SearchResultCard flightDetails, String currency) {
+        
+        String currencySymbol = "$";
+        if (currency.equals("EUR")) {
+            currencySymbol = "€";
+        }
+        else if (currency.equals("GBP")) {
+            currencySymbol = "£";
+        }
+       
+        this.price.setText(currencySymbol + String.valueOf(flightDetails.price));
         this.flightType.setText(flightDetails.getType());
 
         List<Flight> flights = flightDetails.getFlights();
@@ -48,7 +56,7 @@ public class FlightSearchCardController {
                 flightDetailsContainer.getChildren().add(flightNode);
 
                 // If there is a layover and it's not the last flight, display the layover details
-                if (i < layovers.size()) {
+                if (layovers != null && i < layovers.size()) {
                     Layover layover = layovers.get(i);
 
                     FXMLLoader layoverLoader = new FXMLLoader(getClass().getResource("LayoverDetails.fxml"));

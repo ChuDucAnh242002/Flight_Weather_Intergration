@@ -1354,9 +1354,9 @@
                                     <Image url="@icons/Solid%20Oval%20Dollar.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" selected="true">
+                              <RadioButton mnemonicParsing="false" userData="USD" selected="true">
                                  <toggleGroup>
-                                    <ToggleGroup fx:id="currency" />
+                                    <ToggleGroup fx:id="currencyToggle" />
                                  </toggleGroup>
                               </RadioButton>
                            </children>
@@ -1368,7 +1368,7 @@
                                     <Image url="@icons/Solid%20Oval%20Euro.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" toggleGroup="$currency" />
+                              <RadioButton mnemonicParsing="false" userData="EUR" toggleGroup="$currencyToggle" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" spacing="6.0">
@@ -1378,7 +1378,7 @@
                                     <Image url="@icons/Solid%20Oval%20Pound%20Circle.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" toggleGroup="$currency" />
+                              <RadioButton mnemonicParsing="false" userData="GBP" toggleGroup="$currencyToggle" />
                            </children>
                         </VBox>
                      </children>

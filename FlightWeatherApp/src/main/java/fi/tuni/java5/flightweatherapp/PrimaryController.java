@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 public class PrimaryController {
     private static String apiKey = "c37bc522ccf0e106cd0d1be7e1ed9655";
@@ -84,6 +86,11 @@ public class PrimaryController {
     
     @FXML
     private Label childAmountLabel;
+    
+    @FXML
+    private ToggleGroup currencyToggle;
+    
+    private String currency = "USD";
     
     @FXML
     private VBox fetchedFlightsContainer;
@@ -292,8 +299,31 @@ public class PrimaryController {
         }
     }
     
+     @FXML
+    public void currencyToggleListener() {
+        
+        // Add listener to detect currency changes
+        currencyToggle.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
+            
+            if (newToggle != null) {
+                RadioButton selectedRadioButton = (RadioButton) newToggle;
+                String selectedCurrencyCode = getSelectedCurrencyCode(selectedRadioButton);
+                this.currency = selectedCurrencyCode;
+            }
+        });
+    }
+
+    private String getSelectedCurrencyCode(RadioButton selectedRadioButton) {
+        // Retrieve the currency code stored in the userData of the selected radio button
+        return (String) selectedRadioButton.getUserData();
+    }
+    
     @FXML
-    private void OnSearchFlightButtonPressed() {        
+    private void OnSearchFlightButtonPressed() {
+
+        currencyToggleListener();
+        System.out.println("Currency: " + this.currency);
+        
         if (AirportDataAPICall.isAnyAirportNull()) {
             OpenErrorMessage(missingAirportErrorMessage);
             
@@ -320,7 +350,8 @@ public class PrimaryController {
                                 AirportDataAPICall.arrivalAirport.getIata(),
                                 outboundDateString,
                                 adultPassengerAmount,
-                                childPassengerAmount);
+                                childPassengerAmount,
+                                currency);
         } else {
             String returnDateString = returnDatePicker.getValue().format(formatter);
             
@@ -330,15 +361,17 @@ public class PrimaryController {
                                 outboundDateString,
                                 returnDateString,
                                 adultPassengerAmount,
-                                childPassengerAmount);
+                                childPassengerAmount,
+                                currency
+                                );
         }
                 
         SearchResult searchResult = FlightDataAPICall.RequestFlightDataAPI();
-        
+        /*
         System.out.println("_____________________________________");
         System.out.println("searchResult: " + searchResult);
         System.out.println("_____________________________________");
-                
+          */      
         loadFlights(searchResult);
         
         if (searchResult == null) {
@@ -363,7 +396,7 @@ public class PrimaryController {
 
                     FlightSearchCardController controller = loader.getController();
                           
-                    controller.setSearchCardFlightDetails(flightDetails);
+                    controller.setSearchCardFlightDetails(flightDetails, this.currency);
 
                     fetchedFlightsContainer.getChildren().add(flightCardNode);
 
@@ -380,7 +413,7 @@ public class PrimaryController {
                     Node flightCardNode = loader.load();
 
                     FlightSearchCardController controller = loader.getController();
-                    controller.setSearchCardFlightDetails(flightDetails);
+                    controller.setSearchCardFlightDetails(flightDetails, this.currency);
 
                     fetchedFlightsContainer.getChildren().add(flightCardNode);
 
