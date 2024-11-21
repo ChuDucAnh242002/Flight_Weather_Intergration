@@ -35,13 +35,14 @@ public class FlightDataRequest implements RequestInterface {
      * @param arrivalId Airport arrival's IATA code (For example: "AUS", "CDG")
      * @param outboundDate date type yyyy-mm-dd
      */
-    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, int adultAmount, int childAmount) {
+    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, int adultAmount, int childAmount, String currency) {
         this.departureId = departureId;
         this.arrivalId = arrivalId;
         this.type = 2;
         this.outboundDate = outboundDate;
         this.adults = adultAmount;
         this.children = childAmount;
+        this.currency = currency;
     }
     
     /**
@@ -53,7 +54,7 @@ public class FlightDataRequest implements RequestInterface {
      * @param outboundDate date type yyyy-mm-dd
      * @param returnDate date type yyyy-mm-dd
      */
-    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, String returnDate, int adultAmount, int childAmount) {
+    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, String returnDate, int adultAmount, int childAmount, String currency) {
         this.departureId = departureId;
         this.arrivalId = arrivalId;
         this.outboundDate = outboundDate;
@@ -61,6 +62,7 @@ public class FlightDataRequest implements RequestInterface {
         this.type = 1;
         this.adults = adultAmount;
         this.children = childAmount;
+        this.currency = currency;
     }
     
     /**
