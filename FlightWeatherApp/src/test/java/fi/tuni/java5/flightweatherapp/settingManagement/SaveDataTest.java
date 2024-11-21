@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SaveDataTest {
     
     // used to save JSON file during testing so its contents aren't changed
-    private Favorites saved_data_f;
+    private InfoCardStorage saved_data_f;
     private Preferences saved_data_p;
     private SaveData old_data;
     
@@ -123,8 +123,8 @@ public class SaveDataTest {
         new_flight_result.airline_logo = airline_logo_again;
         new_flight_result.departure_token = departure_token;
         
-        Favorites fav = new Favorites();
-        fav.set_new_favorite(new_flight_result);
+        InfoCardStorage fav = new InfoCardStorage();
+        fav.set_new_element(new_flight_result);
         Preferences pref = new Preferences("USD", "F", 250.0, 1);
         old_data.write_data(fav, pref);
         
@@ -133,7 +133,7 @@ public class SaveDataTest {
         pref = test_data.get_preferences();
         fav = test_data.get_favorites();
         
-        SearchResultCard test_flight_card = fav.get_favorite_flights_by_dep_time().get(0);
+        SearchResultCard test_flight_card = fav.get_by_dep_time().get(0);
         Flight test_flight = test_flight_card.flights.get(0);
         Layover test_layover = test_flight_card.layovers.get(0);
         Airport test_dep_airport = test_flight.getDepartureAirport();
