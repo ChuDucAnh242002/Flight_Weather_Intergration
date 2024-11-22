@@ -1246,7 +1246,7 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" maxHeight="30.0" maxWidth="90.0" prefHeight="30.0" prefWidth="90.0" promptText="Enter price">
+                        <TextField fx:id="maxPriceTextField" alignment="CENTER" maxHeight="30.0" maxWidth="90.0" prefHeight="30.0" prefWidth="90.0" promptText="Enter price">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
@@ -1274,7 +1274,7 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                        <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onStopsDecreaseButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -1286,12 +1286,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="17.0" prefHeight="30.0" prefWidth="24.0" text="0" textAlignment="CENTER" textFill="#52459d">
+                        <Label fx:id="stopsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="17.0" prefHeight="30.0" prefWidth="24.0" text="0" textAlignment="CENTER" textFill="#52459d">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                        <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onStopsIncreaseButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
