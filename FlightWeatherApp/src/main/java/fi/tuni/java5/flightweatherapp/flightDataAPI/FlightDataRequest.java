@@ -17,7 +17,7 @@ public class FlightDataRequest implements RequestInterface {
     private int adults = 1;
     private int children = 0;
     private int stops = 0;
-    private double maxPrice = 0;
+    private int maxPrice = 0;
     private String engine = "google_flights";
     private String apiKey = "0c0008d1a14b7681f19f1f6154db1ecc9167ebe938399881a88f9fedc0a09790";
     
@@ -35,7 +35,7 @@ public class FlightDataRequest implements RequestInterface {
      * @param arrivalId Airport arrival's IATA code (For example: "AUS", "CDG")
      * @param outboundDate date type yyyy-mm-dd
      */
-    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, int adultAmount, int childAmount, String currency) {
+    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, int adultAmount, int childAmount, String currency, int maxPrice, int stops) {
         this.departureId = departureId;
         this.arrivalId = arrivalId;
         this.type = 2;
@@ -43,6 +43,8 @@ public class FlightDataRequest implements RequestInterface {
         this.adults = adultAmount;
         this.children = childAmount;
         this.currency = currency;
+        this.maxPrice = maxPrice;
+        this.stops = stops;
     }
     
     /**
@@ -54,7 +56,7 @@ public class FlightDataRequest implements RequestInterface {
      * @param outboundDate date type yyyy-mm-dd
      * @param returnDate date type yyyy-mm-dd
      */
-    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, String returnDate, int adultAmount, int childAmount, String currency) {
+    public FlightDataRequest(String departureId, String arrivalId, String outboundDate, String returnDate, int adultAmount, int childAmount, String currency, int maxPrice, int stops) {
         this.departureId = departureId;
         this.arrivalId = arrivalId;
         this.outboundDate = outboundDate;
@@ -63,6 +65,8 @@ public class FlightDataRequest implements RequestInterface {
         this.adults = adultAmount;
         this.children = childAmount;
         this.currency = currency;
+        this.maxPrice = maxPrice;
+        this.stops = stops;
     }
     
     /**
@@ -81,7 +85,7 @@ public class FlightDataRequest implements RequestInterface {
      */
     public FlightDataRequest(String departureId, String arrivalId, String currency, int type, 
                              String outboundDate, String returnDate, int adults, int children, 
-                             int stops, double maxPrice) {
+                             int stops, int maxPrice) {
         this.departureId = departureId;
         this.arrivalId = arrivalId;
         this.currency = currency;
@@ -157,7 +161,7 @@ public class FlightDataRequest implements RequestInterface {
         return stops;
     }
 
-    public double getMaxPrice() {
+    public int getMaxPrice() {
         return maxPrice;
     }
 
@@ -205,7 +209,7 @@ public class FlightDataRequest implements RequestInterface {
         this.stops = stops;
     }
 
-    public void setMaxPrice(double maxPrice) {
+    public void setMaxPrice(int maxPrice) {
         this.maxPrice = maxPrice;
     }
 
@@ -227,7 +231,7 @@ public class FlightDataRequest implements RequestInterface {
         private int adults = 1;
         private int children = 0;
         private int stops = 0;
-        private double maxPrice = 0;
+        private int maxPrice = 0;
         
         /**
         * Initialize the FlightDataRequest
@@ -347,7 +351,7 @@ public class FlightDataRequest implements RequestInterface {
             return this;
         }
 
-        public Builder setMaxPrice(double maxPrice) {
+        public Builder setMaxPrice(int maxPrice) {
             this.maxPrice = maxPrice;
             return this;
         }
