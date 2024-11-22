@@ -19,13 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Reads and wites data for Favorites and Preferences objects to and from a JSON file.
+ * Reads and wites data for InfoCardStorage and Preferences objects to and from a JSON file.
  * @author Kalle Hirvijärvi
  */
 public class SaveData {
     
     // from storing the data
-    private Favorites favorites = new Favorites();
+    private InfoCardStorage favorites = new InfoCardStorage();
+    private InfoCardStorage latest_search = new InfoCardStorage();
     private Preferences preferences;
     
     // name of target file
@@ -63,9 +64,13 @@ public class SaveData {
      */
     private void parse_json_object(JsonObject data){
         
-        // get favorites and save them to Favorites object
+        // get favorites and save them to InfoCardStorage object
         for (SearchResultCard new_result : read_flights_from_array(data.get("favorites").getAsJsonArray())){
-            favorites.set_new_favorite(new_result);
+            favorites.set_new_element(new_result);
+        }
+        // get latest search results and save them to InfoCardStorage object
+        for (SearchResultCard new_result : read_flights_from_array(data.get("latest_search").getAsJsonArray())){
+            latest_search.set_new_element(new_result);
         }
          
         JsonObject pref = data.get("preferences").getAsJsonObject();
@@ -287,10 +292,16 @@ public class SaveData {
     }
     
     /**
-     * @return saved Favorites object
+     * @return favorites saved in InfoCardStorage object
      */
-    public Favorites get_favorites(){
+    public InfoCardStorage get_favorites(){
         return favorites;
+    }
+     /**
+     * @return latest search results saved in InfoCardStorage object
+     */
+    public InfoCardStorage get_search_results(){
+        return latest_search;
     }
     /**
      * @return saved Preferences object
@@ -298,13 +309,20 @@ public class SaveData {
     public Preferences get_preferences(){
         return preferences;
     }
-
+    
+    // Gives write_data() default parameter value null for
+    // latest result by overloading the function
+    public void write_data(InfoCardStorage fav, Preferences pref){
+        write_data(fav, pref, null);
+    }
+    
     /**
      * writes data from Favorite and Preferences objects to JSON file
-     * @param fav Favorite obejct
+     * @param fav favorites as InfoCardStorage obejct
      * @param pref Preferences object
+     * @param latest_search_result as InfoCardStorage (optional)
      */
-    public void write_data(Favorites fav, Preferences pref){
+    public void write_data(InfoCardStorage fav, Preferences pref, InfoCardStorage latest_search_result){
         
         // saves preferences to JSON object
         JsonObject pref_result = new JsonObject();
@@ -314,7 +332,15 @@ public class SaveData {
         pref_result.addProperty("num_of_layovers", pref.get_leyovers());
         
         JsonObject result = new JsonObject();
-        result.add("favorites", write_flights_to_JSONArray(fav.get_favorite_flights_by_dep_time()));
+        
+        // if function is callad without latest_search_result
+        if (latest_search_result == null){
+            result.add("latest_search", new JsonArray());
+        }
+        else {
+            result.add("latest_search", write_flights_to_JSONArray(latest_search_result.get_by_dep_time()));
+        }
+        result.add("favorites", write_flights_to_JSONArray(fav.get_by_dep_time()));
         result.add("preferences", pref_result);
         
         // writes result to JSON file        

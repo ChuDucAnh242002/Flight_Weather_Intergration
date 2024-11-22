@@ -7,11 +7,11 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
- * stores favorite flights in three different TreeSets
+ * stores flights in three different TreeSets
  * for different orders
  * @author Kalle Hirvijärvi
  */
-public class Favorites {
+public class InfoCardStorage {
     
     private TreeSet<SearchResultCard> flights_by_departure;
     
@@ -20,7 +20,7 @@ public class Favorites {
     private TreeSet<SearchResultCard> flights_by_duration;
     
     // constructor defines comparison fuctions to the TreeSets
-    public Favorites(){
+    public InfoCardStorage(){
         // primarily sort by departure time
         // secondarily sort by total duartion
         flights_by_departure = new TreeSet<>((left, right) -> {
@@ -58,28 +58,28 @@ public class Favorites {
         });
     }
     /**
-     * @return favorites by departure as List
+     * @return flight info by departure as List
      */
-    public List<SearchResultCard> get_favorite_flights_by_dep_time(){
+    public List<SearchResultCard> get_by_dep_time(){
         return flights_by_departure.stream().collect(Collectors.toList());
     }
     /**
-     * @return avorites by price as List
+     * @return flight info by price as List
      */
-    public List<SearchResultCard> get_favorite_flights_by_price(){
+    public List<SearchResultCard> get_by_price(){
         return flights_by_price.stream().collect(Collectors.toList());
     }
     /**
-     * @return avorites by duratino as List
+     * @return flight info by duratino as List
      */
-    public List<SearchResultCard> get_favorite_flights_by_flight_duration(){
+    public List<SearchResultCard> get_by_flight_duration(){
         return flights_by_duration.stream().collect(Collectors.toList());
     }
     /**
      * adds new flight to all TreeSets
      * @param new_flight new flight to be stored
      */
-    public void set_new_favorite(SearchResultCard new_flight){
+    public void set_new_element(SearchResultCard new_flight){
         flights_by_departure.add(new_flight);
         flights_by_price.add(new_flight);
         flights_by_duration.add(new_flight);
