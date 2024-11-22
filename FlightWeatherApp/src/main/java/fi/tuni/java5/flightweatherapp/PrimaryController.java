@@ -93,7 +93,55 @@ public class PrimaryController {
     private String currency = "USD";
     
     @FXML
+    private TextField maxPriceTextField;
+    
+    @FXML
     private VBox fetchedFlightsContainer;
+    
+    @FXML
+    private Label stopsLabel;
+    
+    private int stops = 0; // default any number of stops
+    
+    private Boolean isStopsValueLegal() {
+        /*
+            0 - Any number of stops (default)
+            1 - Nonstop only
+            2 - 1 stop or fewer
+            3 - 2 stops or fewer
+        */
+        return this.stops >= 0 && this.stops <= 3;
+    }
+    
+    @FXML
+    private void onStopsIncreaseButtonPressed() {
+        if (!isStopsValueLegal()) {
+            return;
+        }
+        
+        if (this.stops == 3) {
+            return;
+        }
+        
+        this.stops++;
+        
+        stopsLabel.setText(String.valueOf(this.stops));
+    }
+    
+    @FXML
+    private void onStopsDecreaseButtonPressed() {
+        if (!isStopsValueLegal()) {
+            return;
+        }
+        
+        if (this.stops == 0) {
+            return;
+        }
+        
+        this.stops--;
+        
+        stopsLabel.setText(String.valueOf(this.stops));
+    } 
     
     // Search Parameter
     private Boolean IsDecreasePassengerLegal() {
@@ -318,11 +366,25 @@ public class PrimaryController {
         return (String) selectedRadioButton.getUserData();
     }
     
+    private int maxPriceValue = Integer.MAX_VALUE;
+    
+    private void getMaxPriceFromTextField() {
+        
+        String maxPriceString = maxPriceTextField.getText();
+        Integer maxPriceInput = this.maxPriceValue;
+        if (!maxPriceString.equals("")) {
+            maxPriceInput = Integer.parseInt(maxPriceTextField.getText());
+            this.maxPriceValue = maxPriceInput;
+        }
+    }
+    
     @FXML
     private void OnSearchFlightButtonPressed() {
 
         currencyToggleListener();
+        getMaxPriceFromTextField();
         System.out.println("Currency: " + this.currency);
+        System.out.println("Max Price: " + this.maxPriceValue);
         
         if (AirportDataAPICall.isAnyAirportNull()) {
             OpenErrorMessage(missingAirportErrorMessage);
@@ -351,7 +413,10 @@ public class PrimaryController {
                                 outboundDateString,
                                 adultPassengerAmount,
                                 childPassengerAmount,
-                                currency);
+                                currency,
+                                maxPriceValue,
+                                stops
+                                );
         } else {
             String returnDateString = returnDatePicker.getValue().format(formatter);
             
@@ -362,7 +427,9 @@ public class PrimaryController {
                                 returnDateString,
                                 adultPassengerAmount,
                                 childPassengerAmount,
-                                currency
+                                currency,
+                                maxPriceValue,
+                                stops
                                 );
         }
                 
