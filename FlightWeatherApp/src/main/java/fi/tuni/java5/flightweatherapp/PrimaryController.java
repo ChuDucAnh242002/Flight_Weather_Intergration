@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class PrimaryController {
     private static String apiKey = "c37bc522ccf0e106cd0d1be7e1ed9655";
@@ -87,6 +89,15 @@ public class PrimaryController {
     
     @FXML
     private VBox fetchedFlightsContainer;
+    
+    @FXML
+    private VBox searchNotification;
+    
+    @FXML
+    private Label searchStatusLabel;
+    
+    @FXML
+    private ImageView searchStatusImageView;
     
     // Search Parameter
     private Boolean IsDecreasePassengerLegal() {
@@ -173,6 +184,8 @@ public class PrimaryController {
     private void OnDepartureAirportEditButtonPressed() {
         ToggleDepartureAirportInterface(false);
         
+        AirportDataAPICall.departureAirport = null;
+        
         departureAirportTextField.setText(emptyString);
     }
     
@@ -181,6 +194,7 @@ public class PrimaryController {
         String searchString = departureAirportTextField.getText();
         
         if (searchString == null || searchString == emptyString) {
+            OpenErrorMessage(airportSearchMessage);
             return;
         }
         
@@ -226,6 +240,8 @@ public class PrimaryController {
     private void OnArrivalAirportEditButtonPressed() {
         ToggleArrivalAirportInterface(false);
         
+        AirportDataAPICall.arrivalAirport = null;
+        
         arrivalAirportTextField.setText(emptyString);
     }
     
@@ -234,6 +250,7 @@ public class PrimaryController {
         String searchString = arrivalAirportTextField.getText();
         
         if (searchString == null || searchString == emptyString) {
+            OpenErrorMessage(airportSearchMessage);
             return;
         }
         
@@ -262,16 +279,36 @@ public class PrimaryController {
     
     // Search flight
     
-    String missingAirportErrorMessage = "";
+    String missingAirportErrorMessage = "Please add both Departure and Arrival airports!";
     
-    String missingDatePickerErrorMessage = "";
+    String missingDatePickerErrorMessage = "Please add at least Outbound date!";
     
-    String illegalDatePickerErrorMessage = "";
+    String illegalDatePickerErrorMessage = "The selected date is in the past, please change it!";
+    
+    String searchingMessage = "Please enter all information to start searching!";
+    
+    String airportSearchMessage = "Please enter Airport Code or City name!";
     
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
     private void OpenErrorMessage(String messageString) {
+        searchNotification.setVisible(true);
         
+        searchStatusLabel.setText(messageString);
+            
+        Image image = new Image(getClass().getResourceAsStream("icons/Attention Circle Icon.png"));
+        searchStatusImageView.setImage(image);
+    }
+    
+    private void OpenAndCloseSearchingMessage(boolean isOpen) {
+        searchNotification.setVisible(isOpen);
+        
+        if (isOpen) {
+            searchStatusLabel.setText(searchingMessage);
+            
+            Image image = new Image(getClass().getResourceAsStream("icons/Searching Icon.png"));
+            searchStatusImageView.setImage(image);
+        }
     }
     
     private boolean isDatePickerValueNull() {
@@ -311,6 +348,8 @@ public class PrimaryController {
             
             return;
         }
+        
+        OpenAndCloseSearchingMessage(false);
                     
         String outboundDateString = outboundDatePicker.getValue().format(formatter);
         
@@ -340,10 +379,11 @@ public class PrimaryController {
         System.out.println("_____________________________________");
                 
         loadFlights(searchResult);
-        
+                
         if (searchResult == null) {
             return;
         }
+        
     }
     
     
