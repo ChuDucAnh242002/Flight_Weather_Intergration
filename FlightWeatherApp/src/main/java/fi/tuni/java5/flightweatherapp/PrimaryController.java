@@ -109,32 +109,97 @@ public class PrimaryController {
     private ImageView searchStatusImageView;
     
     @FXML
+    private Button flightSearchButton;
+    
+    // Preference elements
+    @FXML
+    private Button seeMoreButton;
+    
+    @FXML
+    private Button seeLessButton;
+    
+    @FXML
+    private Button savedFlightButton;
+    
+    @FXML
+    private Button goBackButton;
+    
+    @FXML
+    private Button resetButton;
+    
+    @FXML
+    private Pane maxPricePane;
+    
+    @FXML
+    private Pane maxStopPane;
+    
+    @FXML
+    private Line preferenceSeparateLine1;
+    
+    @FXML
+    private Line preferenceSeparateLine2;
+    
+    @FXML
     public void initialize() {
-        outboundDeparturePane.setVisible(false);
-        outboundDepartureHBox.setVisible(false);
-        outboundArrivalPane.setVisible(false);
-        outboundArrivalHBox.setVisible(false);
-
-        outboundDeparturePane.setManaged(false);
-        outboundDepartureHBox.setManaged(false);
-        outboundArrivalPane.setManaged(false);
-        outboundArrivalHBox.setManaged(false);
-
-        outboundWeatherErrorVBox.setVisible(false);
-        outboundWeatherErrorVBox.setManaged(false);
+        SetActiveAndInactiveAllWeatherData(false);
         
-        returnDeparturePane.setVisible(false);
-        returnDepartureHBox.setVisible(false);
-        returnArrivalPane.setVisible(false);
-        returnArrivalHBox.setVisible(false);
+        ExpandOrCollapsePreference(false);
         
-        returnDeparturePane.setManaged(false);
-        returnDepartureHBox.setManaged(false);
-        returnArrivalPane.setManaged(false);
-        returnArrivalHBox.setManaged(false);
+        goBackButton.setVisible(false);
+        goBackButton.setManaged(false);
+    }
+    
+    private void ExpandOrCollapsePreference(boolean isExpand) {
+        seeLessButton.setVisible(isExpand);
+        seeLessButton.setManaged(isExpand);
         
-        returnWeatherErrorVBox.setVisible(false);
-        returnWeatherErrorVBox.setManaged(false);
+        seeMoreButton.setVisible(!isExpand);
+        seeMoreButton.setManaged(!isExpand);
+        
+        maxPricePane.setVisible(isExpand);
+        maxPricePane.setManaged(isExpand);
+        
+        maxStopPane.setVisible(isExpand);
+        maxStopPane.setManaged(isExpand);
+        
+        resetButton.setVisible(isExpand);
+        resetButton.setManaged(isExpand);
+        
+        preferenceSeparateLine1.setVisible(isExpand);
+        preferenceSeparateLine1.setManaged(isExpand);
+        
+        preferenceSeparateLine2.setVisible(isExpand);
+        preferenceSeparateLine2.setManaged(isExpand);
+    }
+    
+    @FXML
+    private void OnSeeMoreButtonPressed() {
+        ExpandOrCollapsePreference(true);
+    }
+    
+    @FXML
+    private void OnSeeLessButtonPressed() {
+        ExpandOrCollapsePreference(false);
+    }
+    
+    private void OpenSavedFlight(boolean isOpen) {
+        savedFlightButton.setVisible(!isOpen);
+        savedFlightButton.setManaged(!isOpen);
+        
+        goBackButton.setVisible(isOpen);
+        goBackButton.setManaged(isOpen);
+        
+        flightSearchButton.setDisable(isOpen);
+    }
+    
+    @FXML
+    private void OnSavedFlightButtonPressed() {
+        OpenSavedFlight(true);
+    }
+    
+    @FXML
+    private void OnGoBackButtonPressed() {
+        OpenSavedFlight(false);
     }
     
     // Search Parameter
@@ -361,7 +426,7 @@ public class PrimaryController {
         }
     }
     
-    // Search flight
+    // Search flight section
     
     String missingAirportErrorMessage = "Please add both Departure and Arrival airports!";
     
@@ -545,7 +610,7 @@ public class PrimaryController {
         
     }
     
-    
+    // Weather update section
     // Outbound - Departure
     @FXML
     private Pane outboundDeparturePane;
@@ -935,6 +1000,34 @@ public class PrimaryController {
 
         Image returnArrivalWeatherBackgroundImage = new Image(getClass().getResourceAsStream(WeatherAPICall.WeatherBackgroundImagePath(returnArrivalWeatherResponse.daily[dateIndex].weather[0].id)));
         returnArrivalBackgroundImageView.setImage(returnArrivalWeatherBackgroundImage);
+    }
+    
+    private void SetActiveAndInactiveAllWeatherData(boolean isActive) {
+        outboundDeparturePane.setVisible(isActive);
+        outboundDepartureHBox.setVisible(isActive);
+        outboundArrivalPane.setVisible(isActive);
+        outboundArrivalHBox.setVisible(isActive);
+
+        outboundDeparturePane.setManaged(isActive);
+        outboundDepartureHBox.setManaged(isActive);
+        outboundArrivalPane.setManaged(isActive);
+        outboundArrivalHBox.setManaged(isActive);
+
+        outboundWeatherErrorVBox.setVisible(isActive);
+        outboundWeatherErrorVBox.setManaged(isActive);
+        
+        returnDeparturePane.setVisible(isActive);
+        returnDepartureHBox.setVisible(isActive);
+        returnArrivalPane.setVisible(isActive);
+        returnArrivalHBox.setVisible(isActive);
+        
+        returnDeparturePane.setManaged(isActive);
+        returnDepartureHBox.setManaged(isActive);
+        returnArrivalPane.setManaged(isActive);
+        returnArrivalHBox.setManaged(isActive);
+        
+        returnWeatherErrorVBox.setVisible(isActive);
+        returnWeatherErrorVBox.setManaged(isActive);
     }
     
     private String DecimalToStringConverter(double value)
