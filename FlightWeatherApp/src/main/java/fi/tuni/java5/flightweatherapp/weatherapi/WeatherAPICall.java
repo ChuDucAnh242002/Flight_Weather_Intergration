@@ -346,47 +346,47 @@ public class WeatherAPICall implements APICallInterface {
         
         if (value == 211 || value == 212 || value == 221)
         {
-            weatherIconImagePath = "weather_icon/thunderstorm.png";
+            weatherIconImagePath = "weatherIcons/thunderstorm.png";
         }
         else if (value >= 200 && value < 300)
         {
-            weatherIconImagePath = "weather_icon/thunderstorm_with_rain.png";
+            weatherIconImagePath = "weatherIcons/thunderstorm_with_rain.png";
         }
         else if (value >= 300 && value < 400)
         {
-            weatherIconImagePath = "weather_icon/drizzle.png";
+            weatherIconImagePath = "weatherIcons/drizzle.png";
         }
         else if (value == 511)
         {
-            weatherIconImagePath = "weather_icon/freezing_rain.png";
+            weatherIconImagePath = "weatherIcons/freezing_rain.png";
         }
         else if (value == 500 || value == 501 || value == 520 || value == 531)
         {
-            weatherIconImagePath = "weather_icon/rain.png";
+            weatherIconImagePath = "weatherIcons/rain.png";
         }
         else if (value > 501 && value < 600)
         {
-            weatherIconImagePath = "weather_icon/heavy_rain.png";
+            weatherIconImagePath = "weatherIcons/heavy_rain.png";
         }
         else if (value >= 600 && value < 700)
         {
-            weatherIconImagePath = "weather_icon/snow.png";
+            weatherIconImagePath = "weatherIcons/snow.png";
         }
         else if (value >= 700 && value < 800)
         {
-            weatherIconImagePath = "weather_icon/haze.png";
+            weatherIconImagePath = "weatherIcons/haze.png";
         }
         else if (value == 800)
         {
-            weatherIconImagePath = "weather_icon/clear.png";
+            weatherIconImagePath = "weatherIcons/clear.png";
         }
         else if (value == 801)
         {
-            weatherIconImagePath = "weather_icon/few_cloud.png";
+            weatherIconImagePath = "weatherIcons/few_cloud.png";
         }
         else if (value > 801)
         {
-            weatherIconImagePath = "weather_icon/overcast_cloud.png";
+            weatherIconImagePath = "weatherIcons/overcast_cloud.png";
         }
         
         return weatherIconImagePath;
@@ -404,47 +404,47 @@ public class WeatherAPICall implements APICallInterface {
         
         if (value == 211 || value == 212 || value == 221)
         {
-            weatherBackgroundImagePath = "weather_background/thunderstorm.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/thunderstorm.png";
         }
         else if (value >= 200 && value < 300)
         {
-            weatherBackgroundImagePath = "weather_background/thunderstorm_with_rain.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/thunderstorm_with_rain.png";
         }
         else if (value >= 300 && value < 400)
         {
-            weatherBackgroundImagePath = "weather_background/drizzle.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/drizzle.png";
         }
         else if (value == 511)
         {
-            weatherBackgroundImagePath = "weather_background/freezing_rain.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/freezing_rain.png";
         }
         else if (value == 500 || value == 501 || value == 520 || value == 531)
         {
-            weatherBackgroundImagePath = "weather_background/rain.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/rain.png";
         }
         else if (value > 501 && value < 600)
         {
-            weatherBackgroundImagePath = "weather_background/heavy_rain.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/heavy_rain.png";
         }
         else if (value >= 600 && value < 700)
         {
-            weatherBackgroundImagePath = "weather_background/snow.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/snow.png";
         }
         else if (value >= 700 && value < 800)
         {
-            weatherBackgroundImagePath = "weather_background/haze.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/haze.png";
         }
         else if (value == 800)
         {
-            weatherBackgroundImagePath = "weather_background/clear.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/clear.png";
         }
         else if (value == 801)
         {
-            weatherBackgroundImagePath = "weather_background/few_cloud.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/few_cloud.png";
         }
         else if (value > 801)
         {
-            weatherBackgroundImagePath = "weather_background/overcast_cloud.png";
+            weatherBackgroundImagePath = "weatherBackgrounds/overcast_cloud.png";
         }
         
         return weatherBackgroundImagePath;
