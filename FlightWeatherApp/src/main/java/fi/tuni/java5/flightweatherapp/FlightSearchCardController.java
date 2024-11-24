@@ -3,11 +3,15 @@ package fi.tuni.java5.flightweatherapp;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Flight;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Layover;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
+import fi.tuni.java5.flightweatherapp.settingManagement.InfoCardStorage;
+import fi.tuni.java5.flightweatherapp.settingManagement.Preferences;
+import fi.tuni.java5.flightweatherapp.settingManagement.SaveData;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import java.io.IOException;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -26,7 +30,17 @@ public class FlightSearchCardController {
     @FXML
     private VBox flightDetailsContainer;
 
+    @FXML
+    private Button saveFlightDetailsButton;
+
+    private SearchResultCard flightDetails;
+    private String currency;
+
     public void setSearchCardFlightDetails(SearchResultCard flightDetails, String currency) {
+        
+        // Saving to use later when saving flight
+        this.flightDetails = flightDetails;
+        this.currency = currency;
         
         String currencySymbol = "$";
         if (currency.equals("EUR")) {
@@ -72,5 +86,16 @@ public class FlightSearchCardController {
             }
         }
     }
+
+    @FXML
+    public void onSaveFlightDetailsButtonPressed() {
+        
+        SaveData flightSaveObj = new SaveData();
+        InfoCardStorage infoCard = flightSaveObj.get_favorites();
+        infoCard.set_new_element(flightDetails);
+
+        Preferences pref = new Preferences(currency, "C", -1.0, 0);
+        flightSaveObj.write_data(infoCard, pref);
+    };
 
 }

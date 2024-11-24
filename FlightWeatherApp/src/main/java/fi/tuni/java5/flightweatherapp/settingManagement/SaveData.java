@@ -211,7 +211,7 @@ public class SaveData {
         
         for (SearchResultCard result_card : input){
             JsonObject result_card_json = new JsonObject();
-            
+                    
             JsonArray flights = new JsonArray();
             for (Flight flight : result_card.getFlights()){
                 JsonObject flight_json = new JsonObject();
@@ -259,7 +259,8 @@ public class SaveData {
             result_card_json.addProperty("price", result_card.getPrice());
             result_card_json.addProperty("type", result_card.getType());
             result_card_json.addProperty("airline_logo", result_card.getAirlineLogo());
-            result_card_json.addProperty("dep_token", result_card.getDepartureToken());
+            String depToken = result_card.getDepartureToken();
+            result_card_json.addProperty("dep_token", depToken == null ? "" : depToken);
             
             result.add(result_card_json);
         }
@@ -285,8 +286,10 @@ public class SaveData {
      */
     private JsonArray List_to_JSONArray(List<String> layovers){
         JsonArray result = new JsonArray();
-        for (String layover : layovers){
-            result.add(layover);
+        if (layovers != null) {
+            for (String layover : layovers){
+                result.add(layover);
+            }
         }
         return result; 
     }
