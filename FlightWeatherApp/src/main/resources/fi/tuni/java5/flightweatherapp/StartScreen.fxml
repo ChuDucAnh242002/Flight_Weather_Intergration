@@ -983,35 +983,35 @@
                               </Label>
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" spacing="90.0">
+                        <HBox fx:id="returnArrivalHBox" alignment="CENTER" layoutX="10.0" layoutY="10.0" spacing="90.0">
                            <children>
                               <Label text="Departure" textFill="#52459d">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="19/09" textFill="#52459d">
+                              <Label fx:id="returnArrivalDateLabel" text="19/09" textFill="#52459d">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <Pane layoutX="10.0" layoutY="57.0">
+                        <Pane fx:id="returnArrivalPane" layoutX="10.0" layoutY="404.0">
                            <children>
-                              <ImageView fitHeight="280.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="returnArrivalBackgroundImageView" fitHeight="280.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@weatherBackgrounds/clear.png" />
+                                    <Image url="@weatherBackgrounds/rain.png" />
                                  </image>
                               </ImageView>
                               <VBox alignment="CENTER" layoutX="33.0" layoutY="26.0" spacing="14.0">
                                  <children>
-                                    <Label alignment="CENTER" text="Helsinki" textFill="WHITE">
+                                    <Label fx:id="returnArrivalCityLabel" alignment="CENTER" text="Singapore" textFill="WHITE">
                                        <font>
                                           <Font name="Arial" size="22.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" prefWidth="140.0" text="17°C" textFill="WHITE">
+                                    <Label fx:id="returnArrivalAvgTempLabel" alignment="CENTER" prefWidth="140.0" text="26°C" textFill="WHITE">
                                        <font>
                                           <Font name="Arial" size="44.0" />
                                        </font>
@@ -1023,30 +1023,30 @@
                                                 <Image url="@icons/Temperature%20box.png" />
                                              </image>
                                           </ImageView>
-                                          <HBox layoutX="10.0" layoutY="6.0" spacing="10.0">
+                                          <HBox alignment="CENTER" layoutX="10.0" layoutY="6.0" spacing="8.0">
                                              <children>
-                                                <HBox alignment="CENTER_LEFT">
+                                                <HBox alignment="CENTER" minWidth="54.0" prefWidth="54.0">
                                                    <children>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@icons/Arrow%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" text="19°" textFill="WHITE">
+                                                      <Label fx:id="returnArrivalHighTempLabel" alignment="CENTER" minWidth="38.0" text="31°" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
                                                       </Label>
                                                    </children>
                                                 </HBox>
-                                                <HBox alignment="CENTER_LEFT">
+                                                <HBox alignment="CENTER" minWidth="54.0" prefWidth="54.0">
                                                    <children>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                                                          <image>
                                                             <Image url="@icons/Arrow%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" layoutX="34.0" layoutY="10.0" text="16°" textFill="WHITE">
+                                                      <Label fx:id="returnArrivalLowTempLabel" alignment="CENTER" layoutX="34.0" layoutY="10.0" minWidth="38.0" text="-26°" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
@@ -1068,14 +1068,14 @@
                                              <children>
                                                 <VBox alignment="CENTER" spacing="4.0">
                                                    <children>
-                                                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="returnArrivalWeatherImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@weatherIcons/few_cloud.png" />
+                                                            <Image url="@weatherIcons/rain.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" prefWidth="50.0" text="Cloud" textFill="WHITE">
+                                                      <Label fx:id="returnArrivalWeatherDescLabel" alignment="CENTER" prefWidth="50.0" text="Rain" textAlignment="CENTER" textFill="WHITE">
                                                          <font>
-                                                            <Font name="Arial Bold" size="16.0" />
+                                                            <Font name="Arial Bold" size="14.0" />
                                                          </font>
                                                       </Label>
                                                    </children>
@@ -1088,7 +1088,7 @@
                                                             <Image url="@icons/Wind%20Vector%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" prefWidth="60.0" text="14 m/s" textFill="WHITE">
+                                                      <Label fx:id="returnArrivalWindSpeedLabel" alignment="CENTER" prefWidth="60.0" text="14 m/s" textAlignment="CENTER" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="16.0" />
                                                          </font>
@@ -1103,7 +1103,7 @@
                                                             <Image url="@icons/Sun%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" prefWidth="46.0" text="UV 2" textFill="WHITE">
+                                                      <Label fx:id="returnArrivalUVIndexLabel" alignment="CENTER" prefWidth="46.0" text="UV 2" textAlignment="CENTER" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="16.0" />
                                                          </font>
@@ -1118,35 +1118,35 @@
                               </VBox>
                            </children>
                         </Pane>
-                        <HBox alignment="CENTER" layoutX="10.0" layoutY="357.0" spacing="130.0">
+                        <HBox fx:id="returnDepartureHBox" alignment="CENTER" layoutX="10.0" layoutY="357.0" spacing="130.0">
                            <children>
                               <Label text="Arrival" textFill="#52459d">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="19/09" textFill="#52459d">
+                              <Label fx:id="returnDepartureDateLabel" text="19/09" textFill="#52459d">
                                  <font>
                                     <Font name="Arial Bold" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <Pane layoutX="10.0" layoutY="404.0">
+                        <Pane fx:id="returnDeparturePane" layoutX="10.0" layoutY="57.0">
                            <children>
-                              <ImageView fitHeight="280.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="returnDepartureBackgroundImageView" fitHeight="280.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@weatherBackgrounds/rain.png" />
+                                    <Image url="@weatherBackgrounds/clear.png" />
                                  </image>
                               </ImageView>
                               <VBox alignment="CENTER" layoutX="33.0" layoutY="26.0" spacing="14.0">
                                  <children>
-                                    <Label alignment="CENTER" text="Singapore" textFill="WHITE">
+                                    <Label fx:id="returnDepartureCityLabel" alignment="CENTER" text="Helsinki" textFill="WHITE">
                                        <font>
                                           <Font name="Arial" size="22.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" prefWidth="140.0" text="26°C" textFill="WHITE">
+                                    <Label fx:id="returnDepartureAvgTempLabel" alignment="CENTER" prefWidth="140.0" text="17°C" textFill="WHITE">
                                        <font>
                                           <Font name="Arial" size="44.0" />
                                        </font>
@@ -1158,30 +1158,30 @@
                                                 <Image url="@icons/Temperature%20box.png" />
                                              </image>
                                           </ImageView>
-                                          <HBox layoutX="10.0" layoutY="6.0" spacing="10.0">
+                                          <HBox alignment="CENTER" layoutX="10.0" layoutY="6.0" spacing="8.0">
                                              <children>
-                                                <HBox alignment="CENTER_LEFT">
+                                                <HBox alignment="CENTER" minWidth="54.0" prefWidth="54.0">
                                                    <children>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@icons/Arrow%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" text="31°" textFill="WHITE">
+                                                      <Label fx:id="returnDepartureHighTempLabel" alignment="CENTER" minWidth="38.0" text="19°" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
                                                       </Label>
                                                    </children>
                                                 </HBox>
-                                                <HBox alignment="CENTER_LEFT">
+                                                <HBox alignment="CENTER" minWidth="54.0" prefWidth="54.0">
                                                    <children>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                                                          <image>
                                                             <Image url="@icons/Arrow%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" layoutX="34.0" layoutY="10.0" text="26°" textFill="WHITE">
+                                                      <Label fx:id="returnDepartureLowTempLabel" alignment="CENTER" layoutX="34.0" layoutY="10.0" minWidth="38.0" text="16°" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="20.0" />
                                                          </font>
@@ -1194,7 +1194,7 @@
                                     </Pane>
                                     <Pane>
                                        <children>
-                                          <ImageView fitHeight="74.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="74.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@icons/Weather%20info%20box.png" />
                                              </image>
@@ -1203,14 +1203,14 @@
                                              <children>
                                                 <VBox alignment="CENTER" spacing="4.0">
                                                    <children>
-                                                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="returnDepartureWeatherImageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@weatherIcons/rain.png" />
+                                                            <Image url="@weatherIcons/few_cloud.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" prefWidth="50.0" text="Rain" textFill="WHITE">
+                                                      <Label fx:id="returnDepartureWeatherDescLabel" alignment="CENTER" prefWidth="50.0" text="Clouds" textAlignment="CENTER" textFill="WHITE">
                                                          <font>
-                                                            <Font name="Arial Bold" size="16.0" />
+                                                            <Font name="Arial Bold" size="14.0" />
                                                          </font>
                                                       </Label>
                                                    </children>
@@ -1223,7 +1223,7 @@
                                                             <Image url="@icons/Wind%20Vector%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" prefWidth="60.0" text="14 m/s" textFill="WHITE">
+                                                      <Label fx:id="returnDepartureWindSpeedLabel" alignment="CENTER" prefWidth="60.0" text="14 m/s" textAlignment="CENTER" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="16.0" />
                                                          </font>
@@ -1238,7 +1238,7 @@
                                                             <Image url="@icons/Sun%20Icon.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <Label alignment="CENTER" prefWidth="46.0" text="UV 2" textFill="WHITE">
+                                                      <Label fx:id="returnDepartureUVIndexLabel" alignment="CENTER" prefWidth="46.0" text="UV 2" textAlignment="CENTER" textFill="WHITE">
                                                          <font>
                                                             <Font name="Arial Bold" size="16.0" />
                                                          </font>
