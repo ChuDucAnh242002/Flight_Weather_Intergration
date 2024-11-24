@@ -24,8 +24,10 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.time.temporal.ChronoUnit;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 
 
 public class PrimaryController {
@@ -105,6 +107,35 @@ public class PrimaryController {
     
     @FXML
     private ImageView searchStatusImageView;
+    
+    @FXML
+    public void initialize() {
+        outboundDeparturePane.setVisible(false);
+        outboundDepartureHBox.setVisible(false);
+        outboundArrivalPane.setVisible(false);
+        outboundArrivalHBox.setVisible(false);
+
+        outboundDeparturePane.setManaged(false);
+        outboundDepartureHBox.setManaged(false);
+        outboundArrivalPane.setManaged(false);
+        outboundArrivalHBox.setManaged(false);
+
+        outboundWeatherErrorVBox.setVisible(false);
+        outboundWeatherErrorVBox.setManaged(false);
+        
+        returnDeparturePane.setVisible(false);
+        returnDepartureHBox.setVisible(false);
+        returnArrivalPane.setVisible(false);
+        returnArrivalHBox.setVisible(false);
+        
+        returnDeparturePane.setManaged(false);
+        returnDepartureHBox.setManaged(false);
+        returnArrivalPane.setManaged(false);
+        returnArrivalHBox.setManaged(false);
+        
+        returnWeatherErrorVBox.setVisible(false);
+        returnWeatherErrorVBox.setManaged(false);
+    }
     
     // Search Parameter
     private Boolean IsDecreasePassengerLegal() {
@@ -344,6 +375,8 @@ public class PrimaryController {
     
     String airportSearchMessage = "Please enter Airport Code or City name!";
     
+    String emptySearchMessage = "Sorry, there is no available flight!";
+    
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
     private void OpenErrorMessage(String messageString) {
@@ -460,6 +493,8 @@ public class PrimaryController {
         loadFlights(searchResult);
                 
         if (searchResult == null) {
+            OpenErrorMessage(emptySearchMessage);
+            
             return;
         }
         
@@ -659,6 +694,17 @@ public class PrimaryController {
     @FXML
     private ImageView returnArrivalBackgroundImageView;
     
+    @FXML
+    private VBox outboundWeatherErrorVBox;
+    
+    @FXML
+    private VBox returnWeatherErrorVBox;
+    
+    @FXML
+    private VBox weatherGuideVBox;
+    
+    @FXML
+    private Line weatherSeperateLine;
     
     // Static responses
     CurrentAndForecastWeatherResponse outboundDepartureWeatherResponse;
@@ -724,18 +770,30 @@ public class PrimaryController {
     }
     
     private void updateWeatherData(boolean isOutbound) {
+        weatherGuideVBox.setVisible(false);
         
         if (isOutbound) {
             Boolean isDateValid = isForcastDateValid(outboundDatePicker);
+            
+            if (returnDeparturePane.isVisible()) {
+                weatherSeperateLine.setVisible(true);
+                weatherSeperateLine.setManaged(true);
+            }
             
             outboundDeparturePane.setVisible(isDateValid);
             outboundDepartureHBox.setVisible(isDateValid);
             outboundArrivalPane.setVisible(isDateValid);
             outboundArrivalHBox.setVisible(isDateValid);
             
+            outboundDeparturePane.setManaged(isDateValid);
+            outboundDepartureHBox.setManaged(isDateValid);
+            outboundArrivalPane.setManaged(isDateValid);
+            outboundArrivalHBox.setManaged(isDateValid);
+            
+            outboundWeatherErrorVBox.setVisible(!isDateValid);
+            outboundWeatherErrorVBox.setManaged(!isDateValid);
+            
             if (!isDateValid) {
-                // error window
-                
                 return;
             }
             
@@ -799,15 +857,26 @@ public class PrimaryController {
         }
         
         Boolean isDateValid = isForcastDateValid(returnDatePicker);
-            
+        
+        if (outboundDeparturePane.isVisible()) {
+            weatherSeperateLine.setVisible(true);
+            weatherSeperateLine.setManaged(true);
+        }
+        
         returnDeparturePane.setVisible(isDateValid);
         returnDepartureHBox.setVisible(isDateValid);
         returnArrivalPane.setVisible(isDateValid);
         returnArrivalHBox.setVisible(isDateValid);
         
+        returnDeparturePane.setManaged(isDateValid);
+        returnDepartureHBox.setManaged(isDateValid);
+        returnArrivalPane.setManaged(isDateValid);
+        returnArrivalHBox.setManaged(isDateValid);
+        
+        returnWeatherErrorVBox.setVisible(!isDateValid);
+        returnWeatherErrorVBox.setManaged(!isDateValid);
+        
         if (!isDateValid) {
-            // error window
-
             return;
         }
         
