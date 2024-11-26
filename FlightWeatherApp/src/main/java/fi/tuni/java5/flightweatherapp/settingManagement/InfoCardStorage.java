@@ -84,4 +84,19 @@ public class InfoCardStorage {
         flights_by_price.add(new_flight);
         flights_by_duration.add(new_flight);
     }
+    /**
+     * removes SearchResultCard object from all TreeSets 
+     * @param target object to be deleted
+     * @return true if target object is found from sets
+     */
+    public boolean delete_element(SearchResultCard target){
+        if (flights_by_departure.remove(target)){
+            flights_by_price.remove(target);
+            flights_by_duration.remove(target);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

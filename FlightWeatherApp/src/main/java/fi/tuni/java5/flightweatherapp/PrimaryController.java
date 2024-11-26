@@ -26,8 +26,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.time.temporal.ChronoUnit;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 
 
 public class PrimaryController {
@@ -158,6 +160,100 @@ public class PrimaryController {
     
     @FXML
     private ImageView searchStatusImageView;
+    
+    @FXML
+    private Button flightSearchButton;
+    
+    // Preference elements
+    @FXML
+    private Button seeMoreButton;
+    
+    @FXML
+    private Button seeLessButton;
+    
+    @FXML
+    private Button savedFlightButton;
+    
+    @FXML
+    private Button goBackButton;
+    
+    @FXML
+    private Button resetButton;
+    
+    @FXML
+    private Pane maxPricePane;
+    
+    @FXML
+    private Pane maxStopPane;
+    
+    @FXML
+    private Line preferenceSeparateLine1;
+    
+    @FXML
+    private Line preferenceSeparateLine2;
+    
+    @FXML
+    public void initialize() {
+        SetActiveAndInactiveAllWeatherData(false);
+        
+        ExpandOrCollapsePreference(false);
+        
+        goBackButton.setVisible(false);
+        goBackButton.setManaged(false);
+    }
+    
+    private void ExpandOrCollapsePreference(boolean isExpand) {
+        seeLessButton.setVisible(isExpand);
+        seeLessButton.setManaged(isExpand);
+        
+        seeMoreButton.setVisible(!isExpand);
+        seeMoreButton.setManaged(!isExpand);
+        
+        maxPricePane.setVisible(isExpand);
+        maxPricePane.setManaged(isExpand);
+        
+        maxStopPane.setVisible(isExpand);
+        maxStopPane.setManaged(isExpand);
+        
+        resetButton.setVisible(isExpand);
+        resetButton.setManaged(isExpand);
+        
+        preferenceSeparateLine1.setVisible(isExpand);
+        preferenceSeparateLine1.setManaged(isExpand);
+        
+        preferenceSeparateLine2.setVisible(isExpand);
+        preferenceSeparateLine2.setManaged(isExpand);
+    }
+    
+    @FXML
+    private void OnSeeMoreButtonPressed() {
+        ExpandOrCollapsePreference(true);
+    }
+    
+    @FXML
+    private void OnSeeLessButtonPressed() {
+        ExpandOrCollapsePreference(false);
+    }
+    
+    private void OpenSavedFlight(boolean isOpen) {
+        savedFlightButton.setVisible(!isOpen);
+        savedFlightButton.setManaged(!isOpen);
+        
+        goBackButton.setVisible(isOpen);
+        goBackButton.setManaged(isOpen);
+        
+        flightSearchButton.setDisable(isOpen);
+    }
+    
+    @FXML
+    private void OnSavedFlightButtonPressed() {
+        OpenSavedFlight(true);
+    }
+    
+    @FXML
+    private void OnGoBackButtonPressed() {
+        OpenSavedFlight(false);
+    }
     
     // Search Parameter
     private Boolean IsDecreasePassengerLegal() {
@@ -383,7 +479,7 @@ public class PrimaryController {
         }
     }
     
-    // Search flight
+    // Search flight section
     
     String missingAirportErrorMessage = "Please add both Departure and Arrival airports!";
     
@@ -396,6 +492,8 @@ public class PrimaryController {
     String searchingMessage = "Please enter all information to start searching!";
     
     String airportSearchMessage = "Please enter Airport Code or City name!";
+    
+    String emptySearchMessage = "Sorry, there is no available flight!";
     
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
@@ -558,6 +656,8 @@ public class PrimaryController {
         loadFlights(searchResult);
                 
         if (searchResult == null) {
+            OpenErrorMessage(emptySearchMessage);
+            
             return;
         }
         
@@ -608,7 +708,7 @@ public class PrimaryController {
         
     }
     
-    
+    // Weather update section
     // Outbound - Departure
     @FXML
     private Pane outboundDeparturePane;
@@ -757,6 +857,17 @@ public class PrimaryController {
     @FXML
     private ImageView returnArrivalBackgroundImageView;
     
+    @FXML
+    private VBox outboundWeatherErrorVBox;
+    
+    @FXML
+    private VBox returnWeatherErrorVBox;
+    
+    @FXML
+    private VBox weatherGuideVBox;
+    
+    @FXML
+    private Line weatherSeperateLine;
     
     // Static responses
     CurrentAndForecastWeatherResponse outboundDepartureWeatherResponse;
@@ -822,18 +933,30 @@ public class PrimaryController {
     }
     
     private void updateWeatherData(boolean isOutbound) {
+        weatherGuideVBox.setVisible(false);
         
         if (isOutbound) {
             Boolean isDateValid = isForcastDateValid(outboundDatePicker);
+            
+            if (returnDeparturePane.isVisible()) {
+                weatherSeperateLine.setVisible(true);
+                weatherSeperateLine.setManaged(true);
+            }
             
             outboundDeparturePane.setVisible(isDateValid);
             outboundDepartureHBox.setVisible(isDateValid);
             outboundArrivalPane.setVisible(isDateValid);
             outboundArrivalHBox.setVisible(isDateValid);
             
+            outboundDeparturePane.setManaged(isDateValid);
+            outboundDepartureHBox.setManaged(isDateValid);
+            outboundArrivalPane.setManaged(isDateValid);
+            outboundArrivalHBox.setManaged(isDateValid);
+            
+            outboundWeatherErrorVBox.setVisible(!isDateValid);
+            outboundWeatherErrorVBox.setManaged(!isDateValid);
+            
             if (!isDateValid) {
-                // error window
-                
                 return;
             }
             
@@ -897,15 +1020,26 @@ public class PrimaryController {
         }
         
         Boolean isDateValid = isForcastDateValid(returnDatePicker);
-            
+        
+        if (outboundDeparturePane.isVisible()) {
+            weatherSeperateLine.setVisible(true);
+            weatherSeperateLine.setManaged(true);
+        }
+        
         returnDeparturePane.setVisible(isDateValid);
         returnDepartureHBox.setVisible(isDateValid);
         returnArrivalPane.setVisible(isDateValid);
         returnArrivalHBox.setVisible(isDateValid);
         
+        returnDeparturePane.setManaged(isDateValid);
+        returnDepartureHBox.setManaged(isDateValid);
+        returnArrivalPane.setManaged(isDateValid);
+        returnArrivalHBox.setManaged(isDateValid);
+        
+        returnWeatherErrorVBox.setVisible(!isDateValid);
+        returnWeatherErrorVBox.setManaged(!isDateValid);
+        
         if (!isDateValid) {
-            // error window
-
             return;
         }
         
@@ -964,6 +1098,34 @@ public class PrimaryController {
 
         Image returnArrivalWeatherBackgroundImage = new Image(getClass().getResourceAsStream(WeatherAPICall.WeatherBackgroundImagePath(returnArrivalWeatherResponse.daily[dateIndex].weather[0].id)));
         returnArrivalBackgroundImageView.setImage(returnArrivalWeatherBackgroundImage);
+    }
+    
+    private void SetActiveAndInactiveAllWeatherData(boolean isActive) {
+        outboundDeparturePane.setVisible(isActive);
+        outboundDepartureHBox.setVisible(isActive);
+        outboundArrivalPane.setVisible(isActive);
+        outboundArrivalHBox.setVisible(isActive);
+
+        outboundDeparturePane.setManaged(isActive);
+        outboundDepartureHBox.setManaged(isActive);
+        outboundArrivalPane.setManaged(isActive);
+        outboundArrivalHBox.setManaged(isActive);
+
+        outboundWeatherErrorVBox.setVisible(isActive);
+        outboundWeatherErrorVBox.setManaged(isActive);
+        
+        returnDeparturePane.setVisible(isActive);
+        returnDepartureHBox.setVisible(isActive);
+        returnArrivalPane.setVisible(isActive);
+        returnArrivalHBox.setVisible(isActive);
+        
+        returnDeparturePane.setManaged(isActive);
+        returnDepartureHBox.setManaged(isActive);
+        returnArrivalPane.setManaged(isActive);
+        returnArrivalHBox.setManaged(isActive);
+        
+        returnWeatherErrorVBox.setVisible(isActive);
+        returnWeatherErrorVBox.setManaged(isActive);
     }
     
     private String DecimalToStringConverter(double value)
