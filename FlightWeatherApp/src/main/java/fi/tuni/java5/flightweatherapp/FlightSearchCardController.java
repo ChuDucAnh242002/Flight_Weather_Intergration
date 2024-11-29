@@ -13,6 +13,8 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 /**
@@ -29,13 +31,28 @@ public class FlightSearchCardController {
 
     @FXML
     private VBox flightDetailsContainer;
-
+    
     @FXML
-    private Button saveFlightDetailsButton;
+    private ImageView saveFlightButtonIcon;
+    
+    // Path to icons
+    private final String SAVE_FILLED_ICON = "icons/Love icon filled.png";
+    private final String SAVE_HOLLOW_ICON = "icons/Love icon hollow.png";
 
     private SearchResultCard flightDetails;
     private String currency;
 
+    private void updateSaveButtonIcon() {
+        Image image;
+        if (flightDetails.isSaved) {
+            image = new Image(getClass().getResourceAsStream("icons/Love icon filled.png"));
+        }
+        else {
+            image = new Image(getClass().getResourceAsStream("icons/Love icon hollow.png"));
+        }
+        saveFlightButtonIcon.setImage(image);
+    }
+    
     public void setSearchCardFlightDetails(SearchResultCard flightDetails, String currency) {
         
         // Saving to use later when saving flight
@@ -52,7 +69,7 @@ public class FlightSearchCardController {
        
         this.price.setText(currencySymbol + String.valueOf(flightDetails.price));
         this.flightType.setText(flightDetails.getType());
-
+        updateSaveButtonIcon();
         List<Flight> flights = flightDetails.getFlights();
         List<Layover> layovers = flightDetails.getLayovers();
         
@@ -92,10 +109,21 @@ public class FlightSearchCardController {
         
         SaveData flightSaveObj = new SaveData();
         InfoCardStorage infoCard = flightSaveObj.get_favorites();
-        infoCard.set_new_element(flightDetails);
-
+        if (flightDetails.isSaved) {
+            flightDetails.isSaved = false;
+            System.out.println("____________________________________________");
+            System.out.println("Flight already saved! Removing from saved list!");
+            System.out.println("____________________________________________");
+            infoCard.delete_element(flightDetails);
+        }
+        else {
+            flightDetails.isSaved = true;
+            infoCard.set_new_element(flightDetails);
+        }
+        
         Preferences pref = new Preferences(currency, "C", -1.0, 0);
         flightSaveObj.write_data(infoCard, pref);
+        updateSaveButtonIcon();
     };
 
 }

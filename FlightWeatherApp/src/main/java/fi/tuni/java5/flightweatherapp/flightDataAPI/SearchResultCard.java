@@ -15,6 +15,7 @@ public class SearchResultCard {
     public String type;
     public String airline_logo;
     public String departure_token;
+    public boolean isSaved = false;
     
     // Getters
     public List<Flight> getFlights() {
@@ -82,7 +83,7 @@ public class SearchResultCard {
         sb.append("Type: ").append(type != null ? type : "N/A").append("\n");
         sb.append("Airline Logo: ").append(airline_logo != null ? airline_logo : "N/A").append("\n");
         sb.append("Departure Token: ").append(departure_token != null ? departure_token : "N/A").append("\n");
-    
+        sb.append("isSaved: ").append(isSaved).append("\n");
         return sb.toString();
     }
 }

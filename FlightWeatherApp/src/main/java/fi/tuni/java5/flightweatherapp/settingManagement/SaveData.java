@@ -181,6 +181,7 @@ public class SaveData {
             String type = current.get("type").getAsString();
             String airline_logo = current.get("airline_logo").getAsString();
             String departure_token = current.get("dep_token").getAsString();
+            boolean isSaved = current.get("isSaved").getAsBoolean();
             
             SearchResultCard new_flight = new SearchResultCard();
             
@@ -194,6 +195,7 @@ public class SaveData {
             new_flight.type = type;
             new_flight.airline_logo = airline_logo;
             new_flight.departure_token = departure_token;
+            new_flight.isSaved = isSaved;
             
             result.add(new_flight);
         }        
@@ -261,6 +263,7 @@ public class SaveData {
             result_card_json.addProperty("airline_logo", result_card.getAirlineLogo());
             String depToken = result_card.getDepartureToken();
             result_card_json.addProperty("dep_token", depToken == null ? "" : depToken);
+            result_card_json.addProperty("isSaved", result_card.isSaved);
             
             result.add(result_card_json);
         }

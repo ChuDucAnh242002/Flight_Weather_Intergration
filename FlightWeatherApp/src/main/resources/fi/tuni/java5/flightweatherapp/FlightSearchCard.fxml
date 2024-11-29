@@ -44,7 +44,7 @@
                 <Font name="Arial Bold" size="20.0" />
             </font>
             <graphic>
-                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="saveFlightButtonIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@icons/Love%20icon%20hollow.png" />
                     </image>

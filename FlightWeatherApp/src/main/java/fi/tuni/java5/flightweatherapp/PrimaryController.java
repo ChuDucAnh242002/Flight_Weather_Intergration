@@ -6,6 +6,8 @@ import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataAPICall;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResult;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataRequest;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
+import fi.tuni.java5.flightweatherapp.settingManagement.InfoCardStorage;
+import fi.tuni.java5.flightweatherapp.settingManagement.SaveData;
 import fi.tuni.java5.flightweatherapp.weatherAPI.CurrentAndForecastWeatherResponse;
 import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import java.io.IOException;
@@ -248,6 +250,32 @@ public class PrimaryController {
     @FXML
     private void OnSavedFlightButtonPressed() {
         OpenSavedFlight(true);
+        
+        fetchedFlightsContainer.getChildren().clear(); 
+        
+        SaveData savedFlights = new SaveData();
+        InfoCardStorage favourites = savedFlights.get_favorites();
+        List<SearchResultCard> searchResultCardList = favourites.get_by_flight_duration();
+        
+        if (!searchResultCardList.isEmpty()) {
+            for (SearchResultCard flightDetails : searchResultCardList) {
+                
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("FlightSearchCard.fxml"));
+                    Node flightCardNode = loader.load();
+
+                    FlightSearchCardController controller = loader.getController();
+                          
+                    controller.setSearchCardFlightDetails(flightDetails, this.currency);
+
+                    fetchedFlightsContainer.getChildren().add(flightCardNode);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
     }
     
     @FXML
@@ -498,7 +526,9 @@ public class PrimaryController {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
     private void OpenErrorMessage(String messageString) {
-        searchNotification.setVisible(true);
+        if (searchNotification != null) {
+            searchNotification.setVisible(true);
+        }
         
         searchStatusLabel.setText(messageString);
             
@@ -507,7 +537,9 @@ public class PrimaryController {
     }
     
     private void OpenAndCloseSearchingMessage(boolean isOpen) {
-        searchNotification.setVisible(isOpen);
+        if (searchNotification != null) {
+            searchNotification.setVisible(isOpen);
+        }
         
         if (isOpen) {
             searchStatusLabel.setText(searchingMessage);
@@ -653,13 +685,13 @@ public class PrimaryController {
         System.out.println("searchResult: " + searchResult);
         System.out.println("_____________________________________");
           */      
-        loadFlights(searchResult);
                 
         if (searchResult == null) {
             OpenErrorMessage(emptySearchMessage);
             
             return;
         }
+        loadFlights(searchResult);
         
     }
     
