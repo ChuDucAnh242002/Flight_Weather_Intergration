@@ -5,7 +5,10 @@ import fi.tuni.java5.flightweatherapp.interfaces.ResponseInterface;
 import java.util.ArrayList;
 import java.util.List;
 /**
- *
+ * The SearchResult is created from the response of Google Flight API
+ * The Search Result will contains best flights and other flights 
+ * in the form of SearchResultCard
+ * 
  * @author Chu Duc Anh
  */
 public class SearchResult implements ResponseInterface {

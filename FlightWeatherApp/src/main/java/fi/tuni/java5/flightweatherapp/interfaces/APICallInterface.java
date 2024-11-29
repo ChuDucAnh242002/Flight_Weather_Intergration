@@ -5,8 +5,11 @@
 package fi.tuni.java5.flightweatherapp.interfaces;
 
 /**
- *
+ * This interface will connect all the API Call classes
+ * 
  * @author Chu Duc Anh
  */
 public interface APICallInterface {
+    // Currently there isn't any need to define any functions yet. 
+    // This interface is used for later extension of the project.
 }

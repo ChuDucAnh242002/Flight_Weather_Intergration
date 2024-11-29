@@ -2,8 +2,10 @@ package fi.tuni.java5.flightweatherapp.airportDataAPI;
 import fi.tuni.java5.flightweatherapp.interfaces.ResponseInterface;
 
 /**
- *
- * @author ASUS
+ * The AirportDataResponse contains of data of the airport
+ * and will be called by AirportDataAPICall
+ * 
+ * @author Chu Duc Anh
  */
 public class AirportDataResponse implements ResponseInterface {
     private String icao;
