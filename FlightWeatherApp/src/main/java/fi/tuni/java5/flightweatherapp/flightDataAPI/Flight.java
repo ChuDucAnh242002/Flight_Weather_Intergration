@@ -9,7 +9,7 @@ public class Flight {
     public Airport departure_airport;
     public Airport arrival_airport;
     public int duration;
-    public String airplane;
+    public String airplane = "";
     public String airline;
     public String airline_logo;
     public String travel_class;

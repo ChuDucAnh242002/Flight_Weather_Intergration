@@ -118,7 +118,7 @@ public class SaveData {
                 String arr_airport_id = current_flight.get("arr_airport_id").getAsString();
                 String arr_airport_time = current_flight.get("arr_airport_time").getAsString();
                 int flight_duration = current_flight.get("duration").getAsInt();
-                String airplane = current_flight.get("airplane").getAsString();
+                String airplane = current_flight.has("airplane") ? current_flight.get("airplane").getAsString() : "Unknown";
                 String air_line = current_flight.get("airline").getAsString();
                 String airline_logo = current_flight.get("airline_logo").getAsString();
                 String travel_class = current_flight.get("class").getAsString();
