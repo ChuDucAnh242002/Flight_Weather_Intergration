@@ -81,7 +81,7 @@ public class FlightDetailsController {
         int extensionsLastIndex = flight.getExtensions().size() - 1;
         String carbonEmission = flight.getExtensions().get(extensionsLastIndex);
         String [] carbonEmissionValue = carbonEmission.split(":");
-        String extraDetails = flight.getTravelClass() + " . Legroom " + flight.getLegroom() + " in . " + "Carbon footprint" + carbonEmissionValue[1];
+        String extraDetails = flight.getTravelClass() + "  •  Legroom " + flight.getLegroom() + "  •  " + "Carbon footprint" + carbonEmissionValue[1];
         String convertedDuration = convertMinutesToHoursAndMinutes(flight.getDuration());
         
         String arrivalSchedule = flight.getArrivalAirport().getTime();
