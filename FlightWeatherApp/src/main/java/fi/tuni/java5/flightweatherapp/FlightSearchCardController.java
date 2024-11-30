@@ -6,6 +6,7 @@ import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
 import fi.tuni.java5.flightweatherapp.settingManagement.InfoCardStorage;
 import fi.tuni.java5.flightweatherapp.settingManagement.Preferences;
 import fi.tuni.java5.flightweatherapp.settingManagement.SaveData;
+import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import java.io.IOException;
@@ -121,8 +122,7 @@ public class FlightSearchCardController {
             infoCard.set_new_element(flightDetails);
         }
         
-        Preferences pref = new Preferences(currency, "C", -1.0, 0);
-        flightSaveObj.write_data(infoCard, pref);
+        flightSaveObj.write_data(infoCard, PrimaryController.userPreference);
         updateSaveButtonIcon();
     };
 

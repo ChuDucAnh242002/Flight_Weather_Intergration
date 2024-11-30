@@ -76,10 +76,10 @@ public class Preferences {
     }   
     /**
      * @param input
-     * @return true if input is "C" or "F"
+     * @return true if input is "metric" or "imperial"
      */
     private boolean validate_temperature_unit(String input){
-        return input.compareTo("C") == 0 || input.compareTo("F") == 0;
+        return input.compareTo("metric") == 0 || input.compareTo("imperial") == 0;
     }
     /**
      * @param input

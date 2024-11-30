@@ -11,6 +11,7 @@ import fi.tuni.java5.flightweatherapp.flightDataAPI.Airport;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Flight;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Layover;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
+import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -87,7 +88,7 @@ public class SaveData {
         } catch(IllegalArgumentException e){
             // if currency or temperature is invalid, create new object with
             // default preferences
-            preferences = new Preferences("EUR", "C", -1.0, -1);
+            preferences = new Preferences("EUR", WeatherAPICall.chosenUnit, -1.0, -1);
         }
         
     }

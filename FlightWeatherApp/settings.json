@@ -3,7 +3,7 @@
   "favorites": [],
   "preferences": {
     "currency": "EUR",
-    "temp_unit": "C",
+    "temp_unit": "metric",
     "max_price": -1.0,
     "num_of_layovers": -1
   }
