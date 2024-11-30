@@ -325,7 +325,7 @@ public class SaveData {
     
     /**
      * writes data from Favorite and Preferences objects to JSON file
-     * @param fav favorites as InfoCardStorage obejct
+     * @param fav favorites as InfoCardStorage object
      * @param pref Preferences object
      * @param latest_search_result as InfoCardStorage (optional)
      */
@@ -336,11 +336,11 @@ public class SaveData {
         pref_result.addProperty("currency", pref.get_currency());
         pref_result.addProperty("temp_unit", pref.get_temperature_unit());
         pref_result.addProperty("max_price", pref.get_max_price());
-        pref_result.addProperty("num_of_layovers", pref.get_leyovers());
+        pref_result.addProperty("num_of_layovers", pref.get_layovers());
         
         JsonObject result = new JsonObject();
         
-        // if function is callad without latest_search_result
+        // if function is called without latest_search_result
         if (latest_search_result == null){
             result.add("latest_search", new JsonArray());
         }
