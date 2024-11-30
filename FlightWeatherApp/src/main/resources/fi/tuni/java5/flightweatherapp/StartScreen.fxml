@@ -542,7 +542,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label fx:id="stopsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="17.0" prefHeight="30.0" prefWidth="24.0" text="0" textAlignment="CENTER" textFill="#52459d">
+                        <Label fx:id="stopsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="17.0" prefHeight="30.0" prefWidth="24.0" text="--" textAlignment="CENTER" textFill="#52459d">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
@@ -622,7 +622,7 @@
                                     <Image url="@icons/Solid%20Oval%20Dollar.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" userData="USD" selected="true">
+                              <RadioButton mnemonicParsing="false" selected="true" userData="USD">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="currencyToggle" />
                                  </toggleGroup>
@@ -636,7 +636,7 @@
                                     <Image url="@icons/Solid%20Oval%20Euro.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" userData="EUR" toggleGroup="$currencyToggle" />
+                              <RadioButton mnemonicParsing="false" toggleGroup="$currencyToggle" userData="EUR" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" spacing="6.0">
@@ -646,7 +646,7 @@
                                     <Image url="@icons/Solid%20Oval%20Pound%20Circle.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" userData="GBP" toggleGroup="$currencyToggle" />
+                              <RadioButton mnemonicParsing="false" toggleGroup="$currencyToggle" userData="GBP" />
                            </children>
                         </VBox>
                      </children>

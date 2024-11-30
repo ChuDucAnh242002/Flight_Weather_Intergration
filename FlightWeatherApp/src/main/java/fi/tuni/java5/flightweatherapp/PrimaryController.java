@@ -220,8 +220,14 @@ public class PrimaryController {
         
         this.stops--;
         
-        stopsLabel.setText(String.valueOf(this.stops));
-    } 
+        if (this.stops == 0) {
+            stopsLabel.setText(defaultAirportCode);
+        } else {
+            stopsLabel.setText(String.valueOf(this.stops));
+        }
+    }
+    
+    @FXML
     private VBox searchNotification;
     
     @FXML
