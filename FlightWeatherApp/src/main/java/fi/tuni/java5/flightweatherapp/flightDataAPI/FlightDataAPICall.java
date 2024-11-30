@@ -41,8 +41,21 @@ public class FlightDataAPICall implements APICallInterface {
         if(jsonResponse.has("best_flights")) {
             JsonArray bestFlightArray = jsonResponse.get("best_flights").getAsJsonArray();
             if(bestFlightArray.size() != 0) {
-                for(JsonElement bestFlightElement : bestFlightArray) {
-                    int carbon_emission = bestFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
+                for(JsonElement bestFlightElement : bestFlightArray) {                    
+                    int carbon_emission = 0; // Default value if "carbon_emissions" or "this_flight" is missing
+
+                    JsonObject otherFlightObject = bestFlightElement.getAsJsonObject();
+
+                    // Check if "carbon_emissions" exists and is an object
+                    if (otherFlightObject.has("carbon_emissions")) {
+                        JsonObject carbonEmissions = otherFlightObject.getAsJsonObject("carbon_emissions");
+
+                        // Check if "this_flight" exists
+                        if (carbonEmissions.has("this_flight")) {
+                            carbon_emission = carbonEmissions.get("this_flight").getAsInt();
+                        }
+                    }
+                    
                     SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
                     bestFlight.setCarbonEmission(carbon_emission);
                     bestFlight.setCurrency(flightDataRequest.getCurrency());
@@ -56,7 +69,20 @@ public class FlightDataAPICall implements APICallInterface {
             JsonArray otherFlightArray = jsonResponse.get("other_flights").getAsJsonArray();
             if(otherFlightArray.size() != 0) {
                 for(JsonElement otherFlightElement : otherFlightArray) {
-                    int carbon_emission = otherFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
+                    int carbon_emission = 0; // Default value if "carbon_emissions" or "this_flight" is missing
+
+                    JsonObject otherFlightObject = otherFlightElement.getAsJsonObject();
+
+                    // Check if "carbon_emissions" exists and is an object
+                    if (otherFlightObject.has("carbon_emissions")) {
+                        JsonObject carbonEmissions = otherFlightObject.getAsJsonObject("carbon_emissions");
+
+                        // Check if "this_flight" exists
+                        if (carbonEmissions.has("this_flight")) {
+                            carbon_emission = carbonEmissions.get("this_flight").getAsInt();
+                        }
+                    }
+                    
                     SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
                     otherFlight.setCarbonEmission(carbon_emission);
                     otherFlight.setCurrency(flightDataRequest.getCurrency());
