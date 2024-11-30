@@ -347,6 +347,8 @@ public class PrimaryController {
     @FXML
     private void OnSavedFlightButtonPressed() {
         OpenSavedFlight(true);
+        
+        OpenAndCloseSearchingMessage(false);
 
         isSearchFlightsContainerActive = false;        
         isSavedFlightsContainerActive = true;
@@ -355,6 +357,10 @@ public class PrimaryController {
         InfoCardStorage favourites = savedFlights.get_favorites();
         List<SearchResultCard> searchResultCardList = favourites.get_by_flight_duration();
         
+        if (searchResultCardList.isEmpty()) {
+            OpenErrorMessage(emptyFavouriteMessage);
+        }
+        
         populateFlightsContainer(searchResultCardList);
       
     }
@@ -362,6 +368,17 @@ public class PrimaryController {
     @FXML
     private void OnGoBackButtonPressed() {
         OpenSavedFlight(false);
+        
+        OpenAndCloseSearchingMessage(false);
+        
+        isSearchFlightsContainerActive = true;        
+        isSavedFlightsContainerActive = false;
+        
+        if (combinedFlightsSearchResult.isEmpty()) {
+            OpenAndCloseSearchingMessage(true);
+        }
+        
+        populateFlightsContainer(combinedFlightsSearchResult);
     }
     
     // Search Parameter
@@ -603,6 +620,8 @@ public class PrimaryController {
     String airportSearchMessage = "Please enter Airport Code or City name!";
     
     String emptySearchMessage = "Sorry, there is no available flight!";
+    
+    String emptyFavouriteMessage = "Save favourite flights to see them here!";
     
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
