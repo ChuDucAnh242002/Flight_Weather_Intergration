@@ -210,7 +210,7 @@ public class SaveData {
      * @param input List of of SerachResultCard objects
      * @return result JsonArray
      */
-    private JsonArray write_flights_to_JSONArray(List<SearchResultCard> input){
+    private static JsonArray write_flights_to_JSONArray(List<SearchResultCard> input){
         
         JsonArray result = new JsonArray();
         
@@ -291,7 +291,7 @@ public class SaveData {
      * @param layovers ArrayList to be converted
      * @return result: resulting JSON array
      */
-    private JsonArray List_to_JSONArray(List<String> layovers){
+    private static JsonArray List_to_JSONArray(List<String> layovers){
         JsonArray result = new JsonArray();
         if (layovers != null) {
             for (String layover : layovers){
@@ -322,7 +322,7 @@ public class SaveData {
     
     // Gives write_data() default parameter value null for
     // latest result by overloading the function
-    public void write_data(InfoCardStorage fav, Preferences pref){
+    public static void write_data(InfoCardStorage fav, Preferences pref){
         write_data(fav, pref, null);
     }
     
@@ -332,7 +332,7 @@ public class SaveData {
      * @param pref Preferences object
      * @param latest_search_result as InfoCardStorage (optional)
      */
-    public void write_data(InfoCardStorage fav, Preferences pref, InfoCardStorage latest_search_result){
+    public static void write_data(InfoCardStorage fav, Preferences pref, InfoCardStorage latest_search_result){
         
         // saves preferences to JSON object
         JsonObject pref_result = new JsonObject();

@@ -129,6 +129,8 @@ public class PrimaryController {
     
     public static Preferences userPreference;
     
+    public static InfoCardStorage favouriteFlights;
+    
     @FXML
     private RadioButton usdRadioButton;
     
@@ -143,11 +145,9 @@ public class PrimaryController {
     
     @FXML
     private RadioButton imperialRadioButton;
-    
+        
     private void SaveData() {
-        SaveData saveData = new SaveData();
-        InfoCardStorage favourites = saveData.get_favorites();
-        saveData.write_data(favourites, userPreference);
+        SaveData.write_data(favouriteFlights, userPreference);
     }
     
     @FXML
@@ -348,6 +348,7 @@ public class PrimaryController {
         
         SaveData flightSaveObj = new SaveData();
         userPreference = flightSaveObj.get_preferences();
+        favouriteFlights = flightSaveObj.get_favorites();
         
         // Update the preference UI
         SetPreferenceInterface(userPreference);

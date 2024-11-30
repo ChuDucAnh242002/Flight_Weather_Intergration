@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author hamza
+ * @author hamza, Nguyen Quang Duc
  */
 public class FlightSearchCardController {
 
@@ -43,9 +43,9 @@ public class FlightSearchCardController {
     private SearchResultCard flightDetails;
     private String currency;
 
-    private void updateSaveButtonIcon() {
+    private void updateSaveButtonIcon(boolean isSaved) {
         Image image;
-        if (flightDetails.isSaved) {
+        if (isSaved) {
             image = new Image(getClass().getResourceAsStream("icons/Love icon filled.png"));
         }
         else {
@@ -72,9 +72,11 @@ public class FlightSearchCardController {
             currencySymbol = "£";
         }
         
+        flightDetails.isSaved = PrimaryController.favouriteFlights.contains(flightDetails);
+        updateSaveButtonIcon(flightDetails.isSaved);
+        
         this.price.setText(currencySymbol + String.valueOf(flightDetails.price));
         this.flightType.setText(flightDetails.getType());
-        updateSaveButtonIcon();
         List<Flight> flights = flightDetails.getFlights();
         List<Layover> layovers = flightDetails.getLayovers();
         
@@ -111,23 +113,20 @@ public class FlightSearchCardController {
 
     @FXML
     public void onSaveFlightDetailsButtonPressed() {
-        
-        SaveData flightSaveObj = new SaveData();
-        InfoCardStorage infoCard = flightSaveObj.get_favorites();
         if (flightDetails.isSaved) {
-            flightDetails.isSaved = false;
             System.out.println("____________________________________________");
             System.out.println("Flight already saved! Removing from saved list!");
             System.out.println("____________________________________________");
-            infoCard.delete_element(flightDetails);
+            PrimaryController.favouriteFlights.delete_element(flightDetails);
         }
         else {
-            flightDetails.isSaved = true;
-            infoCard.set_new_element(flightDetails);
+            PrimaryController.favouriteFlights.set_new_element(flightDetails);
         }
         
-        flightSaveObj.write_data(infoCard, PrimaryController.userPreference);
-        updateSaveButtonIcon();
+        flightDetails.isSaved = !flightDetails.isSaved;
+                
+        updateSaveButtonIcon(flightDetails.isSaved);
+        SaveData.write_data(PrimaryController.favouriteFlights, PrimaryController.userPreference);
     };
 
 }
