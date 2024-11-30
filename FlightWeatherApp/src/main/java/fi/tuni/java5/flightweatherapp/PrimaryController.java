@@ -28,6 +28,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -115,6 +116,72 @@ public class PrimaryController {
     private Label stopsLabel;
     
     private int stops = 0; // default any number of stops
+    
+    private boolean isSearchFlightsContainerActive = false;
+    
+    private boolean isSavedFlightsContainerActive = false;
+    
+    private List<SearchResultCard> combinedFlightsSearchResult = new ArrayList<>();
+    
+    @FXML
+    private void onSortByPriceButtonPressed() {
+        
+        if (isSavedFlightsContainerActive) {
+            
+            SaveData savedFlights = new SaveData();
+            InfoCardStorage favourites = savedFlights.get_favorites();
+            List<SearchResultCard> searchResultCardList = favourites.get_by_price();
+            populateFlightsContainer(searchResultCardList);
+        }
+        else if (isSearchFlightsContainerActive) {
+            InfoCardStorage flights = new InfoCardStorage();
+            for (SearchResultCard flightResult : combinedFlightsSearchResult) {
+                flights.set_new_element(flightResult);
+            }
+            List<SearchResultCard> orderedSearchResultCardList = flights.get_by_price();
+            populateFlightsContainer(orderedSearchResultCardList);
+        }
+    }
+    
+    @FXML
+    private void onSortByDurationButtonPressed() {
+        
+        if (isSavedFlightsContainerActive) {
+            
+            SaveData savedFlights = new SaveData();
+            InfoCardStorage favourites = savedFlights.get_favorites();
+            List<SearchResultCard> orderedSearchResultCardList = favourites.get_by_flight_duration();
+            populateFlightsContainer(orderedSearchResultCardList);
+        }
+        else if (isSearchFlightsContainerActive) {
+            InfoCardStorage flights = new InfoCardStorage();
+            for (SearchResultCard flightResult : combinedFlightsSearchResult) {
+                flights.set_new_element(flightResult);
+            }
+            List<SearchResultCard> orderedSearchResultCardList = flights.get_by_flight_duration();
+            populateFlightsContainer(orderedSearchResultCardList);
+        }
+    }
+
+    @FXML
+    private void onSortByDepartureButtonPressed() {
+        
+        if (isSavedFlightsContainerActive) {
+            
+            SaveData savedFlights = new SaveData();
+            InfoCardStorage favourites = savedFlights.get_favorites();
+            List<SearchResultCard> searchResultCardList = favourites.get_by_dep_time();
+            populateFlightsContainer(searchResultCardList);
+        }
+        else if (isSearchFlightsContainerActive) {
+            InfoCardStorage flights = new InfoCardStorage();
+            for (SearchResultCard flightResult : combinedFlightsSearchResult) {
+                flights.set_new_element(flightResult);
+            }
+            List<SearchResultCard> orderedSearchResultCardList = flights.get_by_dep_time();
+            populateFlightsContainer(orderedSearchResultCardList);
+        }
+    }
     
     private Boolean isStopsValueLegal() {
         /*
@@ -247,15 +314,9 @@ public class PrimaryController {
         flightSearchButton.setDisable(isOpen);
     }
     
-    @FXML
-    private void OnSavedFlightButtonPressed() {
-        OpenSavedFlight(true);
+    private void populateFlightsContainer(List<SearchResultCard> searchResultCardList) {
         
         fetchedFlightsContainer.getChildren().clear(); 
-        
-        SaveData savedFlights = new SaveData();
-        InfoCardStorage favourites = savedFlights.get_favorites();
-        List<SearchResultCard> searchResultCardList = favourites.get_by_flight_duration();
         
         if (!searchResultCardList.isEmpty()) {
             for (SearchResultCard flightDetails : searchResultCardList) {
@@ -275,7 +336,21 @@ public class PrimaryController {
                 }
             }
         }
+    }
+    
+    @FXML
+    private void OnSavedFlightButtonPressed() {
+        OpenSavedFlight(true);
+
+        isSearchFlightsContainerActive = false;        
+        isSavedFlightsContainerActive = true;
+
+        SaveData savedFlights = new SaveData();
+        InfoCardStorage favourites = savedFlights.get_favorites();
+        List<SearchResultCard> searchResultCardList = favourites.get_by_flight_duration();
         
+        populateFlightsContainer(searchResultCardList);
+      
     }
     
     @FXML
@@ -680,11 +755,6 @@ public class PrimaryController {
         }
                 
         SearchResult searchResult = FlightDataAPICall.RequestFlightDataAPI();
-        /*
-        System.out.println("_____________________________________");
-        System.out.println("searchResult: " + searchResult);
-        System.out.println("_____________________________________");
-          */      
                 
         if (searchResult == null) {
             OpenErrorMessage(emptySearchMessage);
@@ -699,9 +769,15 @@ public class PrimaryController {
     private void loadFlights(SearchResult searchResult) {
         fetchedFlightsContainer.getChildren().clear(); 
         
+        isSavedFlightsContainerActive = false;
+        isSearchFlightsContainerActive = true;
+        
         List<SearchResultCard> bestFlights = searchResult.getBestFlights();
         List<SearchResultCard> otherFlights = searchResult.getOtherFlights();
         
+        combinedFlightsSearchResult.addAll(bestFlights);
+        combinedFlightsSearchResult.addAll(otherFlights);
+                
         if (!bestFlights.isEmpty()) {
             for (SearchResultCard flightDetails : bestFlights) {
                 

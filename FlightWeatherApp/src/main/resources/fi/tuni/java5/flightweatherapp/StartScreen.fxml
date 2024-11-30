@@ -353,7 +353,7 @@
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                  <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onSortByPriceButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -365,7 +365,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                  <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onSortByDurationButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -377,7 +377,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutX="138.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                  <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutX="138.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSortByDepartureButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
