@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * stores flights in three different TreeSets
  * for different orders
- * @author Kalle Hirvijärvi
+ * @author Kalle Hirvijärvi, Nguyen Quang Duc
  */
 public class InfoCardStorage {
     
@@ -99,4 +99,14 @@ public class InfoCardStorage {
             return false;
         }
     }
+    
+    /**
+    * Checks whether a SearchResultCard object exists in the database.
+    * 
+    * @param target The SearchResultCard object to check for.
+    * @return true if the target object exists in the database, false otherwise.
+    */
+   public boolean contains(SearchResultCard target) {
+       return flights_by_departure.contains(target);
+   }
 }

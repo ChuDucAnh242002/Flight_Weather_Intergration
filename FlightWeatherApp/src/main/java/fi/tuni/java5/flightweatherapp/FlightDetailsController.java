@@ -1,10 +1,14 @@
 package fi.tuni.java5.flightweatherapp;
 
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Flight;
+import fi.tuni.java5.flightweatherapp.image.ImageRetriver;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 
 public class FlightDetailsController {
     
@@ -40,8 +44,16 @@ public class FlightDetailsController {
     
     @FXML
     private Label extraDetails;
+    
+    @FXML
+    private ImageView airlineLogo;
+    
+    @FXML
+    private HBox overnightHBox;
+    
+    @FXML
+    private HBox delayedHBox;
 
-     
     private String formatDate(String departureDate) {
         
         LocalDate date = LocalDate.parse(departureDate);
@@ -74,6 +86,7 @@ public class FlightDetailsController {
         
         String arrivalSchedule = flight.getArrivalAirport().getTime();
         String[] arrivalDateAndTime = arrivalSchedule.split(" ");
+        Image airlineLogo = ImageRetriver.retrieveImage(flight.airline_logo);
         
         this.airline.setText(flight.getAirline());
         this.departureDate.setText(formattedDepartureDate);
@@ -86,8 +99,12 @@ public class FlightDetailsController {
         this.airplane.setText(flight.getAirplane());
         this.flightDuration.setText(convertedDuration);
         this.extraDetails.setText(extraDetails);
+        this.airlineLogo.setImage(airlineLogo);
+       
+        this.overnightHBox.setVisible(flight.getOvernight());
+        this.overnightHBox.setManaged(flight.getOvernight());
         
-       
-       
+        this.delayedHBox.setVisible(flight.getDelayed());
+        this.delayedHBox.setManaged(flight.getDelayed());
     }
 }

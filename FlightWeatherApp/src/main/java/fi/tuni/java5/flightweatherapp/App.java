@@ -24,7 +24,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = loadFXML("StartScreen");
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("StartScreen.fxml"));
+        
+        Parent root = fxmlLoader.load();
+        
+        // Get the controller instance
+        PrimaryController controller = fxmlLoader.getController();
+
+        // Pass the stage to the controller
+        controller.setStage(stage);
         
         // Get AnchorPane as the root in FXML
         AnchorPane anchorPane = (AnchorPane) root;

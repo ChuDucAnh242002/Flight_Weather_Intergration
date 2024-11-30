@@ -353,7 +353,7 @@
                         <Font name="Arial Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                  <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onSortByPriceButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -365,7 +365,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                  <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onSortByDurationButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -377,7 +377,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutX="138.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                  <Button contentDisplay="CENTER" graphicTextGap="0.0" layoutX="138.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSortByDepartureButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -462,9 +462,9 @@
                                     <Image url="@icons/Selsius%20Icon.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" selected="true">
+                              <RadioButton fx:id="metricRadioButton" mnemonicParsing="false" selected="true" userData="metric">
                                  <toggleGroup>
-                                    <ToggleGroup fx:id="Unit" />
+                                    <ToggleGroup fx:id="temperatureToggle" />
                                  </toggleGroup>
                               </RadioButton>
                            </children>
@@ -476,7 +476,7 @@
                                     <Image url="@icons/Fahrenhei%20Icon.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" toggleGroup="$Unit" />
+                              <RadioButton fx:id="imperialRadioButton" mnemonicParsing="false" toggleGroup="$temperatureToggle" userData="imperial" />
                            </children>
                         </VBox>
                      </children>
@@ -502,7 +502,7 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" maxHeight="30.0" maxWidth="90.0" prefHeight="30.0" prefWidth="90.0" promptText="Enter price">
+                        <TextField fx:id="maxPriceTextField" alignment="CENTER" maxHeight="30.0" maxWidth="90.0" prefHeight="30.0" prefWidth="90.0" promptText="Enter price">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
@@ -530,7 +530,7 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                        <Button cache="true" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onStopsDecreaseButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -542,12 +542,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="17.0" prefHeight="30.0" prefWidth="24.0" text="0" textAlignment="CENTER" textFill="#52459d">
+                        <Label fx:id="stopsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="17.0" prefHeight="30.0" prefWidth="24.0" text="--" textAlignment="CENTER" textFill="#52459d">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
+                        <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onStopsIncreaseButtonPressed" prefHeight="40.0" prefWidth="40.0" textFill="#52459d">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -622,9 +622,9 @@
                                     <Image url="@icons/Solid%20Oval%20Dollar.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" selected="true">
+                              <RadioButton fx:id="usdRadioButton" mnemonicParsing="false" selected="true" userData="USD">
                                  <toggleGroup>
-                                    <ToggleGroup fx:id="currency" />
+                                    <ToggleGroup fx:id="currencyToggle" />
                                  </toggleGroup>
                               </RadioButton>
                            </children>
@@ -636,7 +636,7 @@
                                     <Image url="@icons/Solid%20Oval%20Euro.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" toggleGroup="$currency" />
+                              <RadioButton fx:id="eurRadioButton" mnemonicParsing="false" toggleGroup="$currencyToggle" userData="EUR" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" spacing="6.0">
@@ -646,7 +646,7 @@
                                     <Image url="@icons/Solid%20Oval%20Pound%20Circle.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" toggleGroup="$currency" />
+                              <RadioButton fx:id="gbpRadioButton" mnemonicParsing="false" toggleGroup="$currencyToggle" userData="GBP" />
                            </children>
                         </VBox>
                      </children>
@@ -678,7 +678,7 @@
                </graphic>
             </Button>
             <Line fx:id="preferenceSeparateLine2" endX="100.25" opacity="0.6" startX="-100.0" stroke="#52459d" strokeWidth="1.5" />
-            <Button fx:id="resetButton" graphicTextGap="8.0" mnemonicParsing="false" text="Reset" textFill="#52459d">
+            <Button fx:id="resetButton" graphicTextGap="8.0" mnemonicParsing="false" onAction="#onResetButtonPressed" text="Reset" textFill="#52459d">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>

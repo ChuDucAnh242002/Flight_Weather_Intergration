@@ -11,6 +11,7 @@ import fi.tuni.java5.flightweatherapp.flightDataAPI.Airport;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Flight;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Layover;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
+import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -87,7 +88,7 @@ public class SaveData {
         } catch(IllegalArgumentException e){
             // if currency or temperature is invalid, create new object with
             // default preferences
-            preferences = new Preferences("EUR", "C", -1.0, -1);
+            preferences = new Preferences("EUR", WeatherAPICall.chosenUnit, -1.0, -1);
         }
         
     }
@@ -117,7 +118,7 @@ public class SaveData {
                 String arr_airport_id = current_flight.get("arr_airport_id").getAsString();
                 String arr_airport_time = current_flight.get("arr_airport_time").getAsString();
                 int flight_duration = current_flight.get("duration").getAsInt();
-                String airplane = current_flight.get("airplane").getAsString();
+                String airplane = current_flight.has("airplane") ? current_flight.get("airplane").getAsString() : "Unknown";
                 String air_line = current_flight.get("airline").getAsString();
                 String airline_logo = current_flight.get("airline_logo").getAsString();
                 String travel_class = current_flight.get("class").getAsString();
@@ -177,10 +178,12 @@ public class SaveData {
             // read data fro SearchResultCard from Json file
             int total_duration = current.get("total_duration").getAsInt();
             int carbon_emissions = current.get("emissions").getAsInt();
-            double  price = current.get("price").getAsDouble();
+            double price = current.get("price").getAsDouble();
+            String currency = current.get("currency").getAsString();
             String type = current.get("type").getAsString();
             String airline_logo = current.get("airline_logo").getAsString();
             String departure_token = current.get("dep_token").getAsString();
+            boolean isSaved = current.get("isSaved").getAsBoolean();
             
             SearchResultCard new_flight = new SearchResultCard();
             
@@ -191,9 +194,11 @@ public class SaveData {
             new_flight.total_duration = total_duration;
             new_flight.carbon_emission = carbon_emissions;
             new_flight.price = price;
+            new_flight.currency = currency;
             new_flight.type = type;
             new_flight.airline_logo = airline_logo;
             new_flight.departure_token = departure_token;
+            new_flight.isSaved = isSaved;
             
             result.add(new_flight);
         }        
@@ -205,13 +210,13 @@ public class SaveData {
      * @param input List of of SerachResultCard objects
      * @return result JsonArray
      */
-    private JsonArray write_flights_to_JSONArray(List<SearchResultCard> input){
+    private static JsonArray write_flights_to_JSONArray(List<SearchResultCard> input){
         
         JsonArray result = new JsonArray();
         
         for (SearchResultCard result_card : input){
             JsonObject result_card_json = new JsonObject();
-            
+                    
             JsonArray flights = new JsonArray();
             for (Flight flight : result_card.getFlights()){
                 JsonObject flight_json = new JsonObject();
@@ -257,9 +262,12 @@ public class SaveData {
             result_card_json.addProperty("total_duration", result_card.getTotalDuration());
             result_card_json.addProperty("emissions", result_card.carbon_emission);
             result_card_json.addProperty("price", result_card.getPrice());
+            result_card_json.addProperty("currency", result_card.getCurrency());
             result_card_json.addProperty("type", result_card.getType());
             result_card_json.addProperty("airline_logo", result_card.getAirlineLogo());
-            result_card_json.addProperty("dep_token", result_card.getDepartureToken());
+            String depToken = result_card.getDepartureToken();
+            result_card_json.addProperty("dep_token", depToken == null ? "" : depToken);
+            result_card_json.addProperty("isSaved", result_card.isSaved);
             
             result.add(result_card_json);
         }
@@ -283,10 +291,12 @@ public class SaveData {
      * @param layovers ArrayList to be converted
      * @return result: resulting JSON array
      */
-    private JsonArray List_to_JSONArray(List<String> layovers){
+    private static JsonArray List_to_JSONArray(List<String> layovers){
         JsonArray result = new JsonArray();
-        for (String layover : layovers){
-            result.add(layover);
+        if (layovers != null) {
+            for (String layover : layovers){
+                result.add(layover);
+            }
         }
         return result; 
     }
@@ -312,28 +322,28 @@ public class SaveData {
     
     // Gives write_data() default parameter value null for
     // latest result by overloading the function
-    public void write_data(InfoCardStorage fav, Preferences pref){
+    public static void write_data(InfoCardStorage fav, Preferences pref){
         write_data(fav, pref, null);
     }
     
     /**
      * writes data from Favorite and Preferences objects to JSON file
-     * @param fav favorites as InfoCardStorage obejct
+     * @param fav favorites as InfoCardStorage object
      * @param pref Preferences object
      * @param latest_search_result as InfoCardStorage (optional)
      */
-    public void write_data(InfoCardStorage fav, Preferences pref, InfoCardStorage latest_search_result){
+    public static void write_data(InfoCardStorage fav, Preferences pref, InfoCardStorage latest_search_result){
         
         // saves preferences to JSON object
         JsonObject pref_result = new JsonObject();
         pref_result.addProperty("currency", pref.get_currency());
         pref_result.addProperty("temp_unit", pref.get_temperature_unit());
         pref_result.addProperty("max_price", pref.get_max_price());
-        pref_result.addProperty("num_of_layovers", pref.get_leyovers());
+        pref_result.addProperty("num_of_layovers", pref.get_layovers());
         
         JsonObject result = new JsonObject();
         
-        // if function is callad without latest_search_result
+        // if function is called without latest_search_result
         if (latest_search_result == null){
             result.add("latest_search", new JsonArray());
         }
