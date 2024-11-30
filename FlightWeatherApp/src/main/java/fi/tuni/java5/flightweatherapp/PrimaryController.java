@@ -678,6 +678,8 @@ public class PrimaryController {
     
     String emptyFavouriteMessage = "Save favourite flights to see them here!";
     
+    String maxPriceInputFormatErrorMessage = "Please input positive number for maximum price!";
+    
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
     private void OpenErrorMessage(String messageString) {
@@ -787,6 +789,30 @@ public class PrimaryController {
         }
     }
     
+    private boolean isMaxPriceValueLegal() {
+        String input = maxPriceTextField.getText();
+        
+        if (input == null || input.isEmpty()) {
+            return true;
+        }
+        
+        int startIndex = 0;
+        
+        // Check if the string starts with a negative sign
+        if (input.charAt(0) == '-') {
+            return false;
+        }
+
+        // Verify that the rest of the characters are digits
+        for (int i = startIndex; i < input.length(); i++) {
+            if (!Character.isDigit(input.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
     private void RemoveAllFlightFromInterface() {
         populateFlightsContainer(new ArrayList<SearchResultCard>());
     }
@@ -795,7 +821,6 @@ public class PrimaryController {
     private void OnSearchFlightButtonPressed() {
 
         currencyToggleListener();
-        getMaxPriceFromTextField();
         System.out.println("Currency: " + this.currency);
         System.out.println("Max Price: " + this.maxPriceValue);
         
@@ -826,6 +851,15 @@ public class PrimaryController {
             RemoveAllFlightFromInterface();
             return;
         }
+        
+        if (!isMaxPriceValueLegal()) {
+            OpenErrorMessage(maxPriceInputFormatErrorMessage);
+            
+            RemoveAllFlightFromInterface();
+            return;
+        }
+        
+        getMaxPriceFromTextField();
         
         OpenAndCloseSearchingMessage(false);
                     
