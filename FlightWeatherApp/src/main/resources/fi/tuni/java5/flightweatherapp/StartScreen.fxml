@@ -462,7 +462,7 @@
                                     <Image url="@icons/Selsius%20Icon.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" selected="true">
+                              <RadioButton fx:id="celciusRadioButton" mnemonicParsing="false" selected="true">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="Unit" />
                                  </toggleGroup>
@@ -622,7 +622,7 @@
                                     <Image url="@icons/Solid%20Oval%20Dollar.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" userData="USD" selected="true">
+                              <RadioButton fx:id="usdRadioButton" mnemonicParsing="false" userData="USD" selected="true">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="currencyToggle" />
                                  </toggleGroup>
@@ -678,7 +678,7 @@
                </graphic>
             </Button>
             <Line fx:id="preferenceSeparateLine2" endX="100.25" opacity="0.6" startX="-100.0" stroke="#52459d" strokeWidth="1.5" />
-            <Button fx:id="resetButton" graphicTextGap="8.0" mnemonicParsing="false" text="Reset" textFill="#52459d">
+            <Button fx:id="resetButton" graphicTextGap="8.0" mnemonicParsing="false" onAction= "#onResetButtonPressed" text="Reset" textFill="#52459d">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>

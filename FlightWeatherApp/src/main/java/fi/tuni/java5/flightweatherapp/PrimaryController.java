@@ -124,6 +124,43 @@ public class PrimaryController {
     private List<SearchResultCard> combinedFlightsSearchResult = new ArrayList<>();
     
     @FXML
+    private RadioButton usdRadioButton;
+    
+    @FXML
+    private RadioButton celciusRadioButton;
+    
+    @FXML
+    private void onResetButtonPressed() {
+        
+        SetDepartureAiportInfo(defaultAirportCode, defaultAirportName);
+        ToggleDepartureAirportInterface(true);
+        
+        SetArrivalAiportInfo(defaultAirportCode, defaultAirportName);
+        ToggleArrivalAirportInterface(true);
+                
+        outboundDatePicker.setValue(null);
+        returnDatePicker.setValue(null);
+        
+        adultPassengerAmount = 1;
+        adultAmountLabel.setText(String.valueOf(adultPassengerAmount));
+        childPassengerAmount = 0;
+        childAmountLabel.setText(String.valueOf(childPassengerAmount));
+        
+        maxPriceTextField.setText("");
+        
+        stops = 0;
+        stopsLabel.setText(String.valueOf(stops));
+        
+        usdRadioButton.setSelected(true);
+        
+        celciusRadioButton.setSelected(true);
+        
+        fetchedFlightsContainer.getChildren().clear();
+        
+        OnSeeLessButtonPressed();
+    }
+    
+    @FXML
     private void onSortByPriceButtonPressed() {
         
         if (isSavedFlightsContainerActive) {
@@ -558,11 +595,11 @@ public class PrimaryController {
             updateWeatherData(true);
         }
         
-        if (!isDatePickerValueLegal()) {
+        if (!isOutboundDatePickerValueNull() && !isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
         }
         
-        if (!isReturnDatePickerValueLegal()) {
+        if (!isReturnDatePickerValueNull() && !isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
         }
     }
@@ -573,11 +610,11 @@ public class PrimaryController {
             updateWeatherData(false);
         }
         
-        if (!isDatePickerValueLegal()) {
+        if (!isReturnDatePickerValueNull() && !isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
         }
         
-        if (!isReturnDatePickerValueLegal()) {
+        if (!isReturnDatePickerValueNull() && !isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
         }
     }
@@ -674,7 +711,7 @@ public class PrimaryController {
         String maxPriceString = maxPriceTextField.getText();
         Integer maxPriceInput = this.maxPriceValue;
         if (!maxPriceString.equals("")) {
-            maxPriceInput = Integer.parseInt(maxPriceTextField.getText());
+            maxPriceInput = Integer.parseInt(maxPriceString);
             this.maxPriceValue = maxPriceInput;
         }
     }
