@@ -7,11 +7,11 @@ import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResult;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.FlightDataRequest;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
 import fi.tuni.java5.flightweatherapp.settingManagement.InfoCardStorage;
+import fi.tuni.java5.flightweatherapp.settingManagement.Preferences;
 import fi.tuni.java5.flightweatherapp.settingManagement.SaveData;
 import fi.tuni.java5.flightweatherapp.weatherAPI.CurrentAndForecastWeatherResponse;
 import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -357,6 +357,15 @@ public class PrimaryController {
         goBackButton.setManaged(isOpen);
         
         flightSearchButton.setDisable(isOpen);
+        
+        departureAirportEditButton.setDisable(isOpen);
+        departureAirportFindButton.setDisable(isOpen);
+        
+        arrivalAirportEditButton.setDisable(isOpen);
+        arrivalAirportFindButton.setDisable(isOpen);
+        
+        outboundDatePicker.setDisable(isOpen);
+        returnDatePicker.setDisable(isOpen);
     }
     
     private void populateFlightsContainer(List<SearchResultCard> searchResultCardList) {
@@ -516,6 +525,8 @@ public class PrimaryController {
         
         if (searchString == null || searchString == emptyString) {
             OpenErrorMessage(airportSearchMessage);
+            
+            RemoveAllFlightFromInterface();
             return;
         }
         
@@ -550,6 +561,7 @@ public class PrimaryController {
         }
         
         OpenAndCloseSearchingMessage(true);
+        RemoveAllFlightFromInterface();
     }
     
     // Arrival
@@ -582,6 +594,8 @@ public class PrimaryController {
         
         if (searchString == null || searchString == emptyString) {
             OpenErrorMessage(airportSearchMessage);
+            
+            RemoveAllFlightFromInterface();
             return;
         }
         
@@ -616,10 +630,13 @@ public class PrimaryController {
         }
         
         OpenAndCloseSearchingMessage(true);
+        RemoveAllFlightFromInterface();
     }
     
     @FXML
     private void OnOutboundDatePicked() {
+        RemoveAllFlightFromInterface();
+        
         if (IsWeatherDataOutboundValid()) {
             UpdateWeatherData(true);
         }
@@ -641,6 +658,8 @@ public class PrimaryController {
     
     @FXML
     private void OnReturnDatePicked() {
+        RemoveAllFlightFromInterface();
+        
         if (IsWeatherDataReturnValid()) {
             UpdateWeatherData(false);
         }
