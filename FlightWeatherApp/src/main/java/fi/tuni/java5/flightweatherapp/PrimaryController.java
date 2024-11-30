@@ -29,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -509,6 +508,8 @@ public class PrimaryController {
         if (isWeatherDataReturnValid()) {
             updateWeatherData(false);
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     // Arrival
@@ -573,6 +574,8 @@ public class PrimaryController {
         if (isWeatherDataReturnValid()) {
             updateWeatherData(false);
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     @FXML
@@ -583,11 +586,17 @@ public class PrimaryController {
         
         if (!isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
+            
+            return;
         }
         
         if (!isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
+            
+            return;
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     @FXML
@@ -598,11 +607,17 @@ public class PrimaryController {
         
         if (!isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
+            
+            return;
         }
         
         if (!isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
+            
+            return;
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     // Search flight section
@@ -716,6 +731,10 @@ public class PrimaryController {
         }
     }
     
+    private void RemoveAllFlightFromInterface() {
+        populateFlightsContainer(new ArrayList<SearchResultCard>());
+    }
+    
     @FXML
     private void OnSearchFlightButtonPressed() {
 
@@ -727,24 +746,28 @@ public class PrimaryController {
         if (AirportDataAPICall.isAnyAirportNull()) {
             OpenErrorMessage(missingAirportErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
                 
         if (isOutboundDatePickerValueNull()) {
             OpenErrorMessage(missingDatePickerErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
                 
         if (!isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
         
         if (!isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
         
@@ -784,8 +807,10 @@ public class PrimaryController {
         if (searchResult == null) {
             OpenErrorMessage(emptySearchMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
+        
         loadFlights(searchResult);
         
     }
@@ -799,6 +824,8 @@ public class PrimaryController {
         
         List<SearchResultCard> bestFlights = searchResult.getBestFlights();
         List<SearchResultCard> otherFlights = searchResult.getOtherFlights();
+        
+        combinedFlightsSearchResult.clear();
         
         combinedFlightsSearchResult.addAll(bestFlights);
         combinedFlightsSearchResult.addAll(otherFlights);
