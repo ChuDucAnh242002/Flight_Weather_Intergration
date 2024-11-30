@@ -2,7 +2,7 @@
 
 Instructions for running:
 
-- After clonig repo, confugure as maeven project
+- After cloning repo, configure as maeven project
   (the root directory is: release/finalSubmission/FlightWeatherApp)
-- Run in netbeans to open the desktop app
+- Run in Netbeans to open the desktop app
 - build to run unit tests
