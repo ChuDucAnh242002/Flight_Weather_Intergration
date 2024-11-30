@@ -19,7 +19,7 @@ public class FlightDataRequest implements RequestInterface {
     private int stops = 0;
     private int maxPrice = 0;
     private String engine = "google_flights";
-    private String apiKey = "0c0008d1a14b7681f19f1f6154db1ecc9167ebe938399881a88f9fedc0a09790";
+    private String apiKey = "98239283e9d983ec3306ba6fbeda7da5adfb3ecffe5ff5c31b542ab9d312b59f";
     
     public FlightDataRequest() {
         this.departureId = "PEK";
