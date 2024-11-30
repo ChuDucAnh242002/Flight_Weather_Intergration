@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class PrimaryController {
@@ -327,6 +329,14 @@ public class PrimaryController {
     @FXML
     private Line preferenceSeparateLine2;
     
+    private Stage stage;
+    
+    public void setStage(Stage stage) {
+        this.stage = stage;
+        // Set the close request handler
+        this.stage.setOnCloseRequest(event -> onWindowClose(event));
+    }
+    
     @FXML
     public void initialize() {        
         SetActiveAndInactiveAllWeatherData(false);
@@ -343,6 +353,15 @@ public class PrimaryController {
         SetPreferenceInterface(userPreference);
     }
 
+    
+    private void onWindowClose(WindowEvent event) {
+        currencyToggleListener();
+        temperatureToggleListener();
+        getMaxPriceFromTextField();
+        
+        SaveData();
+    }
+    
     private void SetPreferenceInterface(Preferences preferences) {
         currency = preferences.get_currency();
         
