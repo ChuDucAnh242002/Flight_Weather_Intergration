@@ -459,7 +459,7 @@ public class PrimaryController {
 
                     FlightSearchCardController controller = loader.getController();
                           
-                    controller.setSearchCardFlightDetails(flightDetails, this.currency);
+                    controller.setSearchCardFlightDetails(flightDetails);
 
                     fetchedFlightsContainer.getChildren().add(flightCardNode);
 
@@ -829,7 +829,7 @@ public class PrimaryController {
     
     @FXML
     public void currencyToggleListener() {
-        String selectedCurrencyCode = emptyString;
+        String selectedCurrencyCode;
         
         if (usdRadioButton.isSelected()) {
             selectedCurrencyCode = "USD";
@@ -1031,7 +1031,7 @@ public class PrimaryController {
 
                     FlightSearchCardController controller = loader.getController();
                           
-                    controller.setSearchCardFlightDetails(flightDetails, this.currency);
+                    controller.setSearchCardFlightDetails(flightDetails);
 
                     fetchedFlightsContainer.getChildren().add(flightCardNode);
 
@@ -1048,7 +1048,7 @@ public class PrimaryController {
                     Node flightCardNode = loader.load();
 
                     FlightSearchCardController controller = loader.getController();
-                    controller.setSearchCardFlightDetails(flightDetails, this.currency);
+                    controller.setSearchCardFlightDetails(flightDetails);
 
                     fetchedFlightsContainer.getChildren().add(flightCardNode);
 

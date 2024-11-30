@@ -178,7 +178,8 @@ public class SaveData {
             // read data fro SearchResultCard from Json file
             int total_duration = current.get("total_duration").getAsInt();
             int carbon_emissions = current.get("emissions").getAsInt();
-            double  price = current.get("price").getAsDouble();
+            double price = current.get("price").getAsDouble();
+            String currency = current.get("currency").getAsString();
             String type = current.get("type").getAsString();
             String airline_logo = current.get("airline_logo").getAsString();
             String departure_token = current.get("dep_token").getAsString();
@@ -193,6 +194,7 @@ public class SaveData {
             new_flight.total_duration = total_duration;
             new_flight.carbon_emission = carbon_emissions;
             new_flight.price = price;
+            new_flight.currency = currency;
             new_flight.type = type;
             new_flight.airline_logo = airline_logo;
             new_flight.departure_token = departure_token;
@@ -260,6 +262,7 @@ public class SaveData {
             result_card_json.addProperty("total_duration", result_card.getTotalDuration());
             result_card_json.addProperty("emissions", result_card.carbon_emission);
             result_card_json.addProperty("price", result_card.getPrice());
+            result_card_json.addProperty("currency", result_card.getCurrency());
             result_card_json.addProperty("type", result_card.getType());
             result_card_json.addProperty("airline_logo", result_card.getAirlineLogo());
             String depToken = result_card.getDepartureToken();

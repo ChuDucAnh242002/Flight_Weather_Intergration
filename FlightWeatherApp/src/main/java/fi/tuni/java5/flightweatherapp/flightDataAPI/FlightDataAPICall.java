@@ -45,6 +45,7 @@ public class FlightDataAPICall implements APICallInterface {
                     int carbon_emission = bestFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
                     SearchResultCard bestFlight = gson.fromJson(bestFlightElement, SearchResultCard.class);
                     bestFlight.setCarbonEmission(carbon_emission);
+                    bestFlight.setCurrency(flightDataRequest.getCurrency());
                     flightDataResponse.addBestFlight(bestFlight);
                 
                 }
@@ -58,6 +59,7 @@ public class FlightDataAPICall implements APICallInterface {
                     int carbon_emission = otherFlightElement.getAsJsonObject().getAsJsonObject("carbon_emissions").get("this_flight").getAsInt();
                     SearchResultCard otherFlight = gson.fromJson(otherFlightElement, SearchResultCard.class);
                     otherFlight.setCarbonEmission(carbon_emission);
+                    otherFlight.setCurrency(flightDataRequest.getCurrency());
                     flightDataResponse.addOtherFlight(otherFlight);
                 }
             }

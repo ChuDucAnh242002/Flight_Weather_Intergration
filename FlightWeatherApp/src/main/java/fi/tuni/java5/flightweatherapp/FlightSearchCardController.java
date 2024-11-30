@@ -54,20 +54,24 @@ public class FlightSearchCardController {
         saveFlightButtonIcon.setImage(image);
     }
     
-    public void setSearchCardFlightDetails(SearchResultCard flightDetails, String currency) {
+    public void setSearchCardFlightDetails(SearchResultCard flightDetails) {
         
         // Saving to use later when saving flight
         this.flightDetails = flightDetails;
-        this.currency = currency;
+        String currency = flightDetails.getCurrency();
         
-        String currencySymbol = "$";
-        if (currency.equals("EUR")) {
+        String currencySymbol;
+        
+        if (currency.equals("USD")) {
+            currencySymbol = "$";
+        }
+        else if (currency.equals("EUR")) {
             currencySymbol = "€";
         }
-        else if (currency.equals("GBP")) {
+        else {
             currencySymbol = "£";
         }
-       
+        
         this.price.setText(currencySymbol + String.valueOf(flightDetails.price));
         this.flightType.setText(flightDetails.getType());
         updateSaveButtonIcon();

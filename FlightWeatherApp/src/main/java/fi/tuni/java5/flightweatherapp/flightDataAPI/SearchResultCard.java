@@ -17,6 +17,7 @@ public class SearchResultCard {
     public String airline_logo;
     public String departure_token;
     public boolean isSaved = false;
+    public String currency;
     
     // Getters
     public List<Flight> getFlights() {
@@ -49,6 +50,14 @@ public class SearchResultCard {
     
     public void setCarbonEmission(int carbon_emission){
         this.carbon_emission = carbon_emission;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    public void setCurrency(String currencyCode){
+        this.currency = currencyCode;
     }
     
     @Override
