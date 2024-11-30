@@ -125,15 +125,32 @@ public class PrimaryController {
     
     private List<SearchResultCard> combinedFlightsSearchResult = new ArrayList<>();
     
+    public static Preferences userPreference;
+    
     @FXML
     private RadioButton usdRadioButton;
     
     @FXML
-    private RadioButton celciusRadioButton;
+    private RadioButton eurRadioButton;
+    
+    @FXML
+    private RadioButton gbpRadioButton;
+    
+    @FXML
+    private RadioButton metricRadioButton;
+    
+    @FXML
+    private RadioButton imperialRadioButton;
+    
+    private void SaveData() {
+        SaveData saveData = new SaveData();
+        InfoCardStorage favourites = saveData.get_favorites();
+        saveData.write_data(favourites, userPreference);
+    }
     
     @FXML
     private void onResetButtonPressed() {
-        
+        // Search UI
         SetDepartureAiportInfo(defaultAirportCode, defaultAirportName);
         ToggleDepartureAirportInterface(true);
         
@@ -148,18 +165,18 @@ public class PrimaryController {
         childPassengerAmount = 0;
         childAmountLabel.setText(String.valueOf(childPassengerAmount));
         
-        maxPriceTextField.setText("");
-        
-        stops = 0;
-        stopsLabel.setText(String.valueOf(stops));
-        
-        usdRadioButton.setSelected(true);
-        
-        celciusRadioButton.setSelected(true);
-        
         fetchedFlightsContainer.getChildren().clear();
         
-        OnSeeLessButtonPressed();
+        OpenAndCloseSearchingMessage(true);
+        
+        // Preference
+        userPreference = new Preferences("USD", WeatherAPICall.metricUnit, -1.0, 0);
+        SetPreferenceInterface(userPreference);
+        
+        // Weather UI
+        weatherGuideVBox.setVisible(true);
+        
+        SetActiveAndInactiveAllWeatherData(false);
     }
     
     @FXML
@@ -244,6 +261,8 @@ public class PrimaryController {
         
         this.stops++;
         
+        userPreference.set_layovers(this.stops);
+        
         stopsLabel.setText(String.valueOf(this.stops));
     }
     
@@ -258,6 +277,8 @@ public class PrimaryController {
         }
         
         this.stops--;
+        
+        userPreference.set_layovers(this.stops);
         
         if (this.stops == 0) {
             stopsLabel.setText(defaultAirportCode);
@@ -307,13 +328,51 @@ public class PrimaryController {
     private Line preferenceSeparateLine2;
     
     @FXML
-    public void initialize() {
+    public void initialize() {        
         SetActiveAndInactiveAllWeatherData(false);
         
         ExpandOrCollapsePreference(false);
         
         goBackButton.setVisible(false);
         goBackButton.setManaged(false);
+        
+        SaveData flightSaveObj = new SaveData();
+        userPreference = flightSaveObj.get_preferences();
+        
+        // Update the preference UI
+        SetPreferenceInterface(userPreference);
+    }
+
+    private void SetPreferenceInterface(Preferences preferences) {
+        currency = preferences.get_currency();
+        
+        if (currency.equalsIgnoreCase("USD")) {
+            usdRadioButton.setSelected(true);
+        } else if (currency.equalsIgnoreCase("EUR")) {
+            eurRadioButton.setSelected(true);
+        } else {
+            gbpRadioButton.setSelected(true);
+        }
+                
+        if (preferences.get_temperature_unit().equalsIgnoreCase(WeatherAPICall.metricUnit)) {
+            metricRadioButton.setSelected(true);
+        } else {
+            imperialRadioButton.setSelected(true);
+        }
+                
+        double maxPrice = preferences.get_max_price();
+        if (maxPrice > 0) {
+            maxPriceTextField.setText(Integer.toString((int) maxPrice));
+        } else {
+            maxPriceTextField.setText(emptyString);
+        }
+        
+        this.stops = preferences.get_layovers();
+        if (stops <= 0) {
+            stopsLabel.setText(defaultAirportCode);
+        } else {
+            stopsLabel.setText(Integer.toString(stops));
+        }
     }
     
     private void ExpandOrCollapsePreference(boolean isExpand) {
@@ -751,16 +810,18 @@ public class PrimaryController {
     
     @FXML
     public void currencyToggleListener() {
+        String selectedCurrencyCode = emptyString;
         
-        // Add listener to detect currency changes
-        currencyToggle.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
-            
-            if (newToggle != null) {
-                RadioButton selectedRadioButton = (RadioButton) newToggle;
-                String selectedCurrencyCode = getSelectedCurrencyCode(selectedRadioButton);
-                this.currency = selectedCurrencyCode;
-            }
-        });
+        if (usdRadioButton.isSelected()) {
+            selectedCurrencyCode = "USD";
+        } else if (eurRadioButton.isSelected()) {
+            selectedCurrencyCode = "EUR";
+        } else {
+            selectedCurrencyCode = "GBP";
+        }
+        
+        this.currency = selectedCurrencyCode;
+        userPreference.set_currency(selectedCurrencyCode);
     }
 
     private String getSelectedCurrencyCode(RadioButton selectedRadioButton) {
@@ -769,19 +830,14 @@ public class PrimaryController {
     }
     
     @FXML
-    public void temperatureToggleListener() {
+    public void temperatureToggleListener() {        
+        if (metricRadioButton.isSelected()) {
+            WeatherAPICall.chosenUnit = WeatherAPICall.metricUnit;
+        } else {
+            WeatherAPICall.chosenUnit = WeatherAPICall.imperialUnit;
+        }
         
-        // Add listener to detect currency changes
-        temperatureToggle.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
-            
-            if (newToggle != null) {
-                RadioButton selectedRadioButton = (RadioButton) newToggle;
-                String selectedTemperatureUnit = (String) selectedRadioButton.getUserData();
-                WeatherAPICall.chosenUnit = selectedTemperatureUnit;
-                
-                System.out.println("Chosen Temperature Unit:" + WeatherAPICall.chosenUnit);
-            }
-        });
+        userPreference.set_temperature_unit(WeatherAPICall.chosenUnit);
     }
     
     private int maxPriceValue = Integer.MAX_VALUE;
@@ -789,10 +845,15 @@ public class PrimaryController {
     private void getMaxPriceFromTextField() {
         
         String maxPriceString = maxPriceTextField.getText();
-        Integer maxPriceInput = this.maxPriceValue;
+                
         if (!maxPriceString.equals("")) {
-            maxPriceInput = Integer.parseInt(maxPriceString);
-            this.maxPriceValue = maxPriceInput;
+            this.maxPriceValue = Integer.parseInt(maxPriceString);
+            
+            userPreference.set_max_price(Double.parseDouble(maxPriceString));
+        } else {
+            this.maxPriceValue = Integer.MAX_VALUE;
+            
+            userPreference.set_max_price(-1.0);
         }
     }
     
@@ -838,8 +899,9 @@ public class PrimaryController {
     
     @FXML
     private void OnSearchFlightButtonPressed() {
-
         currencyToggleListener();
+        temperatureToggleListener();
+        
         System.out.println("Currency: " + this.currency);
         System.out.println("Max Price: " + this.maxPriceValue);
         
@@ -879,6 +941,8 @@ public class PrimaryController {
         }
         
         getMaxPriceFromTextField();
+        
+        SaveData();
         
         OpenAndCloseSearchingMessage(false);
                     
@@ -1397,6 +1461,9 @@ public class PrimaryController {
         
         returnWeatherErrorVBox.setVisible(isActive);
         returnWeatherErrorVBox.setManaged(isActive);
+        
+        weatherSeperateLine.setVisible(isActive);
+        weatherSeperateLine.setManaged(isActive);
     }
     
     private String DecimalToStringConverter(double value)
