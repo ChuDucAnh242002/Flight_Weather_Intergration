@@ -1,5 +1,6 @@
 package fi.tuni.java5.flightweatherapp.flightDataAPI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,8 +8,8 @@ import java.util.List;
  * @author Chu Duc Anh
  */
 public class SearchResultCard {
-    public List<Flight> flights;
-    public List<Layover> layovers;
+    public List<Flight> flights = new ArrayList<>();;
+    public List<Layover> layovers = new ArrayList<>();;
     public int total_duration;
     public int carbon_emission;
     public double price;

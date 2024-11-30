@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 
 public class FlightDetailsController {
     
@@ -46,6 +47,12 @@ public class FlightDetailsController {
     
     @FXML
     private ImageView airlineLogo;
+    
+    @FXML
+    private HBox overnightHBox;
+    
+    @FXML
+    private HBox delayedHBox;
 
     private String formatDate(String departureDate) {
         
@@ -94,7 +101,10 @@ public class FlightDetailsController {
         this.extraDetails.setText(extraDetails);
         this.airlineLogo.setImage(airlineLogo);
        
-       
+        this.overnightHBox.setVisible(flight.getOvernight());
+        this.overnightHBox.setManaged(flight.getOvernight());
         
+        this.delayedHBox.setVisible(flight.getDelayed());
+        this.delayedHBox.setManaged(flight.getDelayed());
     }
 }

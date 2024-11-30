@@ -29,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -105,6 +104,9 @@ public class PrimaryController {
     private ToggleGroup currencyToggle;
     
     private String currency = "USD";
+    
+    @FXML
+    private ToggleGroup temperatureToggle;
     
     @FXML
     private TextField maxPriceTextField;
@@ -257,8 +259,14 @@ public class PrimaryController {
         
         this.stops--;
         
-        stopsLabel.setText(String.valueOf(this.stops));
-    } 
+        if (this.stops == 0) {
+            stopsLabel.setText(defaultAirportCode);
+        } else {
+            stopsLabel.setText(String.valueOf(this.stops));
+        }
+    }
+    
+    @FXML
     private VBox searchNotification;
     
     @FXML
@@ -378,6 +386,8 @@ public class PrimaryController {
     @FXML
     private void OnSavedFlightButtonPressed() {
         OpenSavedFlight(true);
+        
+        OpenAndCloseSearchingMessage(false);
 
         isSearchFlightsContainerActive = false;        
         isSavedFlightsContainerActive = true;
@@ -386,6 +396,10 @@ public class PrimaryController {
         InfoCardStorage favourites = savedFlights.get_favorites();
         List<SearchResultCard> searchResultCardList = favourites.get_by_flight_duration();
         
+        if (searchResultCardList.isEmpty()) {
+            OpenErrorMessage(emptyFavouriteMessage);
+        }
+        
         populateFlightsContainer(searchResultCardList);
       
     }
@@ -393,6 +407,17 @@ public class PrimaryController {
     @FXML
     private void OnGoBackButtonPressed() {
         OpenSavedFlight(false);
+        
+        OpenAndCloseSearchingMessage(false);
+        
+        isSearchFlightsContainerActive = true;        
+        isSavedFlightsContainerActive = false;
+        
+        if (combinedFlightsSearchResult.isEmpty()) {
+            OpenAndCloseSearchingMessage(true);
+        }
+        
+        populateFlightsContainer(combinedFlightsSearchResult);
     }
     
     // Search Parameter
@@ -516,13 +541,15 @@ public class PrimaryController {
         
         SetDepartureAiportInfo(AirportDataAPICall.departureAirport.getIata(), AirportDataAPICall.departureAirport.getName());
         
-        if (isWeatherDataOutboundValid()) {
-            updateWeatherData(true);
+        if (IsWeatherDataOutboundValid()) {
+            UpdateWeatherData(true);
         }
         
-        if (isWeatherDataReturnValid()) {
-            updateWeatherData(false);
+        if (IsWeatherDataReturnValid()) {
+            UpdateWeatherData(false);
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     // Arrival
@@ -580,43 +607,57 @@ public class PrimaryController {
         
         SetArrivalAiportInfo(AirportDataAPICall.arrivalAirport.getIata(), AirportDataAPICall.arrivalAirport.getName());
         
-        if (isWeatherDataOutboundValid()) {
-            updateWeatherData(true);
+        if (IsWeatherDataOutboundValid()) {
+            UpdateWeatherData(true);
         }
         
-        if (isWeatherDataReturnValid()) {
-            updateWeatherData(false);
+        if (IsWeatherDataReturnValid()) {
+            UpdateWeatherData(false);
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     @FXML
     private void OnOutboundDatePicked() {
-        if (isWeatherDataOutboundValid()) {
-            updateWeatherData(true);
+        if (IsWeatherDataOutboundValid()) {
+            UpdateWeatherData(true);
         }
         
         if (!isOutboundDatePickerValueNull() && !isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
+            
+            return;
         }
         
         if (!isReturnDatePickerValueNull() && !isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
+            
+            return;
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     @FXML
     private void OnReturnDatePicked() {
-        if (isWeatherDataReturnValid()) {
-            updateWeatherData(false);
+        if (IsWeatherDataReturnValid()) {
+            UpdateWeatherData(false);
         }
         
         if (!isReturnDatePickerValueNull() && !isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
+            
+            return;
         }
         
         if (!isReturnDatePickerValueNull() && !isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
+            
+            return;
         }
+        
+        OpenAndCloseSearchingMessage(true);
     }
     
     // Search flight section
@@ -634,6 +675,8 @@ public class PrimaryController {
     String airportSearchMessage = "Please enter Airport Code or City name!";
     
     String emptySearchMessage = "Sorry, there is no available flight!";
+    
+    String emptyFavouriteMessage = "Save favourite flights to see them here!";
     
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
@@ -685,7 +728,7 @@ public class PrimaryController {
         }
     }
     
-     @FXML
+    @FXML
     public void currencyToggleListener() {
         
         // Add listener to detect currency changes
@@ -702,6 +745,22 @@ public class PrimaryController {
     private String getSelectedCurrencyCode(RadioButton selectedRadioButton) {
         // Retrieve the currency code stored in the userData of the selected radio button
         return (String) selectedRadioButton.getUserData();
+    }
+    
+    @FXML
+    public void temperatureToggleListener() {
+        
+        // Add listener to detect currency changes
+        temperatureToggle.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
+            
+            if (newToggle != null) {
+                RadioButton selectedRadioButton = (RadioButton) newToggle;
+                String selectedTemperatureUnit = (String) selectedRadioButton.getUserData();
+                WeatherAPICall.chosenUnit = selectedTemperatureUnit;
+                
+                System.out.println("Chosen Temperature Unit:" + WeatherAPICall.chosenUnit);
+            }
+        });
     }
     
     private int maxPriceValue = Integer.MAX_VALUE;
@@ -728,6 +787,10 @@ public class PrimaryController {
         }
     }
     
+    private void RemoveAllFlightFromInterface() {
+        populateFlightsContainer(new ArrayList<SearchResultCard>());
+    }
+    
     @FXML
     private void OnSearchFlightButtonPressed() {
 
@@ -739,24 +802,28 @@ public class PrimaryController {
         if (AirportDataAPICall.isAnyAirportNull()) {
             OpenErrorMessage(missingAirportErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
                 
         if (isOutboundDatePickerValueNull()) {
             OpenErrorMessage(missingDatePickerErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
                 
         if (!isDatePickerValueLegal()) {
             OpenErrorMessage(illegalDatePickerErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
         
         if (!isReturnDatePickerValueLegal()) {
             OpenErrorMessage(illegalReturnDatePickerErrorMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
         
@@ -796,14 +863,16 @@ public class PrimaryController {
         if (searchResult == null) {
             OpenErrorMessage(emptySearchMessage);
             
+            RemoveAllFlightFromInterface();
             return;
         }
-        loadFlights(searchResult);
+        
+        LoadFlights(searchResult);
         
     }
     
     @FXML
-    private void loadFlights(SearchResult searchResult) {
+    private void LoadFlights(SearchResult searchResult) {
         fetchedFlightsContainer.getChildren().clear(); 
         
         isSavedFlightsContainerActive = false;
@@ -811,6 +880,8 @@ public class PrimaryController {
         
         List<SearchResultCard> bestFlights = searchResult.getBestFlights();
         List<SearchResultCard> otherFlights = searchResult.getOtherFlights();
+        
+        combinedFlightsSearchResult.clear();
         
         combinedFlightsSearchResult.addAll(bestFlights);
         combinedFlightsSearchResult.addAll(otherFlights);
@@ -1023,15 +1094,15 @@ public class PrimaryController {
     
     CurrentAndForecastWeatherResponse returnArrivalWeatherResponse;
     
-    private boolean isWeatherDataOutboundValid() {
+    private boolean IsWeatherDataOutboundValid() {
         return (!AirportDataAPICall.isAnyAirportNull() && !isOutboundDatePickerValueNull() && isDatePickerValueLegal());
     }
     
-    private boolean isWeatherDataReturnValid() {
+    private boolean IsWeatherDataReturnValid() {
         return (!AirportDataAPICall.isAnyAirportNull() && !isReturnDatePickerValueNull() && isDatePickerValueLegal());
     }
     
-    private boolean isForcastDateValid(DatePicker datePicker) {
+    private boolean IsForcastDateValid(DatePicker datePicker) {
         LocalDate selectedDate = datePicker.getValue();
         if (selectedDate == null) {
             return false;
@@ -1044,7 +1115,7 @@ public class PrimaryController {
         
     }
     
-    public int getDaysFromToday(DatePicker datePicker) {
+    public int GetDaysFromToday(DatePicker datePicker) {
         LocalDate selectedDate = datePicker.getValue();
         if (selectedDate == null) {
             throw new IllegalArgumentException("No date selected in the DatePicker.");
@@ -1054,7 +1125,7 @@ public class PrimaryController {
         return (int) ChronoUnit.DAYS.between(today, selectedDate);
     }
     
-    public String getFormattedDate(DatePicker datePicker) {
+    public String GetFormattedDate(DatePicker datePicker) {
         LocalDate selectedDate = datePicker.getValue();
         if (selectedDate == null) {
             throw new IllegalArgumentException("No date selected in the DatePicker.");
@@ -1069,19 +1140,21 @@ public class PrimaryController {
         return WeatherAPICall.RequestCurrentAndForecastWeatherDataByAirportCode(airportCode);
     }
     
-    private String getDegreeUnit(){
-        if (WeatherAPICall.chosenUnit == "metric") {
+    private String GetDegreeUnit(){
+        if (WeatherAPICall.chosenUnit.equalsIgnoreCase(WeatherAPICall.metricUnit)) {
             return "C";
         }
         
         return "F";
     }
     
-    private void updateWeatherData(boolean isOutbound) {
+    private void UpdateWeatherData(boolean isOutbound) {
+        temperatureToggleListener();
+        
         weatherGuideVBox.setVisible(false);
         
         if (isOutbound) {
-            Boolean isDateValid = isForcastDateValid(outboundDatePicker);
+            Boolean isDateValid = IsForcastDateValid(outboundDatePicker);
             
             if (returnDeparturePane.isVisible()) {
                 weatherSeperateLine.setVisible(true);
@@ -1105,16 +1178,16 @@ public class PrimaryController {
                 return;
             }
             
-            int dateIndex = getDaysFromToday(outboundDatePicker);
+            int dateIndex = GetDaysFromToday(outboundDatePicker);
             
             // Departure
-            outboundDepartureDateLabel.setText(getFormattedDate(outboundDatePicker));
+            outboundDepartureDateLabel.setText(GetFormattedDate(outboundDatePicker));
             
             outboundDepartureWeatherResponse = getWeatherData(AirportDataAPICall.departureAirport.getIata());
             
             outboundDepartureCityLabel.setText(AirportDataAPICall.departureAirport.getCity());
             
-            outboundDepartureAvgTempLabel.setText(String.valueOf((int)outboundDepartureWeatherResponse.daily[dateIndex].temp.day) + "°" + getDegreeUnit());
+            outboundDepartureAvgTempLabel.setText(String.valueOf((int)outboundDepartureWeatherResponse.daily[dateIndex].temp.day) + "°" + GetDegreeUnit());
             
             outboundDepartureHighTempLabel.setText(String.valueOf((int)outboundDepartureWeatherResponse.daily[dateIndex].temp.max) + "°");
             
@@ -1135,13 +1208,13 @@ public class PrimaryController {
             outboundDepartureBackgroundImageView.setImage(outboundDepartureWeatherBackgroundImage);
             
             // Arrival
-            outboundArrivalDateLabel.setText(getFormattedDate(outboundDatePicker));
+            outboundArrivalDateLabel.setText(GetFormattedDate(outboundDatePicker));
             
             outboundArrivalWeatherResponse = getWeatherData(AirportDataAPICall.arrivalAirport.getIata());
             
             outboundArrivalCityLabel.setText(AirportDataAPICall.arrivalAirport.getCity());
             
-            outboundArrivalAvgTempLabel.setText(String.valueOf((int)outboundArrivalWeatherResponse.daily[dateIndex].temp.day) + "°" + getDegreeUnit());
+            outboundArrivalAvgTempLabel.setText(String.valueOf((int)outboundArrivalWeatherResponse.daily[dateIndex].temp.day) + "°" + GetDegreeUnit());
             
             outboundArrivalHighTempLabel.setText(String.valueOf((int)outboundArrivalWeatherResponse.daily[dateIndex].temp.max) + "°");
             
@@ -1164,7 +1237,7 @@ public class PrimaryController {
             return;
         }
         
-        Boolean isDateValid = isForcastDateValid(returnDatePicker);
+        Boolean isDateValid = IsForcastDateValid(returnDatePicker);
         
         if (outboundDeparturePane.isVisible()) {
             weatherSeperateLine.setVisible(true);
@@ -1188,16 +1261,16 @@ public class PrimaryController {
             return;
         }
         
-        int dateIndex = getDaysFromToday(returnDatePicker);
+        int dateIndex = GetDaysFromToday(returnDatePicker);
 
         // Departure
-        returnDepartureDateLabel.setText(getFormattedDate(returnDatePicker));
+        returnDepartureDateLabel.setText(GetFormattedDate(returnDatePicker));
 
         returnDepartureWeatherResponse = getWeatherData(AirportDataAPICall.departureAirport.getIata());
 
         returnDepartureCityLabel.setText(AirportDataAPICall.departureAirport.getCity());
 
-        returnDepartureAvgTempLabel.setText(String.valueOf((int)returnDepartureWeatherResponse.daily[dateIndex].temp.day) + "°" + getDegreeUnit());
+        returnDepartureAvgTempLabel.setText(String.valueOf((int)returnDepartureWeatherResponse.daily[dateIndex].temp.day) + "°" + GetDegreeUnit());
 
         returnDepartureHighTempLabel.setText(String.valueOf((int)returnDepartureWeatherResponse.daily[dateIndex].temp.max) + "°");
 
@@ -1218,13 +1291,13 @@ public class PrimaryController {
         returnDepartureBackgroundImageView.setImage(returnDepartureWeatherBackgroundImage);
 
         // Arrival
-        returnArrivalDateLabel.setText(getFormattedDate(returnDatePicker));
+        returnArrivalDateLabel.setText(GetFormattedDate(returnDatePicker));
 
         returnArrivalWeatherResponse = getWeatherData(AirportDataAPICall.arrivalAirport.getIata());
 
         returnArrivalCityLabel.setText(AirportDataAPICall.arrivalAirport.getCity());
 
-        returnArrivalAvgTempLabel.setText(String.valueOf((int)returnArrivalWeatherResponse.daily[dateIndex].temp.day) + "°" + getDegreeUnit());
+        returnArrivalAvgTempLabel.setText(String.valueOf((int)returnArrivalWeatherResponse.daily[dateIndex].temp.day) + "°" + GetDegreeUnit());
 
         returnArrivalHighTempLabel.setText(String.valueOf((int)returnArrivalWeatherResponse.daily[dateIndex].temp.max) + "°");
 
@@ -1275,9 +1348,6 @@ public class PrimaryController {
     
     private String DecimalToStringConverter(double value)
     {
-        DecimalFormat df = new DecimalFormat("#.#");
-        double formattedValue = Double.parseDouble(df.format(value));
-        
-        return String.valueOf(formattedValue);
+        return String.valueOf((int)value);
     }
 }
