@@ -106,6 +106,9 @@ public class PrimaryController {
     private String currency = "USD";
     
     @FXML
+    private ToggleGroup temperatureToggle;
+    
+    @FXML
     private TextField maxPriceTextField;
     
     @FXML
@@ -688,7 +691,7 @@ public class PrimaryController {
         }
     }
     
-     @FXML
+    @FXML
     public void currencyToggleListener() {
         
         // Add listener to detect currency changes
@@ -705,6 +708,22 @@ public class PrimaryController {
     private String getSelectedCurrencyCode(RadioButton selectedRadioButton) {
         // Retrieve the currency code stored in the userData of the selected radio button
         return (String) selectedRadioButton.getUserData();
+    }
+    
+    @FXML
+    public void temperatureToggleListener() {
+        
+        // Add listener to detect currency changes
+        temperatureToggle.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
+            
+            if (newToggle != null) {
+                RadioButton selectedRadioButton = (RadioButton) newToggle;
+                String selectedTemperatureUnit = (String) selectedRadioButton.getUserData();
+                WeatherAPICall.chosenUnit = selectedTemperatureUnit;
+                
+                System.out.println("Chosen Temperature Unit:" + WeatherAPICall.chosenUnit);
+            }
+        });
     }
     
     private int maxPriceValue = Integer.MAX_VALUE;
@@ -1092,7 +1111,9 @@ public class PrimaryController {
         return "F";
     }
     
-    private void updateWeatherData(boolean isOutbound) {
+    private void UpdateWeatherData(boolean isOutbound) {
+        temperatureToggleListener();
+        
         weatherGuideVBox.setVisible(false);
         
         if (isOutbound) {

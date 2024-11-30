@@ -462,9 +462,9 @@
                                     <Image url="@icons/Selsius%20Icon.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" selected="true">
+                              <RadioButton mnemonicParsing="false" selected="true" userData="metric">
                                  <toggleGroup>
-                                    <ToggleGroup fx:id="Unit" />
+                                    <ToggleGroup fx:id="temperatureToggle" />
                                  </toggleGroup>
                               </RadioButton>
                            </children>
@@ -476,7 +476,7 @@
                                     <Image url="@icons/Fahrenhei%20Icon.png" />
                                  </image>
                               </ImageView>
-                              <RadioButton mnemonicParsing="false" toggleGroup="$Unit" />
+                              <RadioButton mnemonicParsing="false" toggleGroup="$temperatureToggle" userData="imperial" />
                            </children>
                         </VBox>
                      </children>
