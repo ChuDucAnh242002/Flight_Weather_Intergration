@@ -12,6 +12,8 @@ If there are too many flight available, you can also be sorted based on flight d
 
 <img src="Release/Thumbnails/Thumbnail_1.png"/>
 
+<img src="Release/Thumbnails/Thumbnail_2.png"/>
+
 #  Installation & Run instruction
 
 There are two main ways to run the application:
