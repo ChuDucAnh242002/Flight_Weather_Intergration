@@ -70,7 +70,7 @@ public class InfoCardStorage {
         return flights_by_price.stream().collect(Collectors.toList());
     }
     /**
-     * @return flight info by duratino as List
+     * @return flight info by duration as List
      */
     public List<SearchResultCard> get_by_flight_duration(){
         return flights_by_duration.stream().collect(Collectors.toList());
