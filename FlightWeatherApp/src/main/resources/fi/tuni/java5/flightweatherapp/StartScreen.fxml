@@ -334,7 +334,7 @@
             </Label>
          </children>
       </HBox>
-      <Label layoutX="627.0" layoutY="29.0" text="Search results" textFill="#52459d">
+      <Label fx:id="SearchResultLabel" layoutX="627.0" layoutY="29.0" text="Search results" textFill="#52459d">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>

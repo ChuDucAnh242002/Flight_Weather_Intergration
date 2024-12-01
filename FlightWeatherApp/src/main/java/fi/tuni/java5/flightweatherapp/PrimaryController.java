@@ -472,7 +472,16 @@ public class PrimaryController {
     }
     
     @FXML
+    private Label SearchResultLabel;
+    
+    String SearchResultTitle = "Search results";
+    
+    String SavedFlightTitle = "Saved flights";
+    
+    @FXML
     private void OnSavedFlightButtonPressed() {
+        SearchResultLabel.setText(SavedFlightTitle);
+        
         OpenSavedFlight(true);
         
         OpenAndCloseSearchingMessage(false);
@@ -494,6 +503,8 @@ public class PrimaryController {
     
     @FXML
     private void OnGoBackButtonPressed() {
+        SearchResultLabel.setText(SearchResultTitle);
+        
         OpenSavedFlight(false);
         
         OpenAndCloseSearchingMessage(false);
