@@ -44,7 +44,7 @@ public class Preferences {
     public Double get_max_price(){
         return max_price_;
     }
-    public int get_leyovers(){
+    public int get_layovers(){
         return layovers_;
     }
     
@@ -52,19 +52,11 @@ public class Preferences {
     // the parameter and return boolean value:
     // valid: true
     // invalid: false
-    public boolean set_currency(String currency){
-        if (validate_currency(currency)){
-            currency_ = currency;
-            return true;
-        }
-        return false;
+    public void set_currency(String currency){
+        currency_ = currency;
     }
-    public boolean set_temperature_unit(String temperature_unit){
-        if (validate_temperature_unit(temperature_unit)){
-            temp_unit = temperature_unit;
-            return true;
-        }
-        return false;
+    public void set_temperature_unit(String temperature_unit){
+        temp_unit = temperature_unit;
     }
     
     // other setters
@@ -76,10 +68,10 @@ public class Preferences {
     }   
     /**
      * @param input
-     * @return true if input is "C" or "F"
+     * @return true if input is "metric" or "imperial"
      */
     private boolean validate_temperature_unit(String input){
-        return input.compareTo("C") == 0 || input.compareTo("F") == 0;
+        return input.compareTo("metric") == 0 || input.compareTo("imperial") == 0;
     }
     /**
      * @param input

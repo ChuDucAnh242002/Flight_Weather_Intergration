@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>                                
-
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.tuni.java5.flightweatherapp.FlightDetailsController">
     <children>
@@ -24,7 +23,7 @@
                         <Image url="@icons/Circle%20image.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="airlineLogo" fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
                 <Label fx:id="departureDate" layoutX="300.0" layoutY="19.0" text="Fri, Sep 13" textFill="#52459d">
                     <font>
                         <Font name="Arial Bold" size="20.0" />
@@ -119,7 +118,7 @@
                         </Label>
                         <HBox alignment="CENTER" spacing="20.0">
                             <children>
-                                <HBox alignment="CENTER" spacing="4.0">
+                                <HBox fx:id="overnightHBox" alignment="CENTER" spacing="4.0">
                                     <children>
                                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -133,7 +132,7 @@
                                         </Label>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER" spacing="4.0">
+                                <HBox fx:id="delayedHBox" alignment="CENTER" spacing="4.0">
                                     <children>
                                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -164,5 +163,3 @@
                     
     </children>
 </VBox>
-                        
-                        

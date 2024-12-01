@@ -6,6 +6,7 @@ import fi.tuni.java5.flightweatherapp.flightDataAPI.Airport;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Flight;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Layover;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
+import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -105,6 +106,7 @@ public class SaveDataTest {
         int total_duration = 150;
         int carbon_emissions = 1000;
         double  price = 199.95;
+        String currency = "EUR";
         String type = "sometype";
         String airline_logo_again = "https//:someurlforimnage.something";
         String departure_token = "6789";
@@ -119,13 +121,14 @@ public class SaveDataTest {
         new_flight_result.total_duration = total_duration;
         new_flight_result.carbon_emission = carbon_emissions;
         new_flight_result.price = price;
+        new_flight_result.currency = currency;
         new_flight_result.type = type;
         new_flight_result.airline_logo = airline_logo_again;
         new_flight_result.departure_token = departure_token;
         
         InfoCardStorage fav = new InfoCardStorage();
         fav.set_new_element(new_flight_result);
-        Preferences pref = new Preferences("USD", "F", 250.0, 1);
+        Preferences pref = new Preferences("USD", WeatherAPICall.imperialUnit, 250.0, 1);
         old_data.write_data(fav, pref);
         
         SaveData test_data = new SaveData();
@@ -169,8 +172,8 @@ public class SaveDataTest {
         assertEquals("sometype", test_flight_card.type);
         
         assertEquals("USD", pref.get_currency());
-        assertEquals("F", pref.get_temperature_unit());
+        assertEquals("imperial", pref.get_temperature_unit());
         assertEquals(250.0, pref.get_max_price());
-        assertEquals(1, pref.get_leyovers());
+        assertEquals(1, pref.get_layovers());
     }
 }

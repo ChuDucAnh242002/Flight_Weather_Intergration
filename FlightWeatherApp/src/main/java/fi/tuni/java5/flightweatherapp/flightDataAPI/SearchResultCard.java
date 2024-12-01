@@ -1,5 +1,6 @@
 package fi.tuni.java5.flightweatherapp.flightDataAPI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,14 +9,16 @@ import java.util.List;
  * @author Chu Duc Anh
  */
 public class SearchResultCard {
-    public List<Flight> flights;
-    public List<Layover> layovers;
+    public List<Flight> flights = new ArrayList<>();;
+    public List<Layover> layovers = new ArrayList<>();;
     public int total_duration;
     public int carbon_emission;
     public double price;
     public String type;
     public String airline_logo;
     public String departure_token;
+    public boolean isSaved = false;
+    public String currency;
     
     // Getters
     public List<Flight> getFlights() {
@@ -48,6 +51,14 @@ public class SearchResultCard {
     
     public void setCarbonEmission(int carbon_emission){
         this.carbon_emission = carbon_emission;
+    }
+    
+    public String getCurrency() {
+        return currency;
+    }
+    
+    public void setCurrency(String currencyCode){
+        this.currency = currencyCode;
     }
     
     @Override
@@ -83,7 +94,7 @@ public class SearchResultCard {
         sb.append("Type: ").append(type != null ? type : "N/A").append("\n");
         sb.append("Airline Logo: ").append(airline_logo != null ? airline_logo : "N/A").append("\n");
         sb.append("Departure Token: ").append(departure_token != null ? departure_token : "N/A").append("\n");
-    
+        sb.append("isSaved: ").append(isSaved).append("\n");
         return sb.toString();
     }
 }

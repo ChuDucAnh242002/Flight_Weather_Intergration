@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * stores flights in three different TreeSets
  * for different orders
- * @author Kalle Hirvijärvi
+ * @author Kalle Hirvijärvi, Nguyen Quang Duc
  */
 public class InfoCardStorage {
     
@@ -70,7 +70,7 @@ public class InfoCardStorage {
         return flights_by_price.stream().collect(Collectors.toList());
     }
     /**
-     * @return flight info by duratino as List
+     * @return flight info by duration as List
      */
     public List<SearchResultCard> get_by_flight_duration(){
         return flights_by_duration.stream().collect(Collectors.toList());
@@ -98,5 +98,15 @@ public class InfoCardStorage {
         else {
             return false;
         }
+    }
+    
+    /**
+    * Checks whether a SearchResultCard object exists in the database.
+    * 
+    * @param target The SearchResultCard object to check for.
+    * @return true if the target object exists in the database, false otherwise.
+    */
+    public boolean contains(SearchResultCard target) {
+        return flights_by_departure.contains(target);
     }
 }

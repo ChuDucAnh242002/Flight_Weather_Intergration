@@ -3,17 +3,24 @@ package fi.tuni.java5.flightweatherapp;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Flight;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.Layover;
 import fi.tuni.java5.flightweatherapp.flightDataAPI.SearchResultCard;
+import fi.tuni.java5.flightweatherapp.settingManagement.InfoCardStorage;
+import fi.tuni.java5.flightweatherapp.settingManagement.Preferences;
+import fi.tuni.java5.flightweatherapp.settingManagement.SaveData;
+import fi.tuni.java5.flightweatherapp.weatherAPI.WeatherAPICall;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import java.io.IOException;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 /**
  *
- * @author hamza
+ * @author hamza, Nguyen Quang Duc
  */
 public class FlightSearchCardController {
 
@@ -25,12 +32,51 @@ public class FlightSearchCardController {
 
     @FXML
     private VBox flightDetailsContainer;
+    
+    @FXML
+    private ImageView saveFlightButtonIcon;
+    
+    // Path to icons
+    private final String SAVE_FILLED_ICON = "icons/Love icon filled.png";
+    private final String SAVE_HOLLOW_ICON = "icons/Love icon hollow.png";
 
+    private SearchResultCard flightDetails;
+    private String currency;
+
+    private void updateSaveButtonIcon(boolean isSaved) {
+        Image image;
+        if (isSaved) {
+            image = new Image(getClass().getResourceAsStream("icons/Love icon filled.png"));
+        }
+        else {
+            image = new Image(getClass().getResourceAsStream("icons/Love icon hollow.png"));
+        }
+        saveFlightButtonIcon.setImage(image);
+    }
+    
     public void setSearchCardFlightDetails(SearchResultCard flightDetails) {
-
-        this.price.setText("$" + String.valueOf(flightDetails.price));
+        
+        // Saving to use later when saving flight
+        this.flightDetails = flightDetails;
+        String currency = flightDetails.getCurrency();
+        
+        String currencySymbol;
+        
+        if (currency.equals("USD")) {
+            currencySymbol = "$";
+        }
+        else if (currency.equals("EUR")) {
+            currencySymbol = "€";
+        }
+        else {
+            currencySymbol = "£";
+        }
+        
+        flightDetails.isSaved = PrimaryController.favouriteFlights.contains(flightDetails);
+        updateSaveButtonIcon(flightDetails.isSaved);
+        
+        this.price.setText(currencySymbol + String.valueOf(flightDetails.price));
         this.flightType.setText(flightDetails.getType());
-
         List<Flight> flights = flightDetails.getFlights();
         List<Layover> layovers = flightDetails.getLayovers();
         
@@ -48,7 +94,7 @@ public class FlightSearchCardController {
                 flightDetailsContainer.getChildren().add(flightNode);
 
                 // If there is a layover and it's not the last flight, display the layover details
-                if (i < layovers.size()) {
+                if (layovers != null && i < layovers.size()) {
                     Layover layover = layovers.get(i);
 
                     FXMLLoader layoverLoader = new FXMLLoader(getClass().getResource("LayoverDetails.fxml"));
@@ -64,5 +110,23 @@ public class FlightSearchCardController {
             }
         }
     }
+
+    @FXML
+    public void onSaveFlightDetailsButtonPressed() {
+        if (flightDetails.isSaved) {
+            System.out.println("____________________________________________");
+            System.out.println("Flight already saved! Removing from saved list!");
+            System.out.println("____________________________________________");
+            PrimaryController.favouriteFlights.delete_element(flightDetails);
+        }
+        else {
+            PrimaryController.favouriteFlights.set_new_element(flightDetails);
+        }
+        
+        flightDetails.isSaved = !flightDetails.isSaved;
+                
+        updateSaveButtonIcon(flightDetails.isSaved);
+        SaveData.write_data(PrimaryController.favouriteFlights, PrimaryController.userPreference);
+    };
 
 }

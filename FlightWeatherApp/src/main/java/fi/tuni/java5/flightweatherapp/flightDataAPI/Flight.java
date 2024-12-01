@@ -9,7 +9,7 @@ public class Flight {
     public Airport departure_airport;
     public Airport arrival_airport;
     public int duration;
-    public String airplane;
+    public String airplane = "";
     public String airline;
     public String airline_logo;
     public String travel_class;
@@ -17,6 +17,8 @@ public class Flight {
     public List<String> ticket_also_sold_by;
     public String legroom;
     public List<String> extensions;
+    public boolean overnight = false;
+    public boolean often_delayed_by_over_30_min = false;
 
     // Getters
     public Airport getDepartureAirport() {
@@ -57,6 +59,14 @@ public class Flight {
 
     public String getLegroom() {
         return legroom;
+    }
+    
+    public boolean getOvernight() {
+        return overnight;
+    }
+    
+    public boolean getDelayed() {
+        return often_delayed_by_over_30_min;
     }
 
     public List<String> getExtensions() {
