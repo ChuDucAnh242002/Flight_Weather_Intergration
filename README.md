@@ -1,4 +1,4 @@
-# User manual
+# User Manual
 
 You can use this application to search information about commercial flights based on a given staring point and destination.
 
@@ -14,7 +14,7 @@ If there are too many flights available, you can also be sorted based on flight 
 
 <img src="Release/Thumbnails/Thumbnail_2.png"/>
 
-#  Installation & Run instruction
+#  Installation & Run Instruction
 
 There are two main ways to run the application:
 ### 1. The first method: Run through command line, which is considered quick and easy.
@@ -30,6 +30,10 @@ Notice: This command line is supposed to work in Windows operating system; howev
 - Open the project in Netbeans and select the "Run" button to start the application.
 
 Notice: This method has been proved to work on both MacOS and Windows operating systems.
+
+#  Design Documentation
+
+The detailed documentation about the design of the software can be found in the ‘Release’ folder of the group’s root directory with the name of "Design Documentation" in PDF format.
 
 # Java Version
 
