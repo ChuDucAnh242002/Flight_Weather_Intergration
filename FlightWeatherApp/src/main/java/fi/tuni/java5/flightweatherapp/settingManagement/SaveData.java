@@ -175,7 +175,7 @@ public class SaveData {
                 
             }
             
-            // read data fro SearchResultCard from Json file
+            // read data from SearchResultCard from Json file
             int total_duration = current.get("total_duration").getAsInt();
             int carbon_emissions = current.get("emissions").getAsInt();
             double price = current.get("price").getAsDouble();
