@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The SearchResultCard will contains data about multiple flights
  *
  * @author Chu Duc Anh
  */

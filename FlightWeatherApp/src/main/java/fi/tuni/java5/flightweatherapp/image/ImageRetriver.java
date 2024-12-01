@@ -6,10 +6,19 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 /**
- *
+ * ImageRetriver class will get the image from the URL link
+ * and store it into FXML Image or ImageView component
+ * 
  * @author Chu Duc Anh
  */
 public class ImageRetriver {
+    
+    /**
+     * The function retrieve image from the URL link
+     * 
+     * @param String the URL link retrieved from the Flight of SearchResultCard
+     * @return Image the FXML image component got from the URL String
+     */
     public static Image retrieveImage(String urlString) {
         if (urlString == null || urlString.isEmpty()) {
             System.out.println("URL is null or empty");
@@ -40,6 +49,12 @@ public class ImageRetriver {
         }
     }
     
+    /**
+     * The function retrieve image from the URL link
+     * 
+     * @param String the URL link retrieved from the Flight of SearchResultCard
+     * @return ImageView the FXML image view component got from the URL String
+     */
     public static ImageView retriveImageView(String urlString) { 
         Image image = retrieveImage(urlString);
         if (image == null) {

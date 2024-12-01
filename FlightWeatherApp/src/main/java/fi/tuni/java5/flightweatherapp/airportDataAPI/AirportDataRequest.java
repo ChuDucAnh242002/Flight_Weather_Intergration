@@ -5,6 +5,9 @@ import fi.tuni.java5.flightweatherapp.interfaces.RequestInterface;
 
 /**
  *
+ * The AirportDataRequest class contains the attributes
+ * to request data from AirportDataAPICall class
+ * 
  * @author Chu Duc Anh
  */
 public class AirportDataRequest implements RequestInterface {

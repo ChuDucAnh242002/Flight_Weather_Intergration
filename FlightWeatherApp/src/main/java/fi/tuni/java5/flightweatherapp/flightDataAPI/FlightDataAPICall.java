@@ -13,8 +13,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 /**
- *
- * @author ASUS
+ * The FlgihtDataAPICall class will contains methods to make request 
+ * to the Google Flights and store the response into SearchResult
+ * 
+ * @author Chu Duc Anh
  */
 public class FlightDataAPICall implements APICallInterface {
     
@@ -94,6 +96,12 @@ public class FlightDataAPICall implements APICallInterface {
         
     }
     
+    /**
+     * The function makes a request by FlightDataRequest class
+     * 
+     * @param FlightDataRequest 
+     * @return JsonObject the response contain of best flights in json form
+     */
     public static JsonObject RequestFlightDataAPIJson() {
         
         try {
@@ -130,6 +138,13 @@ public class FlightDataAPICall implements APICallInterface {
         }   
     }
     
+    /**
+     * The functions checks if the flight data request is valid and 
+     * generates the API URI
+     * 
+     * @param FlightDataRequest 
+     * @return JsonObject the response contain of best flights in json form
+     */
     private static String generateAPIURI(FlightDataRequest flightDataRequest) {
         String engine = flightDataRequest.getEngine();
         String apiKey = flightDataRequest.getApiKey();
