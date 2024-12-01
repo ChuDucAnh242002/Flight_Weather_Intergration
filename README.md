@@ -6,7 +6,7 @@ The search result will contain multiple valuable information, including date and
 
 To further customize user's experience, you can also save favorite flights and conveniently access them later. You are also able to choose a preferred currency and filter results based on number of layovers, number of passengers or the maximum price of the trip.
 
-If there are too many flight available, you can also be sorted based on flight duration, price or departure time for both searched and saved flights.
+If there are too many flights available, you can also be sorted based on flight duration, price or departure time for both searched and saved flights.
 
 # Application Previews
 
