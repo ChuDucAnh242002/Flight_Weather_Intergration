@@ -106,7 +106,7 @@ public class InfoCardStorage {
     * @param target The SearchResultCard object to check for.
     * @return true if the target object exists in the database, false otherwise.
     */
-   public boolean contains(SearchResultCard target) {
-       return flights_by_departure.contains(target);
-   }
+    public boolean contains(SearchResultCard target) {
+        return flights_by_departure.contains(target);
+    }
 }
