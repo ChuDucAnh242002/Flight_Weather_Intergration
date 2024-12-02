@@ -16,7 +16,7 @@ If there are too many flights available, you can also be sorted based on flight 
 
 #  Installation & Run Instruction
 
-There are two main ways to run the application:
+There are three main ways to run the application:
 ### 1. The first method: Run JAR file through command line, which is considered quick and easy.
 - Firstly, you need to clone this repository into your local device.
 - Navigate to the application’s JAR file, which is located in the ‘Release’ folder of the group’s root directory.
