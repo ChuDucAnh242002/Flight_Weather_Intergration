@@ -17,14 +17,20 @@ If there are too many flights available, you can also be sorted based on flight 
 #  Installation & Run Instruction
 
 There are two main ways to run the application:
-### 1. The first method: Run through command line, which is considered quick and easy.
+### 1. The first method: Run JAR file through command line, which is considered quick and easy.
 - Firstly, you need to clone this repository into your local device.
 - Navigate to the application’s JAR file, which is located in the ‘Release’ folder of the group’s root directory.
 - Next, you can run it by using the command line ‘java -jar "FlightWeatherApp.jar"’ at the ‘Release’ folder’s directory.
 
 Notice: This command line is supposed to work in Windows operating system; however, we have not fully tested the software on MacOS counterpart yet.
 
-### 2. The second method: Run through Netbeans IDE, which is a more reliable way.
+### 2. The second method: Run the project using Maven, which also requires command line.
+- Firstly, you need to clone this repository into your local device.
+- Make sure you have installed Maven with correct version mentioned at the end of this README file.
+- Navigate to the application’s project file, which is located in the ‘FlightWeatherApp’ folder of the group’s root directory.
+- Next, you can run it by using the command line ‘mvn javafx:run’ at the ‘FlightWeatherApp’ folder’s directory.
+
+### 3. The third method: Run the project using Netbeans IDE, which is a more reliable way.
 - Firstly, you need to clone this repository into your local device and configure it as Maven project.
 - Make sure you have installed Netbeans IDE and supported modules such as JavaFX with correct version stated at the end of this README file.
 - Open the project in Netbeans and select the "Run" button to start the application.
