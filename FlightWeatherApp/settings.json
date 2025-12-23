@@ -1,8 +1,76 @@
 {
   "latest_search": [],
-  "favorites": [],
+  "favorites": [
+    {
+      "flights": [
+        {
+          "dep_airport_name": "Helsinki Airport",
+          "dep_airport_id": "HEL",
+          "dep_airport_time": "2025-01-14 06:30",
+          "arr_airport_name": "Paris Charles de Gaulle Airport",
+          "arr_airport_id": "CDG",
+          "arr_airport_time": "2025-01-14 09:00",
+          "duration": 210,
+          "airplane": "Airbus A220-300 Passenger",
+          "airline": "Air France",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AF.png",
+          "class": "Economy",
+          "flight_num": "AF 1177",
+          "tickets_sold_by": [],
+          "extentions": [
+            "Average legroom (30 in)",
+            "Wi-Fi for a fee",
+            "In-seat USB outlet",
+            "Carbon emissions estimate: 176 kg"
+          ]
+        }
+      ],
+      "layovers": [],
+      "total_duration": 210,
+      "emissions": 176000,
+      "price": 252.0,
+      "currency": "EUR",
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AF.png",
+      "dep_token": "WyJDalJJVVVOb2VHVndUMHd3WlhkQlIwOXRkbmRDUnkwdExTMHRMUzB0TFhaM2NtOHlORUZCUVVGQlIyVkVkRzh3UTFkQk1VbEJFZ1pCUmpFeE56Y2FDd2pCeEFFUUFob0RSVlZTT0J4d3dza0IiLFtbIkhFTCIsIjIwMjUtMDEtMTQiLCJDREciLG51bGwsIkFGIiwiMTE3NyJdXV0\u003d",
+      "isSaved": true
+    },
+    {
+      "flights": [
+        {
+          "dep_airport_name": "Helsinki Airport",
+          "dep_airport_id": "HEL",
+          "dep_airport_time": "2025-01-14 07:35",
+          "arr_airport_name": "Paris Charles de Gaulle Airport",
+          "arr_airport_id": "CDG",
+          "arr_airport_time": "2025-01-14 09:45",
+          "duration": 190,
+          "airplane": "Airbus A320",
+          "airline": "Finnair",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AY.png",
+          "class": "Economy",
+          "flight_num": "AY 1571",
+          "tickets_sold_by": [],
+          "extentions": [
+            "Average legroom (31 in)",
+            "Wi-Fi for a fee",
+            "Carbon emissions estimate: 181 kg"
+          ]
+        }
+      ],
+      "layovers": [],
+      "total_duration": 190,
+      "emissions": 182000,
+      "price": 298.0,
+      "currency": "EUR",
+      "type": "Round trip",
+      "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/AY.png",
+      "dep_token": "WyJDalJJVVVOb2VHVndUMHd3WlhkQlIwOXRkbmRDUnkwdExTMHRMUzB0TFhaM2NtOHlORUZCUVVGQlIyVkVkRzh3UTFkQk1VbEJFZ1pCV1RFMU56RWFDd2laNkFFUUFob0RSVlZTT0J4d2p1NEIiLFtbIkhFTCIsIjIwMjUtMDEtMTQiLCJDREciLG51bGwsIkFZIiwiMTU3MSJdXV0\u003d",
+      "isSaved": true
+    }
+  ],
   "preferences": {
-    "currency": "USD",
+    "currency": "EUR",
     "temp_unit": "metric",
     "max_price": -1.0,
     "num_of_layovers": 0
