@@ -1,49 +1,73 @@
-# User Manual
+# Flight Weather App
 
-You can use this application to search information about commercial flights based on a given staring point and destination.
+A JavaFX desktop app for searching commercial flights and viewing weather forecasts for the departure and arrival airports. Flight search and airport/weather details are retrieved from online services, so an internet connection and available API service are required.
 
-The search result will contain multiple valuable information, including date and time, airline, type of aircraft, price and possible layover. Moreover, you also can see the weather forecast based on local arrival and departure times.
+## Features
 
-To further customize user's experience, you can also save favorite flights and conveniently access them later. You are also able to choose a preferred currency and filter results based on number of layovers, number of passengers or the maximum price of the trip.
+- Search one-way and round-trip flights by departure and arrival airport.
+- Choose travel dates and adult/child passenger counts.
+- Filter results by number of stops and maximum price.
+- Sort current results and saved flights by price, duration, or departure time.
+- View flight details and weather forecasts for the journey.
+- Save favorite flights and retain recent searches and preferences.
+- Choose a supported currency (USD, EUR, or GBP) and weather unit (metric or imperial).
 
-If there are too many flights available, you can also be sorted based on flight duration, price or departure time for both searched and saved flights.
+## Screenshots
 
-# Application Previews
+![Flight search screen](Release/Thumbnails/Thumbnail_1.png)
 
-<img src="Release/Thumbnails/Thumbnail_1.png"/>
+![Flight results screen](Release/Thumbnails/Thumbnail_2.png)
 
-<img src="Release/Thumbnails/Thumbnail_2.png"/>
+## Repository layout
 
-#  Installation & Run Instruction
+```text
+.
+├── FlightWeatherApp/
+│   ├── pom.xml                 # Maven build, dependencies, and JavaFX run configuration
+│   ├── settings.json           # Sample app data for running from this directory
+│   └── src/
+│       ├── main/java/          # JavaFX app, controllers, API clients, and persistence
+│       ├── main/resources/     # FXML screens and image assets
+│       └── test/java/          # Unit tests
+└── Release/
+    ├── FlightWeatherApp.jar    # Packaged application
+    ├── Design Documentation.pdf
+    ├── settings.json           # Sample app data for running from this directory
+    └── Thumbnails/             # README screenshots
+```
 
-There are three main ways to run the application:
-### 1. The first method: Run JAR file through command line, which is considered quick and easy.
-- Firstly, you need to clone this repository into your local device.
-- Navigate to the application’s JAR file, which is located in the ‘Release’ folder of the group’s root directory.
-- Next, you can run it by using the command line ‘java -jar "FlightWeatherApp.jar"’ at the ‘Release’ folder’s directory.
+The app uses SerpApi for Google Flights search, API Ninjas for airport data, and OpenWeatherMap for weather. Saved favorites, recent searches, and preferences are read from and written to `settings.json` in the app's current working directory.
 
-Notice: This command line is supposed to work in Windows operating system; however, we have not fully tested the software on MacOS counterpart yet.
+## Requirements
 
-### 2. The second method: Run the project using Maven, which also requires command line.
-- Firstly, you need to clone this repository into your local device.
-- Make sure you have installed Maven with correct version mentioned at the end of this README file.
-- Navigate to the application’s project file, which is located in the ‘FlightWeatherApp’ folder of the group’s root directory.
-- Next, you can run it by using the command line ‘mvn javafx:run’ at the ‘FlightWeatherApp’ folder’s directory.
+- JDK 17 or newer (JavaFX 21 requires Java 17 or newer).
+- Maven 3.x for building, testing, or running from source.
 
-### 3. The third method: Run the project using Netbeans IDE, which is a more reliable way.
-- Firstly, you need to clone this repository into your local device and configure it as Maven project.
-- Make sure you have installed Netbeans IDE and supported modules such as JavaFX with correct version stated at the end of this README file.
-- Open the project in Netbeans and select the "Run" button to start the application.
+The Maven compiler is configured to target Java 11 bytecode. That target does not lower the JavaFX runtime requirement: use JDK 17 or newer to run the app.
 
-Notice: This method has been proved to work on both MacOS and Windows operating systems.
+## Run the application
 
-#  Design Documentation
+### Run the bundled JAR
 
-The detailed documentation about the design of the software can be found in the ‘Release’ folder of the group’s root directory with the name of "Design Documentation" in PDF format.
+```sh
+cd Release
+java -jar FlightWeatherApp.jar
+```
 
-# Java Version
+### Run from source with Maven
 
-This project is built and tested with versions of Java as shown below:
-- Maven's version: 11
-- JavaFX's version: 21
-- Java's version: 23
+```sh
+cd FlightWeatherApp
+mvn javafx:run
+```
+
+To run the tests:
+
+```sh
+cd FlightWeatherApp
+mvn test
+```
+
+## Design documentation
+
+See [Design Documentation.pdf](Release/Design%20Documentation.pdf) for the detailed software design.
