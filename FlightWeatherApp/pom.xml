@@ -67,6 +67,14 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <executions>
@@ -79,7 +87,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>fi.tuni.java5.flightweatherapp.App</mainClass>
+                                    <mainClass>fi.tuni.java5.flightweatherapp.AppLauncher</mainClass>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
@@ -100,7 +108,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fi.tuni.java5.flightweatherapp.App</mainClass>
+                            <mainClass>fi.tuni.java5.flightweatherapp.AppLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

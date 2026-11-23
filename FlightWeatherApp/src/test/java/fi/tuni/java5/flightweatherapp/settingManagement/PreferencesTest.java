@@ -29,8 +29,8 @@ public class PreferencesTest {
 
     @Test
     public void test_temp_unit_validation() {
-        pref.set_currency("metric");
-        assertEquals("metric", pref.get_currency());
+        pref.set_temperature_unit("metric");
+        assertEquals("metric", pref.get_temperature_unit());
 
         assertThrows(IllegalArgumentException.class, () -> new Preferences("USD", "Celsius", -1.0, -1));
     }

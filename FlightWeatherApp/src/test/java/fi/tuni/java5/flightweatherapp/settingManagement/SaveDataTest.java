@@ -30,6 +30,7 @@ public class SaveDataTest {
     
     @BeforeEach
     public void save_existing_data(){
+        SaveData.write_data(new InfoCardStorage(), new Preferences("EUR", "metric", -1.0, -1));
         old_data = new SaveData();
         saved_data_f = old_data.get_favorites();
         saved_data_p = old_data.get_preferences();

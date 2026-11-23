@@ -1,0 +1,6 @@
+**
+!FlightWeatherApp/
+!FlightWeatherApp/pom.xml
+!FlightWeatherApp/src/
+!FlightWeatherApp/src/**
+**/.DS_Store

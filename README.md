@@ -68,6 +68,33 @@ cd FlightWeatherApp
 mvn test
 ```
 
+The tests use `FlightWeatherApp/target` as their working directory so they do
+not overwrite the app's `settings.json`.
+
+### Build with Docker
+
+From the repository root, with Docker and BuildKit available:
+
+```sh
+docker build --output ./docker-output .
+```
+
+This runs the Maven tests and exports `docker-output/FlightWeatherApp.jar`.
+The image is a build environment, not a desktop server. The exported JAR
+contains Linux JavaFX libraries for the build architecture; run it on a
+compatible Linux desktop with JDK 17 or newer. Copy the sample settings into
+the working directory before starting it:
+
+```sh
+cp -n FlightWeatherApp/settings.json docker-output/settings.json
+cd docker-output
+java -jar FlightWeatherApp.jar
+```
+
+Keep that working directory to retain saved flights and preferences. The build
+downloads its base image and Maven dependencies. It does not validate the live
+external APIs, which require working services and credentials.
+
 ## Design documentation
 
 See [Design Documentation.pdf](Release/Design%20Documentation.pdf) for the detailed software design.
