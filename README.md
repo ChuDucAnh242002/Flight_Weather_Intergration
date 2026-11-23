@@ -71,6 +71,9 @@ mvn test
 The tests use `FlightWeatherApp/target` as their working directory so they do
 not overwrite the app's `settings.json`.
 
+GitHub Actions runs `mvn -B -ntp verify` with JDK 21 on pull requests and
+pushes to `main`. This tests and packages the app without exercising live APIs.
+
 ### Build with Docker
 
 From the repository root, with Docker and BuildKit available:
